@@ -1,0 +1,6 @@
+dist/*
+.vscode/
+minishell
+*.o
+*.a
+*.pdf
