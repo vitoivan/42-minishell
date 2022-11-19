@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/11/19 16:26:02 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/11/19 16:30:40 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ BOOL	get_line_from_terminal(char **line)
 	if (!get_buffer(&buffer))
 		return (False);
 	i = 0;
-	ft_printf(COLOR_BOLD GRN "minishell $> " RESET COLOR_OFF);
+	ft_printf(COLOR_BOLD GREEN "minishell $> " RESET_COLOR REMOVE_BOLD);
 	read_ret = read(STDIN_FILENO, &buf, 1);
 	while (read_ret && read_ret != -1 && buf != '\n')
 	{
