@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   free_if_exists.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/11/19 16:39:03 by vivan-de         ###   ########.fr       */
+/*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
+/*   Updated: 2022/11/19 16:22:48 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/minishell.h"
 
-# include "../libs/libft/libft.h"
-# include "./define.h"
-# include "./utils.h"
-# include <readline/readline.h>
-
-#endif
+void	free_if_exists(void **data)
+{
+	if (*data)
+		free(*data);
+}

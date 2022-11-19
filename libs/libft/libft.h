@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/08/07 08:32:48 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/11/19 16:57:10 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,4 +182,6 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 
 int					ft_printf(const char *str, ...);
+
+char				*get_next_line(int fd, int buffer_size, int free_rest);
 #endif
