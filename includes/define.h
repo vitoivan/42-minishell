@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/11/19 16:30:36 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/11/19 16:36:13 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ enum	e_bool
 	False = 0,
 	True = 1
 };
-
+# define BUFFER_SIZE 4096
 # define RED "\x1B[31m"
 # define GREEN "\x1B[32m"
 # define YEL "\x1B[33m"
