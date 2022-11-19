@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/11/19 13:57:39 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:01:33 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(void)
 
 	while (True)
 	{
-		line = get_line();
+		line = get_line_from_terminal();
 		if (!strcmp(line, "exit"))
 		{
 			free(line);

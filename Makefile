@@ -7,7 +7,7 @@ OBJ_DIR = dist
 OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils
 
 TARGETS = 	main.c \
-			utils/get_line.c
+			utils/get_line_from_terminal.c
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
 OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 
