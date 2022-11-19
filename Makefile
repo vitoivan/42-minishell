@@ -1,13 +1,13 @@
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -g -c
-LFLAGS = -L./dist -lft
+LFLAGS = -L./dist -lft -lreadline
 NAME = minishell
 
 OBJ_DIR = dist
-OBJ_DIRS = $(OBJ_DIR)
-HEADERS = includes/minishell.h
+OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils
 
-TARGETS = 	main.c 
+TARGETS = 	main.c \
+			utils/get_line.c
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
 OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 
@@ -26,7 +26,7 @@ valgrind: $(NAME)
 $(NAME): $(LIBFT) $(OBJ_DIRS) $(OBJ)
 	$(CC) $(OBJ) $(LFLAGS) -o $(NAME)
 
-$(OBJ_DIR)/%.o: src/%.c $(HEADERS)
+$(OBJ_DIR)/%.o: src/%.c
 	$(CC) $(CFLAGS) $< -o $@
 
 $(LIBFT): $(OBJ_DIRS)
