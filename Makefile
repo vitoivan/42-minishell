@@ -4,11 +4,12 @@ LFLAGS = -L./dist -lft -lreadline
 NAME = minishell
 
 OBJ_DIR = dist
-OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils
+OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils $(OBJ_DIR)/interpreter
 
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
-			utils/free_if_exists.c
+			utils/free_if_exists.c \
+			interpreter/ft_tokenizer.c \
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
 OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 

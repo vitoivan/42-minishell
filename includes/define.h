@@ -20,7 +20,15 @@ enum	e_bool
 	False = 0,
 	True = 1
 };
+
+enum e_erros {
+  UNQUOTED_STRING_ERROR
+};
 # define BUFFER_SIZE 4096
+# define uint unsigned int
+# define byte unsigned char
+# define SINGLE_QUOTE 39
+# define DOUBLE_QUOTE 34
 # define RED "\x1B[31m"
 # define GREEN "\x1B[32m"
 # define YEL "\x1B[33m"
