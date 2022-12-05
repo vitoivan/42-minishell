@@ -22,7 +22,8 @@ enum	e_bool
 };
 
 enum e_erros {
-  UNQUOTED_STRING_ERROR
+  UNQUOTED_STRING_ERROR,
+  MEMORY_ALLOC_ERROR
 };
 # define BUFFER_SIZE 4096
 # define uint unsigned int

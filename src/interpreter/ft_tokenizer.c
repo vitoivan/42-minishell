@@ -26,7 +26,7 @@ static void parse_quote(char **start_token, char **end_token, char quote)
   while (**end_token != quote) /*  Ajustar na proxima atualizacao do tokenizer */
     (*end_token)++;
   if (**end_token != quote)
-    exit(UNQUOTED_STRING_ERROR);
+    exit(MEMORY_ALLOC_ERROR);
 }
 
 t_list *ft_tokenizer(char *cmd_line)
@@ -37,7 +37,7 @@ t_list *ft_tokenizer(char *cmd_line)
   end_token = cmd_line;
   list = ft_calloc(1, sizeof(t_list));
   if (!list)
-    exit(UNQUOTED_STRING_ERROR); //corrigir
+    exit(MEMORY_ALLOC_ERROR); //corrigir
   while (*cmd_line)
   {
     while(ft_isalpha(*end_token))
