@@ -23,7 +23,7 @@ static void parse_quote(char **start_token, char **end_token, char quote)
 {
   (*start_token)++;
   (*end_token)++;
-  while (**end_token != quote) /*  Ajustar na proxima atualizacao do tokenizer */
+  while (**end_token != quote || **end_token) /*  Ajustar na proxima atualizacao do tokenizer */
     (*end_token)++;
   if (**end_token != quote)
     exit(MEMORY_ALLOC_ERROR);
