@@ -15,6 +15,7 @@
 int	main(void)
 {
 	char	*line;
+  t_list *tokens;
 
 	line = NULL;
 	while (True)
@@ -26,8 +27,10 @@ int	main(void)
 			free(line);
 			return (0);
 		}
-		ft_printf("line: %s", line);
-		free_if_exists((void **)&line);
+     tokens = ft_tokenizer(line);
+     ft_lst_print_str(tokens);
+     ft_lstclear(tokens, free_token);
+		 free_if_exists((void **)&line);
 	}
 	return (0);
 }

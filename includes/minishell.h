@@ -16,6 +16,8 @@
 # include "../libs/libft/libft.h"
 # include "./define.h"
 # include "./utils.h"
+# include <stdio.h>
 # include <readline/readline.h>
 
+t_list *ft_tokenizer(char *cmd_line);
 #endif

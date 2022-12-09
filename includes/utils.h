@@ -15,5 +15,6 @@
 
 BOOL	get_line_from_terminal(char **line);
 void	free_if_exists(void **data);
+void	free_token(void *data);
 
 #endif

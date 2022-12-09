@@ -15,11 +15,18 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_list
+typedef struct s_node
 {
 	void			*content;
-	struct s_list	*next;
-}					t_list;
+	struct s_node	*next;
+}					t_node;
+
+typedef struct 
+{
+  t_node       *head;
+  t_node       *tail;
+  unsigned int size;
+}         t_list;
 
 /* Check for an alphabetic character */
 int					ft_isalpha(int n);
@@ -152,7 +159,7 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 
 /* Create an list (structure) and return a pointer to it */
-t_list				*ft_lstnew(void *content);
+t_node				*ft_lstnew(void *content);
 
 /* Add a new list (structure) to the begin of that linked list */
 void				ft_lstadd_front(t_list **lst, t_list *new);
@@ -164,17 +171,20 @@ int					ft_lstsize(t_list *lst);
 t_list				*ft_lstlast(t_list *lst);
 
 /* Add a new list (structure) to the end of an linked list */
-void				ft_lstadd_back(t_list **lst, t_list *new);
+void				ft_lstadd_back(t_list *lst, t_node *new);
 
 /* Delete a content of an node of the linked list */
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 
 /* Delete the content and the node of an linked
  * list from the passed node to the end */
-void				ft_lstclear(t_list **lst, void (*del)(void *));
+void				ft_lstclear(t_list *lst, void (*del)(void *));
 
 /* Apply a function in every node content of an linked list */
 void				ft_lstiter(t_list *lst, void (*f)(void *));
+
+/* Print a list of strings                */
+void        ft_lst_print_str(t_list *lst);
 
 /* Apply a function to every single node content of an linked list,
  * and return a new list with the modifications */

@@ -2,7 +2,7 @@ SRC = ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.
 
 PRINTF = ft_printf/ft_helpers.c ft_printf/ft_itohex.c ft_printf/ft_print_arg.c ft_printf/ft_print_char.c  ft_printf/ft_print_conversion.c ft_printf/ft_print_hex.c ft_printf/ft_print_ptr.c ft_printf/ft_print_signed_digit.c ft_printf/ft_print_str.c ft_printf/ft_print_udigit.c ft_printf/ft_printf.c ft_printf/ft_uitoa.c
 
-SRC_BONUS = ft_lstadd_front.c ft_lstnew.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstiter.c ft_lstclear.c ft_lstmap.c
+SRC_BONUS = ft_lstadd_front.c ft_lstnew.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstiter.c ft_lstclear.c ft_lstmap.c ft_lst_print_str.c
 
 CFLAGS = -Wall -Wextra -Werror
 CC = clang
@@ -15,9 +15,9 @@ OBJS = $(addprefix $(DIR)/,$(SRC:%.c=%.o))
 PRINTF_OBJS = $(addprefix $(DIR)/,$(PRINTF:%.c=%.o))
 OBJS_BONUS = $(addprefix $(DIR)/,$(SRC_BONUS:%.c=%.o))
 
-all: $(NAME)
+all: $(NAME) $(bonus)
 
-$(NAME): $(OBJS) $(OBJS_BONUS) $(PRINTF_OBJS)
+$(NAME): $(OBJS) $(OBJS_BONUS) $(PRINTF_OBJS) $(bonus)
 	$(AR) $(NAME) $(OBJS) $(OBJS_BONUS) $(PRINTF_OBJS)
 
 clean:
