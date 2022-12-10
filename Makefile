@@ -9,6 +9,7 @@ OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils $(OBJ_DIR)/interpreter
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
 			utils/free_if_exists.c \
+			utils/print_lkd_list.c \
 			interpreter/ft_tokenizer.c \
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
@@ -22,8 +23,7 @@ test: re
 	@clear
 	@./$(NAME)
 
-valgrind: $(NAME)
-	@$(VALGRIND_FLAGS) ./$(NAME) 
+valgrind: $(NAME)void	print_lkd_list(t_lkd_lst **list)GS) ./$(NAME) 
 
 $(NAME): $(LIBFT) $(OBJ_DIRS) $(OBJ)
 	$(CC) $(OBJ) $(LFLAGS) -o $(NAME)
