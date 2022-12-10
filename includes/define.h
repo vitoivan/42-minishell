@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/11/19 16:36:13 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/10 13:54:43 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,16 @@ enum	e_bool
 	True = 1
 };
 
-enum e_erros {
-  UNQUOTED_STRING_ERROR,
-  MEMORY_ALLOC_ERROR
+enum	e_erros
+{
+	UNQUOTED_STRING_ERROR,
+	MEMORY_ALLOC_ERROR
 };
+
 # define BUFFER_SIZE 4096
 # define uint unsigned int
 # define byte unsigned char
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
-# define RED "\x1B[31m"
-# define GREEN "\x1B[32m"
-# define YEL "\x1B[33m"
-# define BLU "\x1B[34m"
-# define MAG "\x1B[35m"
-# define CYN "\x1B[36m"
-# define WHT "\x1B[37m"
-# define RESET_COLOR "\x1B[0m"
-# define COLOR_BOLD "\e[1m"
-# define REMOVE_BOLD "\e[m"
 
 #endif

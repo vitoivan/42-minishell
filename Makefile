@@ -41,6 +41,9 @@ $(OBJ_DIRS):
 dclean: fclean
 	make -C libs/libft fclean
 
+dtest:
+	make -C libs/libft test
+
 clean: 
 	rm -f $(OBJ)
 

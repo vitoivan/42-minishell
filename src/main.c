@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/11/19 16:44:47 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/10 14:00:18 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	main(void)
 {
-	char	*line;
-  t_list *tokens;
+	char		*line;
+	t_linked	*tokens;
 
 	line = NULL;
 	while (True)
@@ -27,10 +27,10 @@ int	main(void)
 			free(line);
 			return (0);
 		}
-     tokens = ft_tokenizer(line);
-     ft_lst_print_str(tokens);
-     ft_lstclear(tokens, free_token);
-		 free_if_exists((void **)&line);
+		tokens = ft_tokenizer(line);
+		// ft_lst_print_str(tokens);
+		linked_kill_list(&tokens, free_token);
+		free_if_exists((void **)&line);
 	}
 	return (0);
 }
