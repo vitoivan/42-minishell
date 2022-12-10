@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/12/10 13:55:49 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/10 14:34:19 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@
 # include <readline/readline.h>
 # include <stdio.h>
 
-t_linked	*ft_tokenizer(char *cmd_line);
+t_lkd_lst	*ft_tokenizer(char *cmd_line);
+
 #endif

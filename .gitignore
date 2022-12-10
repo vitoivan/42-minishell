@@ -3,3 +3,5 @@ dist/*
 minishell
 *.o
 *.a
+
+*libft.a

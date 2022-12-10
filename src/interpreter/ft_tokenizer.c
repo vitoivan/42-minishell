@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/10 14:08:48 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/10 14:35:20 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static void	parse_quote(char **start_token, char **end_token, char quote)
 		exit(MEMORY_ALLOC_ERROR);
 }
 
-t_linked	*ft_tokenizer(char *cmd_line)
+t_lkd_lst	*ft_tokenizer(char *cmd_line)
 {
-	t_linked	*list;
+	t_lkd_lst	*list;
 	char		*end_token;
 
 	end_token = cmd_line;
-	list = linked_new_list();
+	list = lkd_lst_new_list();
 	if (!list)
 		exit(MEMORY_ALLOC_ERROR); //corrigir
 	while (*cmd_line)
@@ -58,7 +58,7 @@ t_linked	*ft_tokenizer(char *cmd_line)
 			parse_quote(&cmd_line, &end_token, SINGLE_QUOTE);
 		else if (*end_token == DOUBLE_QUOTE)
 			parse_quote(&cmd_line, &end_token, DOUBLE_QUOTE);
-		linked_add_back(&list, linked_new_node(split_token(cmd_line,
+		lkd_lst_add_back(&list, lkd_lst_new_node(split_token(cmd_line,
 						end_token)));
 		cmd_line = ++end_token;
 	}
