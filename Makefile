@@ -4,13 +4,16 @@ LFLAGS = -L./dist -lft -lreadline
 NAME = minishell
 
 OBJ_DIR = dist
-OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils $(OBJ_DIR)/interpreter
+OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils $(OBJ_DIR)/interpreter $(OBJ_DIR)/cmd
 
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
 			utils/free_if_exists.c \
 			utils/print_lkd_list.c \
+			utils/skip_whitespace.c \
 			interpreter/ft_tokenizer.c \
+			cmd/cmd_new.c \
+			
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
 OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 
@@ -19,7 +22,7 @@ VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origin
 
 all: $(NAME) 
 
-test: re 
+test: re $(NAME)
 	@clear
 	@./$(NAME)
 

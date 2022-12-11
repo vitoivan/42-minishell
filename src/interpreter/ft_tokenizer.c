@@ -6,13 +6,13 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/10 16:09:31 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/11 10:54:47 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*split_token(char *start_token, char *end_token)
+static char	*get_token(char *start_token, char *end_token)
 {
 	char	*token;
 	uint	index;
@@ -34,7 +34,7 @@ static void	parse_quote(char **start_token, char **end_token, char quote)
 {
 	(*start_token)++;
 	(*end_token)++;
-	while (**end_token != quote && **end_token)
+	while (**end_token != quote && **end_token != '\n' && **end_token)
 		(*end_token)++;
 	if (**end_token != quote)
 		exit(MEMORY_ALLOC_ERROR);
@@ -42,21 +42,12 @@ static void	parse_quote(char **start_token, char **end_token, char quote)
 
 static void	ft_add_to_ldk_lst(t_lkd_lst **list, char *cmd, char *end)
 {
-	lkd_lst_add_back(list, lkd_lst_new_node(split_token(cmd, end)));
-}
+	char	*token;
 
-static void	skip_whitespace(char **line)
-{
-	int	count;
-
-	count = 0;
-	while (**line == ' ')
-	{
-		count++;
-		(*line)++;
-	}
-	if (!count)
-		(*line)++;
+	token = get_token(cmd, end);
+	if (!token)
+		return ;
+	lkd_lst_add_back(list, lkd_lst_new_node(token));
 }
 
 /* 
@@ -71,7 +62,7 @@ t_lkd_lst	*ft_tokenizer(char *cmd_line)
 	list = lkd_lst_new_list();
 	if (!list)
 		exit(MEMORY_ALLOC_ERROR); //corrigir
-	skip_whitespace(&cmd_line);
+	skip_whitespace(&cmd_line, 0);
 	end_token = cmd_line;
 	while (*cmd_line && *cmd_line != '\n')
 	{
@@ -82,7 +73,7 @@ t_lkd_lst	*ft_tokenizer(char *cmd_line)
 		else if (*end_token == DOUBLE_QUOTE)
 			parse_quote(&cmd_line, &end_token, DOUBLE_QUOTE);
 		ft_add_to_ldk_lst(&list, cmd_line, end_token);
-		skip_whitespace(&end_token);
+		skip_whitespace(&end_token, 1);
 		cmd_line = end_token;
 	}
 	return (list);
