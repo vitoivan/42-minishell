@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   print_lkd_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/12/11 10:10:46 by vivan-de         ###   ########.fr       */
+/*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
+/*   Updated: 2022/12/11 09:41:48 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/minishell.h"
 
-# include "../libs/libft/includes/libft.h"
-# include "./cmd.h"
-# include "./define.h"
-# include "./utils.h"
-# include <readline/readline.h>
-# include <stdio.h>
+static void	print_fn(void *data, t_uint ind)
+{
+	ft_printf("{ index: %d, string: %s }, ", ind, (char *)data);
+}
 
-t_lkd_lst	*ft_tokenizer(char *cmd_line);
-
-#endif
+void	print_lkd_list(t_lkd_lst **list)
+{
+	ft_printf("[ ");
+	lkd_lst_foreach(list, print_fn);
+	ft_printf("]");
+}

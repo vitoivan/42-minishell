@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   skip_whitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/12/11 10:10:46 by vivan-de         ###   ########.fr       */
+/*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
+/*   Updated: 2022/12/11 10:09:50 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/minishell.h"
 
-# include "../libs/libft/includes/libft.h"
-# include "./cmd.h"
-# include "./define.h"
-# include "./utils.h"
-# include <readline/readline.h>
-# include <stdio.h>
+void	skip_whitespace(char **line, int always_skip_one)
+{
+	int	count;
 
-t_lkd_lst	*ft_tokenizer(char *cmd_line);
-
-#endif
+	count = 0;
+	while (**line == ' ')
+	{
+		count++;
+		(*line)++;
+	}
+	if (!count && always_skip_one)
+		(*line)++;
+}

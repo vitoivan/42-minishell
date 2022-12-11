@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/10 14:34:58 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/11 10:23:08 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	main(void)
 			return (0);
 		}
 		tokens = ft_tokenizer(line);
-		// ft_lst_print_str(tokens);
+		print_lkd_list(&tokens);
+		ft_printf("\n");
 		lkd_lst_kill_list(&tokens, free_token);
 		free_if_exists((void **)&line);
 	}
