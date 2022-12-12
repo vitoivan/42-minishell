@@ -27,10 +27,21 @@ enum	e_erros
 	MEMORY_ALLOC_ERROR
 };
 
-# define BUFFER_SIZE 4096
-# define uint unsigned int
-# define byte unsigned char
+enum e_tokens 
+{
+  PIPE,
+  AND,
+  OR,
+  SEMICOLON
+}
+
+
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
+
+# define BUFFER_SIZE 4096
+
+# define uint unsigned int
+# define byte unsigned char
 
 #endif

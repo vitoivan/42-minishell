@@ -19,6 +19,18 @@
 # include <readline/readline.h>
 # include <stdio.h>
 
+
+typedef struct s_node {
+  t_lkd_lst *commads;
+  byte status;
+} c_node;
+
+typedef struct s_cmd {
+  c_node *left;
+  c_node *right;
+  byte   operator;
+} CommandTree; 
+
 t_lkd_lst	*ft_tokenizer(char *cmd_line);
 
 #endif
