@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/11 10:54:47 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/11 16:14:44 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*get_token(char *start_token, char *end_token)
 	uint	index;
 
 	index = 0;
-	token = ft_calloc((end_token - start_token), sizeof(char));
+	token = ft_calloc((end_token - start_token) + 1, sizeof(char));
 	if (!token)
 		exit(UNQUOTED_STRING_ERROR); // corrigir dps
 	while (start_token < end_token)

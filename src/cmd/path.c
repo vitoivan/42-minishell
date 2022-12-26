@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 10:19:03 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/11 10:52:01 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/11 14:49:54 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static void	free_path(char **path)
 	free(path);
 }
 
-static char	**get_path()
+char	**get_path(void)
 {
 	return (ft_split(getenv("PATH"), ':'));
 }
 
-char	*get_binary_path(char *cmd)
+char	*get_cmd_binary_path(char *cmd)
 {
 	char	**path;
 	char	*binary;

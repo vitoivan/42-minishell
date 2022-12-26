@@ -12,13 +12,15 @@ TARGETS = 	main.c \
 			utils/print_lkd_list.c \
 			utils/skip_whitespace.c \
 			interpreter/ft_tokenizer.c \
+			cmd/cmd_is_valid.c \
 			cmd/cmd_new.c \
+			cmd/path.c \
 			
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
 OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 
 LIBFT = $(OBJ_DIR)/libft.a
-VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose
+VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all: $(NAME) 
 
@@ -26,7 +28,8 @@ test: re $(NAME)
 	@clear
 	@./$(NAME)
 
-valgrind: $(NAME)void	print_lkd_list(t_lkd_lst **list)GS) ./$(NAME) 
+valgrind: $(NAME)	
+	valgrind $(VALGRIND_FLAGS) ./$(NAME) 
 
 $(NAME): $(LIBFT) $(OBJ_DIRS) $(OBJ)
 	$(CC) $(OBJ) $(LFLAGS) -o $(NAME)
