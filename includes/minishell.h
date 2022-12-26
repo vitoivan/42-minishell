@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/12/11 14:37:32 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/26 07:08:48 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define MINISHELL_H
 
 # include "../libs/libft/includes/libft.h"
-# include "./cmd.h"
-# include "./utils.h"
+# include "builtins.h"
+# include "cmd.h"
+# include "utils.h"
 # include <readline/readline.h>
 # include <stdio.h>
 

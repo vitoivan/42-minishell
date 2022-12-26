@@ -4,7 +4,7 @@ LFLAGS = -L./dist -lft -lreadline
 NAME = minishell
 
 OBJ_DIR = dist
-OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils $(OBJ_DIR)/interpreter $(OBJ_DIR)/cmd
+OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils $(OBJ_DIR)/interpreter $(OBJ_DIR)/cmd $(OBJ_DIR)/builtins
 
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
@@ -15,6 +15,7 @@ TARGETS = 	main.c \
 			cmd/cmd_is_valid.c \
 			cmd/cmd_new.c \
 			cmd/path.c \
+			builtins/utils.c \
 			
 
 SRC = $(addprefix ./src/,$(TARGETS)) 

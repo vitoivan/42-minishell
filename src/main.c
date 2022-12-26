@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/11 16:17:42 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/26 07:11:00 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(void)
 		print_lkd_list(&tokens);
 		data = (char *)tokens->head->content;
 		ft_printf("\ncommand is valid: %d\n", cmd_is_valid(data));
+		ft_printf("is builtin: %d\n", is_builtin(data));
 		lkd_lst_kill_list(&tokens, free_token);
 		free_if_exists((void **)&line);
 	}
