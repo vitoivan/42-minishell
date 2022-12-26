@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_if_exists.c                                   :+:      :+:    :+:   */
+/*   print_terminal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/26 16:54:30 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/26 09:54:05 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_if_exists(void **data)
+void	print_terminal(t_ctx *ctx)
 {
-	if (*data)
-		free(*data);
-}
-
-void	free_token(void *data)
-{
-	if (data)
-		free(data);
+	(void)ctx;
+	ft_printf(COLOR_BOLD GREEN "minishell $> " RESET_COLOR REMOVE_BOLD);
 }

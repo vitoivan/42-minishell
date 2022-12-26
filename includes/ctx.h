@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_if_exists.c                                   :+:      :+:    :+:   */
+/*   ctx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/26 16:54:30 by vivan-de         ###   ########.fr       */
+/*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
+/*   Updated: 2022/12/26 15:46:12 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#ifndef CTX_H
+# define CTX_H
 
-void	free_if_exists(void **data)
+typedef struct s_ctx
 {
-	if (*data)
-		free(*data);
-}
+	char	*user;
+	char	*path;
+	char	*hostname;
+}			t_ctx;
 
-void	free_token(void *data)
-{
-	if (data)
-		free(data);
-}
+t_ctx		*ctx_init(void);
+void		ctx_free(t_ctx **ctx);
+
+# define USER_SIZE 1024
+# define PATH_SIZE 4096
+# define HOSTNAME_SIZE 256
+
+#endif
