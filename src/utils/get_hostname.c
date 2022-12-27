@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/26 17:06:00 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/27 09:21:30 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,16 @@ static void	free_hostname_data(char *path, char **args)
 static char	*get_buffer_from_pipe(int pipefd[2], char *path, char **args)
 {
 	char	*read_buffer;
+	char	*buffer;
 
-	read_buffer = ft_calloc(1, 1024);
+	read_buffer = ft_calloc(1, HOSTNAME_SIZE);
+	buffer = ft_calloc(1, HOSTNAME_SIZE);
 	free_hostname_data(path, args);
-	read(pipefd[0], read_buffer, 1024);
+	read(pipefd[0], read_buffer, HOSTNAME_SIZE);
 	pipe_close_both(pipefd);
-	return (read_buffer);
+	ft_strlcpy(buffer, read_buffer, ft_strlen(read_buffer));
+	free(read_buffer);
+	return (buffer);
 }
 
 char	*get_hostname(void)
