@@ -9,7 +9,12 @@ OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils $(OBJ_DIR)/interpreter
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
 			utils/free_if_exists.c \
+			utils/debug.c \
+			utils/ft_parser_utils.c \
+			utils/ft_tokenizer_utils.c \
 			interpreter/ft_tokenizer.c \
+			interpreter/ft_parser.c
+
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
 OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 

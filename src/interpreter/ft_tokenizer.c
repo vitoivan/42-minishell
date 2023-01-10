@@ -3,143 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/10 14:35:20 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:09:02 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*split_token(char *start_token, char *end_token)
-{
-	char	*token;
-	uint	index;
+static Token *mk_token(Lexer *lexer, TokenType type) {
+	Token *token; 
 
-	index = 0;
-	token = ft_calloc((end_token - start_token), sizeof(char));
-	if (!token)
-		exit(MEMORY_ALLOC_ERROR); // corrigir dps
-	while (start_token < end_token)
-	{
-		token[index++] = *start_token;
-		start_token++;
-	}
-	token[index] = '\0';
+	token = ft_calloc(1, sizeof(Token));
+
+	if (!token) 
+		return (NULL);
+	
+	token->type = type;
+	token->size = (uint) (lexer->current_position - lexer->start);
+	token->start = ft_strndup(lexer->start, token->size);
+	token->error_msg = NULL;
 	return (token);
 }
 
-static void evaluator(char *position) {
-    switch (*position) {
-      case SINGLE_QUOTE:
+static Token *scan_command(Lexer *lexer) {
+	uint quote;
 
-      break;
-      case DOUBLE_QUOTE:
+	quote = 0;
 
-      break;
-      case AND:
-
-      break;
-      case PIPE: 
-
-      break
-
-      case SEMICOLON:
-      break;
-    }
-}
-
-static void	parse_quote(char **start_token, char **end_token, char quote)
-{
-	(*start_token)++;
-	(*end_token)++;
-	while (**end_token != quote || **end_token)
-		/*  Ajustar na proxima atualizacao do tokenizer */
-		(*end_token)++;
-	if (**end_token != quote)
-		exit(MEMORY_ALLOC_ERROR);
-}
-
-t_lkd_lst	*ft_tokenizer(char *cmd_line)
-{
-	t_lkd_lst	*list;
-	char		*end_token;
-
-	end_token = cmd_line;
-	list = lkd_lst_new_list();
-	if (!list)
-		exit(MEMORY_ALLOC_ERROR); //corrigir
-	while (*cmd_line)
-	{
-		while (ft_isalpha(*end_token))
-			end_token++;
-    
-		if (*end_token == SINGLE_QUOTE)
-			parse_quote(&cmd_line, &end_token, SINGLE_QUOTE);
-		else if (*end_token == DOUBLE_QUOTE)
-			parse_quote(&cmd_line, &end_token, DOUBLE_QUOTE);
-		lkd_lst_add_back(&list, lkd_lst_new_node(split_token(cmd_line,
-						end_token)));
-		cmd_line = ++end_token;
+	if ( is_command(lexer) || is_at_end(lexer) )
+		return NULL;
+		
+	while ( !is_at_end(lexer) && !is_command(lexer)) {
+		if (is_quote(*lexer->current_position)) {
+			if (quote) 
+			{
+				lexer->current_position++;
+				return (mk_token(lexer, TOKEN_COMMAND));
+			}
+			quote = 1;
+		}
+		lexer->current_position++;
 	}
-	return (list);
+	if (quote) {
+		// return token with error 
+	}
+	if ( is_command(lexer))
+		lexer->current_position--;
+	return (mk_token(lexer, TOKEN_COMMAND));
 }
 
-static char *splited_commands(char *line, byte *token) 
-{
-  char *commads;
-
-  commads = ft_split(line, "|");
-  if (commads)
-  {
-    *token = PIPE;
-    return (commads); // pipe 
-  }
-  commads = ft_split(line, "||");
-  if (commads)
-  {
-    *token = OR;
-    return (commads); // or 
-  }
-  commads = ft_split(line, "&&");
-  if (commads)
-  {
-    *token = AND;
-    return (commads);
-  }
-  return (NULL);
+static Token *scan_operator(Lexer *lexer) {
+	while ( !is_at_end(lexer) && is_command(lexer) ) {
+		lexer->current_position++;
+	}
+	if (is_at_end(lexer)) {
+		return NULL; // return token with error
+	}
+	return (mk_token(lexer, TOKEN_OPERATOR));
 }
 
-void ft_avalueter(char *cmd_line) {
-    char **commads;
-    char *c_line;
-    char *c_splited_line;
-    byte operator;
+static Token *lexer_next_token(ParserContext *context) {
+	Token *new_current_token;
 
-    commads = ft_split(cmd_line, ";");
-    if (commads) /* more than one command per line  */
-    {
-      c_line = commads[0];
-      while (c_line) {
-        /* echo oi && echo oi || echo ola && echo oi  */
-        c_splited_line = splited_commands(c_line, &operator); // vai dar ruim
-        if (!c_splited_line)
-        {
-          /* Não existem Comandos concatenados */
-        } 
-        else 
-        {
-          /* existem Comandos concatenados */
-        } 
-
-        }
-        c_line++;
-      }
-    }
-    else  /* one command per line */
-    {
-
-    }
-
+	new_current_token = scan_command(&context->lexer);
+	if (!new_current_token)
+		new_current_token = scan_operator(&context->lexer);
+	if (!new_current_token)
+		return (NULL);
+	skip_white_spaces(&context->lexer);
+	context->lexer.start = context->lexer.current_position;
+	return (new_current_token);
 }
+
+void del_token(Token *token) {
+	if (token != NULL) {
+		free(token->start);
+		free(token);
+	}
+}
+
+
+void advance_to_next_token(ParserContext *context) {
+	context->parser.previus_token = context->parser.current_token;
+
+	context->parser.current_token = lexer_next_token(context);
+/*
+	if (get_current_token(context)->type != TOKEN_ERROR)
+		return ;
+	exit(1); // error in current token, adjusting msg after
+*/
+}
+

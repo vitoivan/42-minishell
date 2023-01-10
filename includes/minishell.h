@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/12/10 14:34:19 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:23:56 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,7 @@
 # include "../libs/libft/includes/libft.h"
 # include "./define.h"
 # include "./utils.h"
-# include <readline/readline.h>
 # include <stdio.h>
 
-
-typedef struct s_node {
-  t_lkd_lst *commads;
-  byte status;
-} c_node;
-
-typedef struct s_cmd {
-  c_node *left;
-  c_node *right;
-  byte   operator;
-} CommandTree; 
-
-t_lkd_lst	*ft_tokenizer(char *cmd_line);
 
 #endif
