@@ -80,8 +80,14 @@ static void debug_node_redirect_append(AstNode *node) {
 static void debug_node_semicolon(AstNode *node) {
 	print_with_ident("Semicolon {");
 	begin_scope();
-	debug_command_tree(node->as.binaryExpression.left);
-	debug_command_tree(node->as.binaryExpression.right);
+	t_lkd_lst *list = get_head_node(node);
+	t_lkd_node *head = list->head;
+	uint i = 0; 
+	while (i < list->size ) {
+		debug_command_tree(head->content);
+		head = head->next;
+		i++;
+	}
 	end_scope();
 	print_with_ident("}");
 }

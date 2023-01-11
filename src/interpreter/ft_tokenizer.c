@@ -6,9 +6,18 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/01/10 19:09:02 by jv               ###   ########.fr       */
+/*   Updated: 2023/01/10 21:15:16 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+/*
+	Pontos a se resolver:
+		2 - precedencia do ; 
+		3 - tratamento de erros de parsing
+		
+*/
+
 
 #include "../../includes/minishell.h"
 
@@ -49,8 +58,6 @@ static Token *scan_command(Lexer *lexer) {
 	if (quote) {
 		// return token with error 
 	}
-	if ( is_command(lexer))
-		lexer->current_position--;
 	return (mk_token(lexer, TOKEN_COMMAND));
 }
 
@@ -61,6 +68,8 @@ static Token *scan_operator(Lexer *lexer) {
 	if (is_at_end(lexer)) {
 		return NULL; // return token with error
 	}
+	if (ft_strncmp(lexer->start, ";", 1) == 0)
+		return (mk_token(lexer, TOKEN_HIGH_OPERATOR));
 	return (mk_token(lexer, TOKEN_OPERATOR));
 }
 
@@ -83,7 +92,6 @@ void del_token(Token *token) {
 		free(token);
 	}
 }
-
 
 void advance_to_next_token(ParserContext *context) {
 	context->parser.previus_token = context->parser.current_token;

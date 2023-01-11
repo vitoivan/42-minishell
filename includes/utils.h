@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/01/10 19:08:40 by jv               ###   ########.fr       */
+/*   Updated: 2023/01/11 16:22:15 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ AstNode *ft_parser(char *source);
 AstNodeType	get_node_type(Token *token);
 void	ast_node_free(AstNode *node);
 void	parser_init(Parser *parser);
+t_lkd_lst *get_head_node(AstNode *node);
 
 /*  tokenizer functions */
 void	del_token(Token *token);
@@ -34,6 +35,7 @@ byte	is_command(Lexer *lexer);
 Token	*get_current_token(ParserContext *context);
 Token	*get_previus_token(ParserContext *context);
 char	*ft_strndup(const char *str, uint n);
+Precedence get_precedence(Token *token);
 
 /* debug functions */
 void	debug_command_tree(AstNode *root);

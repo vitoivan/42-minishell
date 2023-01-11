@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/01/10 18:55:27 by jv               ###   ########.fr       */
+/*   Updated: 2023/01/11 10:16:26 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ enum	e_bool
 enum	e_erros
 {
 	UNQUOTED_STRING_ERROR,
-	MEMORY_ALLOC_ERROR
+	MEMORY_ALLOC_ERROR,
+  PARSER_ERROR
 };
 
 typedef enum  {
@@ -43,10 +44,16 @@ typedef enum  {
   NODE_SEMICOLON
 } AstNodeType;
 
+typedef enum {
+  PREC_NONE,
+  PREC_HIGH
+} Precedence;
+
 typedef enum  {
   TOKEN_ERROR,
   TOKEN_COMMAND,
-  TOKEN_OPERATOR
+  TOKEN_OPERATOR,
+  TOKEN_HIGH_OPERATOR
 } TokenType;
 
 typedef struct {
@@ -81,6 +88,9 @@ typedef struct ast_node_t {
       struct ast_node_t *left;
       struct ast_node_t *right;
     } binaryExpression;
+    struct {
+      t_lkd_lst *nodes;
+    } expressions;
   } as;
 } AstNode;
 
