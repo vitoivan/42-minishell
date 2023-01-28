@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_new.c                                          :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/11 10:05:10 by vivan-de         ###   ########.fr       */
+/*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
+/*   Updated: 2022/12/31 08:28:18 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_cmd	*cmd_new(char *cmd, char **args)
+t_ctx	*ctx_init(void)
 {
-	t_cmd	*new_cmd;
+	t_ctx	*ctx;
 
-	if (!cmd || !args)
-		return (NULL);
-	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!new_cmd)
-		return (NULL);
-	new_cmd->args = args;
-	new_cmd->cmd = cmd;
-	return (new_cmd);
+	ctx = (t_ctx *)ft_calloc(1, sizeof(t_ctx));
+	ctx->user = getenv("USERNAME");
+	ctx->path = getcwd(ctx->path, PATH_SIZE);
+	ctx->hostname = get_hostname();
+	return (ctx);
 }

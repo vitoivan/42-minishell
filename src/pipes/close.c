@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_if_exists.c                                   :+:      :+:    :+:   */
+/*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/26 16:54:30 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/26 16:22:21 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_if_exists(void **data)
+void	pipe_close_read(int pipefd[2])
 {
-	if (*data)
-		free(*data);
+	close(pipefd[0]);
 }
 
-void	free_token(void *data)
+void	pipe_close_write(int pipefd[2])
 {
-	if (data)
-		free(data);
+	close(pipefd[1]);
+}
+
+void	pipe_close_both(int pipefd[2])
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
 }

@@ -4,17 +4,29 @@ LFLAGS = -L./dist -lft -lreadline
 NAME = minishell
 
 OBJ_DIR = dist
-OBJ_DIRS = $(OBJ_DIR) $(OBJ_DIR)/utils $(OBJ_DIR)/interpreter $(OBJ_DIR)/cmd
+OBJ_DIRS = $(OBJ_DIR) \
+			$(OBJ_DIR)/utils \
+			$(OBJ_DIR)/interpreter \
+			$(OBJ_DIR)/cmd \
+			$(OBJ_DIR)/builtins \
+			$(OBJ_DIR)/pipes \
+			$(OBJ_DIR)/context
 
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
 			utils/free_if_exists.c \
 			utils/print_lkd_list.c \
 			utils/skip_whitespace.c \
+			utils/print_terminal.c \
+			utils/get_hostname.c \
 			interpreter/ft_tokenizer.c \
 			cmd/cmd_is_valid.c \
-			cmd/cmd_new.c \
 			cmd/path.c \
+			cmd/cmd_exec.c \
+			pipes/close.c \
+			builtins/utils.c \
+			context/init.c \
+			context/free.c \
 			
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
