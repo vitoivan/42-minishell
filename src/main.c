@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/26 15:46:01 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/01/28 15:47:11 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,25 @@
 int	main(void)
 {
 	char		*line;
-	t_lkd_lst	*tokens;
-	char		*data;
-	t_ctx		*ctx;
+	AstNode		*command_tree;
 
 	line = NULL;
+	command_tree = NULL;
 	ctx = ctx_init();
 	while (True)
 	{
 		if (!get_line_from_terminal(&line, ctx) || !line)
 			return (1);
-		if (!strcmp(line, "exit\n"))
+		if (!ft_strcmp(line, "exit\n"))
 		{
 			free(line);
-			ctx_free(&ctx);
+			ast_node_free(command_tree);
 			return (0);
 		}
-		tokens = ft_tokenizer(line);
-		print_lkd_list(&tokens);
-		data = (char *)tokens->head->content;
-		ft_printf("\ncommand is valid: %d\n", cmd_is_valid(data));
-		ft_printf("\nis builtin: %d\n", is_builtin(data));
-		lkd_lst_kill_list(&tokens, free_token);
+		command_tree = ft_parser(line);
+
 		free_if_exists((void **)&line);
+		ast_node_free(command_tree);
 	}
 	return (0);
 }

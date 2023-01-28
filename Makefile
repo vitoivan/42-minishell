@@ -15,6 +15,14 @@ OBJ_DIRS = $(OBJ_DIR) \
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
 			utils/free_if_exists.c \
+<<<<<<< HEAD
+			utils/debug.c \
+			utils/ft_parser_utils.c \
+			utils/ft_tokenizer_utils.c \
+			interpreter/ft_tokenizer.c \
+			interpreter/ft_parser.c
+
+=======
 			utils/print_lkd_list.c \
 			utils/skip_whitespace.c \
 			utils/print_terminal.c \
@@ -28,6 +36,7 @@ TARGETS = 	main.c \
 			context/init.c \
 			context/free.c \
 			
+>>>>>>> origin/master
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
 OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 

@@ -3,78 +3,104 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/26 07:12:45 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/01/28 15:45:58 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+/*
+	Pontos a se resolver:
+		2 - precedencia do ; 
+		3 - tratamento de erros de parsing
+		
+*/
+
+
 #include "../../includes/minishell.h"
 
-static char	*get_token(char *start_token, char *end_token)
-{
-	char	*token;
-	uint	index;
+static Token *mk_token(Lexer *lexer, TokenType type) {
+	Token *token; 
 
-	index = 0;
-	token = ft_calloc((end_token - start_token) + 1, sizeof(char));
-	if (!token)
-		exit(UNQUOTED_STRING_ERROR); // corrigir dps
-	while (start_token < end_token)
-	{
-		token[index++] = *start_token;
-		start_token++;
-	}
-	token[index] = '\0';
+	token = ft_calloc(1, sizeof(Token));
+
+	if (!token) 
+		return (NULL);
+	
+	token->type = type;
+	token->size = (uint) (lexer->current_position - lexer->start);
+	token->start = ft_strndup(lexer->start, token->size);
+	token->error_msg = NULL;
 	return (token);
 }
 
-static void	parse_quote(char **start_token, char **end_token, char quote)
-{
-	(*start_token)++;
-	(*end_token)++;
-	while (**end_token != quote && **end_token != '\n' && **end_token)
-		(*end_token)++;
-	if (**end_token != quote)
-		exit(MEMORY_ALLOC_ERROR);
-}
+static Token *scan_command(Lexer *lexer) {
+	uint quote;
 
-static void	ft_add_to_ldk_lst(t_lkd_lst **list, char *cmd, char *end)
-{
-	char	*token;
+	quote = 0;
 
-	token = get_token(cmd, end);
-	if (!token)
-		return ;
-	lkd_lst_add_back(list, lkd_lst_new_node(token));
-}
-
-/* 
-	TODO: Receive one command and parses it to t_cmd struct,
-		then append this struct to t_lkd_nlst
-*/
-t_lkd_lst	*ft_tokenizer(char *cmd_line)
-{
-	t_lkd_lst	*list;
-	char		*end_token;
-
-	list = lkd_lst_new_list();
-	if (!list)
-		exit(MEMORY_ALLOC_ERROR); //corrigir
-	skip_whitespace(&cmd_line, 0);
-	end_token = cmd_line;
-	while (*cmd_line && *cmd_line != '\n')
-	{
-		while (ft_isalpha(*end_token))
-			end_token++;
-		if (*end_token == SINGLE_QUOTE)
-			parse_quote(&cmd_line, &end_token, SINGLE_QUOTE);
-		else if (*end_token == DOUBLE_QUOTE)
-			parse_quote(&cmd_line, &end_token, DOUBLE_QUOTE);
-		ft_add_to_ldk_lst(&list, cmd_line, end_token);
-		skip_whitespace(&end_token, 1);
-		cmd_line = end_token;
+	if ( is_command(lexer) || is_at_end(lexer) )
+		return NULL;
+		
+	while ( !is_at_end(lexer) && !is_command(lexer)) {
+		if (is_quote(*lexer->current_position)) {
+			if (quote) 
+			{
+				lexer->current_position++;
+				return (mk_token(lexer, TOKEN_COMMAND));
+			}
+			quote = 1;
+		}
+		lexer->current_position++;
 	}
-	return (list);
+	if (quote) {
+		// return token with error 
+	}
+	return (mk_token(lexer, TOKEN_COMMAND));
 }
+
+static Token *scan_operator(Lexer *lexer) {
+	while ( !is_at_end(lexer) && is_command(lexer) ) {
+		lexer->current_position++;
+	}
+	if (is_at_end(lexer)) {
+		return NULL; // return token with error
+	}
+	if (ft_strncmp(lexer->start, ";", 1) == 0)
+		return (mk_token(lexer, TOKEN_HIGH_OPERATOR));
+	return (mk_token(lexer, TOKEN_OPERATOR));
+}
+
+static Token *lexer_next_token(ParserContext *context) {
+	Token *new_current_token;
+
+	new_current_token = scan_command(&context->lexer);
+	if (!new_current_token)
+		new_current_token = scan_operator(&context->lexer);
+	if (!new_current_token)
+		return (NULL);
+	skip_white_spaces(&context->lexer);
+	context->lexer.start = context->lexer.current_position;
+	return (new_current_token);
+}
+
+void del_token(Token *token) {
+	if (token != NULL) {
+		free(token->start);
+		free(token);
+	}
+}
+
+void advance_to_next_token(ParserContext *context) {
+	context->parser.previus_token = context->parser.current_token;
+
+	context->parser.current_token = lexer_next_token(context);
+/*
+	if (get_current_token(context)->type != TOKEN_ERROR)
+		return ;
+	exit(1); // error in current token, adjusting msg after
+*/
+}
+

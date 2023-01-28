@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2022/12/26 16:23:58 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/01/28 15:44:53 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include "../libs/libft/includes/libft.h"
+# include "./define.h"
+# include "./utils.h"
 # include "builtins.h"
 # include "cmd.h"
 # include "ctx.h"
@@ -25,6 +27,5 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-t_lkd_lst	*ft_tokenizer(char *cmd_line);
 
 #endif
