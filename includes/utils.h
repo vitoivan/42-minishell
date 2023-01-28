@@ -6,16 +6,24 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/01/11 16:22:15 by jv               ###   ########.fr       */
+/*   Updated: 2023/01/28 15:45:12 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-BOOL	get_line_from_terminal(char **line);
+# include "ctx.h"
+# include "define.h"
+# include "minishell.h"
+
+BOOL	get_line_from_terminal(char **line, t_ctx *);
 void	free_if_exists(void **data);
 void	free_token(void *data);
+void	print_lkd_list(t_lkd_lst **list);
+void	skip_whitespace(char **line, int always_skip_one);
+void	print_terminal(t_ctx *ctx);
+char	*get_hostname(void);
 
 /*	parser functions	*/
 AstNode *ft_parser(char *source);

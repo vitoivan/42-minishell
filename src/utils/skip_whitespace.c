@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_if_exists.c                                   :+:      :+:    :+:   */
+/*   skip_whitespace.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/26 16:54:30 by vivan-de         ###   ########.fr       */
+/*   Updated: 2022/12/11 10:09:50 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_if_exists(void **data)
+void	skip_whitespace(char **line, int always_skip_one)
 {
-	if (*data)
-		free(*data);
-}
+	int	count;
 
-void	free_token(void *data)
-{
-	if (data)
-		free(data);
+	count = 0;
+	while (**line == ' ')
+	{
+		count++;
+		(*line)++;
+	}
+	if (!count && always_skip_one)
+		(*line)++;
 }
