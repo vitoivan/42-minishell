@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/01/28 15:44:53 by jv               ###   ########.fr       */
+/*   Updated: 2023/01/28 16:18:07 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../libs/libft/includes/libft.h"
 # include "./define.h"
 # include "./utils.h"
-# include "builtins.h"
+# include "./builtins.h"
 # include "cmd.h"
 # include "ctx.h"
 # include "pipes.h"
@@ -26,6 +26,9 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
+# include <string.h>
+
 
 
 #endif

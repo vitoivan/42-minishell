@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/01/28 15:45:12 by jv               ###   ########.fr       */
+/*   Updated: 2023/01/28 16:06:09 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,16 @@
 
 # include "ctx.h"
 # include "define.h"
-# include "minishell.h"
+# include "../libs/libft/includes/libft.h"
+
 
 BOOL	get_line_from_terminal(char **line, t_ctx *);
 void	free_if_exists(void **data);
 void	free_token(void *data);
-void	print_lkd_list(t_lkd_lst **list);
 void	skip_whitespace(char **line, int always_skip_one);
 void	print_terminal(t_ctx *ctx);
 char	*get_hostname(void);
+void	print_lkd_list(t_lkd_lst **list);
 
 /*	parser functions	*/
 AstNode *ft_parser(char *source);
@@ -48,4 +49,6 @@ Precedence get_precedence(Token *token);
 /* debug functions */
 void	debug_command_tree(AstNode *root);
 void	debug_token(Token *token);
+int    	ft_isspace(int c);
+
 #endif

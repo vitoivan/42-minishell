@@ -12,35 +12,37 @@ OBJ_DIRS = $(OBJ_DIR) \
 			$(OBJ_DIR)/pipes \
 			$(OBJ_DIR)/context
 
+
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
 			utils/free_if_exists.c \
-<<<<<<< HEAD
 			utils/debug.c \
 			utils/ft_parser_utils.c \
 			utils/ft_tokenizer_utils.c \
 			interpreter/ft_tokenizer.c \
-			interpreter/ft_parser.c
-
-=======
+			interpreter/ft_parser.c \
 			utils/print_lkd_list.c \
 			utils/skip_whitespace.c \
 			utils/print_terminal.c \
 			utils/get_hostname.c \
-			interpreter/ft_tokenizer.c \
+			utils/ft_isspace.c \
 			cmd/cmd_is_valid.c \
 			cmd/path.c \
 			cmd/cmd_exec.c \
 			pipes/close.c \
 			builtins/utils.c \
+			builtins/pwd.c \
+			builtins/cd.c \
+			builtins/export.c \
 			context/init.c \
-			context/free.c \
+			context/update.c \
+			context/free.c
 			
->>>>>>> origin/master
 
 SRC = $(addprefix ./src/,$(TARGETS)) 
 OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 
 LIBFT = $(OBJ_DIR)/libft.a
+
 VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all: $(NAME) 

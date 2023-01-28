@@ -1,20 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exec.c                                         :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/01/28 11:36:58 by victor.si        ###   ########.fr       */
+/*   Created: 2022/04/09 22:02:58 by jv                #+#    #+#             */
+/*   Updated: 2023/01/28 16:05:38 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-void	cmd_exec(char *binary_path, char **args)
+int    ft_isspace(int c)
 {
-	if (execve(binary_path, (char *const *)args, NULL) == -1)
-		free_if_exists((void **)&binary_path);
+    return (((c >= 9 && c <= 13) || c == 32));
 }
-

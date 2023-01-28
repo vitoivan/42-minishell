@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exec.c                                         :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/01/28 11:36:58 by victor.si        ###   ########.fr       */
+/*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
+/*   Updated: 2023/01/28 16:21:30 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	cmd_exec(char *binary_path, char **args)
+int cd(char *path)
 {
-	if (execve(binary_path, (char *const *)args, NULL) == -1)
-		free_if_exists((void **)&binary_path);
+	if (chdir(path) == -1)
+		return (False);
+	return (True);
 }
 

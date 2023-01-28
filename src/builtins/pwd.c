@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctx.h                                              :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/01/28 14:40:34 by victor.si        ###   ########.fr       */
+/*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
+/*   Updated: 2023/01/28 11:55:34 by victor.si        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CTX_H
-# define CTX_H
+#include "../../includes/minishell.h"
 
-typedef struct s_ctx
+void pwd(void)
 {
-	char	*user;
-	char	*path;
-	char	*hostname;
-}			t_ctx;
+	char *current_path;
 
-t_ctx		*ctx_init(void);
-void		ctx_free(t_ctx **ctx);
-void		ctx_update(t_ctx **ctx);
+	current_path = NULL;
+	current_path = getcwd(current_path, PATH_SIZE);
+	ft_printf("%s\n", current_path);
+	free(current_path);
+}
 
-# define USER_SIZE 1024
-# define PATH_SIZE 4096
-# define HOSTNAME_SIZE 256
-
-#endif
