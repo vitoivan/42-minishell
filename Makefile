@@ -2,7 +2,11 @@ CC = clang
 CFLAGS = -Wall -Wextra -Werror -g -c
 LFLAGS = -L./dist -lft -lreadline
 NAME = minishell
+AR = ar -crs
+NAME_LIB = minishell.a
 
+
+#----------------- directories
 OBJ_DIR = dist
 OBJ_DIRS = $(OBJ_DIR) \
 			$(OBJ_DIR)/utils \
@@ -10,9 +14,12 @@ OBJ_DIRS = $(OBJ_DIR) \
 			$(OBJ_DIR)/cmd \
 			$(OBJ_DIR)/builtins \
 			$(OBJ_DIR)/pipes \
-			$(OBJ_DIR)/context
+			$(OBJ_DIR)/tests \
+			$(OBJ_DIR)/context 
 
+# -------------- end directories			
 
+# --------------------- source code
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
 			utils/free_if_exists.c \
@@ -37,25 +44,53 @@ TARGETS = 	main.c \
 			context/init.c \
 			context/update.c \
 			context/free.c
-			
 
-SRC = $(addprefix ./src/,$(TARGETS)) 
-OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 
+SRC = $(addprefix ./src/,$(TARGETS))
+SRC_OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 
+# --------------------- end source code
+
+
+# ---------------- tests
+TEST_TARGETS =  tests/main.c \
+				tests/utils.c \
+				tests/first_test.c
+
+TESTS_OBJS = $(addprefix ./$(OBJ_DIR)/,$(TEST_TARGETS:.c=.o))
+
+# -------------------- end tests
+			
+ 
 LIBFT = $(OBJ_DIR)/libft.a
+
 
 VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all: $(NAME) 
 
-test: re $(NAME)
+test: $(NAME_LIB) $(TESTS_OBJS)
 	@clear
-	@./$(NAME)
+	@$(CC) $(TESTS_OBJS) $(LFLAGS) -o $(NAME)_test
+	@./$(NAME)_test
+	@rm -f $(NAME)_test $(NAME_LIB)
+
+
+test-valgrind: $(NAME_LIB) $(TESTS_OBJS)
+	@clear
+	@$(CC) $(TESTS_OBJS) $(LFLAGS) -o $(NAME)_test
+	@valgrind $(VALGRIND_FLAGS) ./$(NAME)_test
+	@rm -f $(NAME)_test $(NAME_LIB)
+
+$(OBJ_DIR)/tests/%.o: tests/%.c
+	$(CC) $(CFLAGS) $< -o $@
+
+$(NAME_LIB): $(LIBFT) $(OBJ) 
+	$(AR) $(NAME_LIB) $(LIBFT) $(OBJ)
 
 valgrind: $(NAME)	
 	valgrind $(VALGRIND_FLAGS) ./$(NAME) 
 
-$(NAME): $(LIBFT) $(OBJ_DIRS) $(OBJ)
-	$(CC) $(OBJ) $(LFLAGS) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJ_DIRS) $(SRC_OBJ)
+	$(CC) $(SRC_OBJ) $(LFLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: src/%.c
 	$(CC) $(CFLAGS) $< -o $@
@@ -74,12 +109,14 @@ dtest:
 	make -C libs/libft test
 
 clean: 
-	rm -f $(OBJ)
+	rm -f $(SRC_OBJ)
+	rm -f $(TESTS_OBJS)
 
 fclean: clean 
 	rm -f $(NAME)
 	rm -f $(LIBFT)
+	rm -f $(NAME_LIB)
 
 re: fclean $(NAME)
 
-.PHONY: dclean clean fclean all re run valgrind test
+.PHONY: dclean clean fclean all re run valgrind test test-valgrind 
