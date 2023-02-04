@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_isquote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 14:49:53 by victor.simo      ###   ########.fr       */
+/*   Created: 2023/02/04 14:31:23 by victor.simo       #+#    #+#             */
+/*   Updated: 2023/02/04 14:31:26 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ctx	*ctx_init(int argc, char **argv, char **envp)
+BOOL	ft_isquote(char c)
 {
-	t_ctx	*ctx;
-
-	ctx = (t_ctx *)ft_calloc(1, sizeof(t_ctx));
-	ctx->user = getenv("USERNAME");
-	ctx->path = getcwd(ctx->path, PATH_SIZE);
-	ctx->hostname = get_hostname(envp);
-	ctx->argc = argc;
-	ctx->argv = argv;
-	ctx->env = envp;
-	ft_printf("path: %s\n", ctx->path);
-	return (ctx);
+	if (c == SINGLE_QUOTE)
+		return (True);
+	if (c == DOUBLE_QUOTE)
+		return (True);
+	return (False);
 }

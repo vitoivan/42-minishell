@@ -6,12 +6,14 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/01/29 10:57:21 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/04 06:42:29 by victor.si        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
+
+#include "../libs/libft/includes/libft.h"
 
 # define BOOL int
 # define SINGLE_QUOTE 39

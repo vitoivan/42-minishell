@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line_from_terminal.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/26 09:06:24 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:55:31 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ BOOL	get_line_from_terminal(char **line, t_ctx *ctx)
 	*line = get_next_line(STDIN_FILENO, 4096, True);
 	if (*line)
 		return (True);
-	skip_whitespace(line, 0);
 	free_if_exists((void **)line);
 	return (False);
 }

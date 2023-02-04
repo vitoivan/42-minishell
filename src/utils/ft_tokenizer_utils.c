@@ -1,48 +1,57 @@
 #include "../../includes/minishell.h"
 
-byte is_at_end(Lexer *lexer) {
-	return (*lexer->current_position == '\0' || 
-			*lexer->current_position == '\n'); 
+byte	is_at_end(Lexer *lexer)
+{
+	return (*lexer->current_position == '\0' ||
+			*lexer->current_position == '\n');
 }
 
-byte is_quote(char ch) {
-	if (ch == SINGLE_QUOTE || ch == DOUBLE_QUOTE )
+byte	is_quote(char ch)
+{
+	if (ch == SINGLE_QUOTE || ch == DOUBLE_QUOTE)
 		return (1);
 	return (0);
 }
 
-byte is_command(Lexer *lexer) {
-	switch(*(lexer->current_position)) {
-		case '&':
-		case '|':
-		case '>':
-		case ';':
-			return (1);
-		break;
+byte	is_command(Lexer *lexer)
+{
+	switch (*(lexer->current_position))
+	{
+	case '&':
+	case '|':
+	case '>':
+	case ';':
+		return (1);
+		break ;
 	}
 	return (0);
 }
 
-void skip_white_spaces(Lexer *lexer) {
-	while (ft_isspace(*lexer->current_position))
+void	skip_white_spaces(Lexer *lexer)
+{
+	while (ft_isspace(*lexer->current_position) && !is_at_end(lexer))
 		lexer->current_position++;
 	lexer->start = lexer->current_position;
 }
 
-void lexer_init(Lexer *lexer, char *source) {
+void	lexer_init(Lexer *lexer, char *source)
+{
 	lexer->start = source;
 	lexer->current_position = source;
 }
 
-Token *get_current_token(ParserContext *context) {
-	return context->parser.current_token;
+Token	*get_current_token(ParserContext *context)
+{
+	return (context->parser.current_token);
 }
 
-Token *get_previus_token(ParserContext *context) {
-	return context->parser.previus_token;
+Token	*get_previus_token(ParserContext *context)
+{
+	return (context->parser.previus_token);
 }
 
-char *ft_strndup(const char *str, uint n) {
+char	*ft_strndup(const char *str, uint n)
+{
 	char *new = NULL;
 
 	new = ft_calloc(sizeof(char), n + 1);
