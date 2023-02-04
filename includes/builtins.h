@@ -1,10 +1,11 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
+# include "ctx.h"
 # include "define.h"
 
 BOOL	is_builtin(char *cmd);
 void	pwd(void);
-int		cd(char *path);
-int		builtin_export(char *name, char *value);
+int		cmd_cd(char *line);
+int		cmd_export(t_ctx **ctx, char *line);
 #endif

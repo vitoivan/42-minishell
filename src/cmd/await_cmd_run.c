@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   await_cmd_run.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 14:49:53 by victor.simo      ###   ########.fr       */
+/*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
+/*   Updated: 2023/02/04 19:37:20 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ctx	*ctx_init(int argc, char **argv, char **envp)
+BOOL	await_cmd_run(char *binary_path, char **args, char **envp)
 {
-	t_ctx	*ctx;
+	int	pid;
+	int	status;
 
-	ctx = (t_ctx *)ft_calloc(1, sizeof(t_ctx));
-	ctx->user = getenv("USERNAME");
-	ctx->path = getcwd(ctx->path, PATH_SIZE);
-	ctx->hostname = get_hostname(envp);
-	ctx->argc = argc;
-	ctx->argv = argv;
-	ctx->env = envp;
-	ft_printf("path: %s\n", ctx->path);
-	return (ctx);
+	pid = fork();
+	if (pid == 0)
+	{
+		if (execve(binary_path, (char *const *)args, envp) == -1)
+			return (False);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		errno = WEXITSTATUS(status);
+	}
+	return (True);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/26 07:03:59 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:08:32 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ BOOL	is_builtin(char *cmd)
 	if (!ft_strncmp(cmd, "env", 3))
 		return (True);
 	if (!ft_strncmp(cmd, "exit", 4))
+		return (True);
+	if (!ft_strncmp(cmd, "clear", 5))
 		return (True);
 	return (False);
 }

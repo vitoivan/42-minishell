@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/01/29 10:57:30 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/04 14:32:15 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		free_if_exists(void **data);
 void		free_token(void *data);
 void		skip_whitespace(char **line, int always_skip_one);
 void		print_terminal(t_ctx *ctx);
-char		*get_hostname(void);
+char		*get_hostname(char **envp);
 void		print_lkd_list(t_lkd_lst **list);
 
 /*	parser functions	*/
@@ -49,5 +49,6 @@ Precedence	get_precedence(Token *token);
 void		debug_command_tree(AstNode *root);
 void		debug_token(Token *token);
 int			ft_isspace(int c);
+BOOL		ft_isquote(char c);
 
 #endif

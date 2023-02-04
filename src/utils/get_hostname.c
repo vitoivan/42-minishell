@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/01/28 08:31:57 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/04 12:40:13 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*get_buffer_from_pipe(int pipefd[2], char *path, char **args)
 	return (buffer);
 }
 
-char	*get_hostname(void)
+char	*get_hostname(char **envp)
 {
 	int		pid;
 	int		pipefd[2];
@@ -72,7 +72,7 @@ char	*get_hostname(void)
 	{
 		dup2(pipefd[1], STDOUT_FILENO);
 		pipe_close_both(pipefd);
-		cmd_exec(path, args);
+		execve(path, args, envp);
 	}
 	else
 	{

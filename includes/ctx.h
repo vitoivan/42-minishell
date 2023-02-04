@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/01/29 10:57:19 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/04 16:01:54 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ typedef struct s_ctx
 	char	*user;
 	char	*path;
 	char	*hostname;
+	int		argc;
+	char	**env;
+	char	**argv;
 }			t_ctx;
 
-t_ctx		*ctx_init(void);
+t_ctx		*ctx_init(int argc, char **argv, char **envp);
 void		ctx_free(t_ctx **ctx);
 void		ctx_update(t_ctx **ctx);
 

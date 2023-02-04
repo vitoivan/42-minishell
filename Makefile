@@ -33,8 +33,11 @@ TARGETS = 	main.c \
 			utils/print_terminal.c \
 			utils/get_hostname.c \
 			utils/ft_isspace.c \
+			utils/ft_isquote.c \
 			cmd/cmd_is_valid.c \
+			cmd/cmd_try_run.c \
 			cmd/path.c \
+			cmd/await_cmd_run.c \
 			cmd/cmd_exec.c \
 			pipes/close.c \
 			builtins/utils.c \
