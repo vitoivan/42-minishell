@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/01/28 15:45:58 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/04 15:12:45 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,13 @@ static Token *scan_command(Lexer *lexer) {
 		
 	while ( !is_at_end(lexer) && !is_command(lexer)) {
 		if (is_quote(*lexer->current_position)) {
-			if (quote) 
-			{
-				lexer->current_position++;
-				return (mk_token(lexer, TOKEN_COMMAND));
-			}
-			quote = 1;
+			quote = !quote;
 		}
 		lexer->current_position++;
 	}
 	if (quote) {
-		// return token with error 
+		ft_printf("Parser Error, UNQUOTED STRING\n");
+		exit(UNQUOTED_STRING_ERROR);
 	}
 	return (mk_token(lexer, TOKEN_COMMAND));
 }
