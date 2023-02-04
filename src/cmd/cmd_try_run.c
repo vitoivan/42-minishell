@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 19:40:31 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/04 20:40:28 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ static int	cmd_run_builtin(t_ctx **ctx, char *line)
 	else if (is_equal(line, "export", 6))
 		cmd_export(ctx, line);
 	else if (is_equal(line, "exit", 4))
+	{
+		ctx_free(ctx);
 		exit(0);
+	}
 	else if (is_equal(line, "echo", 4))
 		ft_printf("%s\n", line + 5);
 	return (0);
@@ -39,18 +42,14 @@ static int	cmd_run_builtin(t_ctx **ctx, char *line)
 
 BOOL	cmd_try_run(t_ctx **ctx, char *line)
 {
-	char *trimmed;
-
 	errno = 0;
-	trimmed = ft_strtrim(line, " ");
-	if (is_builtin(trimmed))
-		cmd_run_builtin(ctx, trimmed);
-	else if (cmd_is_valid(trimmed))
-		cmd_exec(trimmed, (*ctx)->env);
+	if (is_builtin(line))
+		cmd_run_builtin(ctx, line);
+	else if (cmd_is_valid(line))
+		cmd_exec(line, (*ctx)->env);
 	else
 		errno = 127;
 	if (errno != EXIT_SUCCESS)
-		ft_printf("minishell: %s: %s\n", trimmed, strerror(errno));
-	free(trimmed);
+		ft_printf("minishell: %s: %s\n", line, strerror(errno));
 	return (1);
 }

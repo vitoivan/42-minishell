@@ -6,12 +6,14 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/04 16:01:54 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/04 20:38:00 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CTX_H
 # define CTX_H
+
+# include "./define.h"
 
 typedef struct s_ctx
 {
@@ -21,6 +23,7 @@ typedef struct s_ctx
 	int		argc;
 	char	**env;
 	char	**argv;
+	AstNode	*root_cmd;
 }			t_ctx;
 
 t_ctx		*ctx_init(int argc, char **argv, char **envp);

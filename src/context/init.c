@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 14:49:53 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/04 20:38:19 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ t_ctx	*ctx_init(int argc, char **argv, char **envp)
 	ctx->argc = argc;
 	ctx->argv = argv;
 	ctx->env = envp;
-	ft_printf("path: %s\n", ctx->path);
+	ctx->root_cmd = NULL;
 	return (ctx);
 }

@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 19:45:19 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/04 20:40:47 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		if (line[0] == '\0' || line[0] == '\n')
 			continue ;
-		root_cmd = ft_parser(line);
+		ctx->root_cmd = ft_parser(line);
 		if (line)
 			free(line);
-		exec_tree(root_cmd, &ctx);
-		ast_node_free(root_cmd);
+		exec_tree(ctx->root_cmd, &ctx);
+		ast_node_free(ctx->root_cmd);
 	}
 	return (0);
 }
