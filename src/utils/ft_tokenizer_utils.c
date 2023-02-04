@@ -2,7 +2,7 @@
 
 byte is_at_end(Lexer *lexer) {
 	return (*lexer->current_position == '\0' || 
-			*lexer->current_position == '\n');
+			*lexer->current_position == '\n'); 
 }
 
 byte is_quote(char ch) {
@@ -24,8 +24,9 @@ byte is_command(Lexer *lexer) {
 }
 
 void skip_white_spaces(Lexer *lexer) {
-	while (ft_isspace(*lexer->current_position) && !is_at_end(lexer))
+	while (ft_isspace(*lexer->current_position))
 		lexer->current_position++;
+	lexer->start = lexer->current_position;
 }
 
 void lexer_init(Lexer *lexer, char *source) {
