@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 14:10:58 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 14:22:28 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #include "../../includes/minishell.h"
 
-static Token *mk_token(Lexer *lexer, TokenType type, uint variable) {
+static Token *mk_token(Lexer *lexer, TokenType type, byte variable) {
 	Token *token; 
 
 	token = ft_calloc(1, sizeof(Token));
@@ -44,8 +44,8 @@ static Token *mk_token(Lexer *lexer, TokenType type, uint variable) {
 }
 
 static Token *scan_command(Lexer *lexer) {
-	uint quote;
-	uint variable;
+	byte quote;
+	byte variable;
 	
 	quote    = 0;
 	variable = 0;
