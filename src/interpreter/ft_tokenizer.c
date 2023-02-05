@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 15:46:48 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 16:00:12 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static Token *mk_token(Lexer *lexer, TokenType type, byte variable) {
 			token->start = sb->start;
 			free(sb); 
 		} else {
-			ft_printf("Lexer Error: Undefined variable\n");
+			ft_printf("\n");
 			token->type = TOKEN_ERROR;
 			token->error_msg = "Lexer Error: Undefined variable\n";
 		}
