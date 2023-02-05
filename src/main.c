@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 12:25:15 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/05 13:12:29 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,9 @@ void	exec_tree(AstNode *node, t_ctx **ctx)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	AstNode	*root_cmd;
 	t_ctx	*ctx;
 
 	line = NULL;
-	root_cmd = NULL;
 	ctx = ctx_init(argc, argv, envp);
 	while (True)
 	{

@@ -109,17 +109,6 @@ static AstNode	*parser_expression(ParserContext *context)
 	return (node);
 }
 
-/*
-static AstNode	*parser_expression(ParserContext *context) {
-	advance_to_next_token(context);
-
-	if (get_current_token(context) == NULL) 
-		return (mk_node_command(get_previus_token(context)));
-	if (get_current_token(context)->type == TOKEN_HIGH_OPERATOR)
-		return (expression_builder_semicolon(context));
-	return (expression_builder(context, PREC_NONE));
-}
-*/
 AstNode	*ft_parser(char *source)
 {
 	ParserContext	context;
@@ -129,6 +118,6 @@ AstNode	*ft_parser(char *source)
 	parser_init(&context.parser);
 	advance_to_next_token(&context);
 	command_tree = parser_expression(&context);
-	// debug_command_tree(command_tree);
+	debug_command_tree(command_tree);
 	return (command_tree);
 }
