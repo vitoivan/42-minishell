@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 20:40:28 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/05 09:08:17 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,31 @@ static int	cmd_run_builtin(t_ctx **ctx, char *line)
 	return (0);
 }
 
+static void	print_errno(char *line)
+{
+	char	*cmd;
+
+	cmd = line;
+	while (*cmd && *cmd != ' ')
+		cmd++;
+	if (*cmd == ' ')
+	{
+		*cmd = '\0';
+		if (errno == 127)
+			ft_printf("%s: command not found\n", line);
+		else
+			ft_printf("%s: %s\n", line, strerror(errno));
+		*cmd = ' ';
+	}
+	else
+	{
+		if (errno == 127)
+			ft_printf("%s: command not found\n", line);
+		else
+			ft_printf("%s: %s\n", line, strerror(errno));
+	}
+}
+
 BOOL	cmd_try_run(t_ctx **ctx, char *line)
 {
 	errno = 0;
@@ -50,6 +75,6 @@ BOOL	cmd_try_run(t_ctx **ctx, char *line)
 	else
 		errno = 127;
 	if (errno != EXIT_SUCCESS)
-		ft_printf("minishell: %s: %s\n", line, strerror(errno));
+		print_errno(line);
 	return (1);
 }
