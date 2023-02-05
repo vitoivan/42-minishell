@@ -67,7 +67,6 @@ StringBuilder *string_builder(const char *s, int t_size) {
 	int i;
 	int real_size;
 	char *new_str;
-	char *env;
 	int single_quote;
 
 	i  = 0;
@@ -89,13 +88,12 @@ StringBuilder *string_builder(const char *s, int t_size) {
 			int ini_pos = i + 1; // ignorando o $
 			while(!ft_isspace(s[i]) && !ft_is_double_quote(s[i])) 
 				i++;
-			env = getenv(get_substr(ini_pos, i, s));
 
-			if (!env) 
+			if (!getenv(get_substr(ini_pos, i, s))) 
 				return (NULL);
 
-			ft_strlcpy(new_str + j, env, ft_strlen(env - 1)); // ajustando o tamanho do buffer
-			j += ft_strlen(env);
+			ft_strlcpy(new_str + j, getenv(get_substr(ini_pos, i, s)), ft_strlen(getenv(get_substr(ini_pos, i, s)) - 1)); // ajustando o tamanho do buffer
+			j += ft_strlen(getenv(get_substr(ini_pos, i, s)));
 
 			get_substr(0, 0, NULL);
 		} else
