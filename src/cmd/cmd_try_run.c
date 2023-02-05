@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 09:08:17 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/05 12:45:30 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,12 @@ static void	print_errno(char *line)
 {
 	char	*cmd;
 
-	cmd = line;
-	while (*cmd && *cmd != ' ')
-		cmd++;
-	if (*cmd == ' ')
-	{
-		*cmd = '\0';
-		if (errno == 127)
-			ft_printf("%s: command not found\n", line);
-		else
-			ft_printf("%s: %s\n", line, strerror(errno));
-		*cmd = ' ';
-	}
-	else
-	{
-		if (errno == 127)
-			ft_printf("%s: command not found\n", line);
-		else
-			ft_printf("%s: %s\n", line, strerror(errno));
-	}
+	cmd = get_cmd_from_line(line);
+	if (errno == 127)
+		ft_printf("%s: command not found\n", line);
+	else if (!cmd_is_valid(cmd))
+		ft_printf("%s: %s\n", line, strerror(errno));
+	free(cmd);
 }
 
 BOOL	cmd_try_run(t_ctx **ctx, char *line)

@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/04 14:32:15 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/05 12:01:41 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ Token		*get_current_token(ParserContext *context);
 Token		*get_previus_token(ParserContext *context);
 char		*ft_strndup(const char *str, uint n);
 Precedence	get_precedence(Token *token);
+int			ft_isspace(int c);
+BOOL		ft_isquote(char c);
+void		skip_quotes(char **line);
 
 /* debug functions */
 void		debug_command_tree(AstNode *root);
 void		debug_token(Token *token);
-int			ft_isspace(int c);
-BOOL		ft_isquote(char c);
 
 #endif

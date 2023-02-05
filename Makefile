@@ -34,12 +34,18 @@ TARGETS = 	main.c \
 			utils/get_hostname.c \
 			utils/ft_isspace.c \
 			utils/ft_isquote.c \
+			utils/skip_quotes.c \
 			cmd/cmd_is_valid.c \
 			cmd/cmd_try_run.c \
 			cmd/path.c \
 			cmd/await_cmd_run.c \
 			cmd/cmd_exec.c \
+			cmd/cmd_get_args.c \
+			cmd/cmd_free_args.c \
+			cmd/cmd_with_redirect.c \
+			cmd/get_cmd_from_line.c \
 			pipes/close.c \
+			pipes/open.c \
 			builtins/utils.c \
 			builtins/pwd.c \
 			builtins/cd.c \

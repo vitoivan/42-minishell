@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 20:40:47 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/05 12:25:15 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ void	exec_tree(AstNode *node, t_ctx **ctx)
 			if (node->as.binaryExpression.right)
 				exec_tree(node->as.binaryExpression.right, ctx);
 		}
+	}
+	if (node->type == NODE_REDIRECT)
+	{
+		// run first command with redirection to the second one
+		cmd_with_redirect(node->as.binaryExpression.left->token->start,
+							node->as.binaryExpression.right->token->start,
+							ctx);
+	}
+	if (node->type == NODE_PIPE)
+	{
+		// run both commands here
 	}
 }
 
