@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 20:13:16 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 13:02:33 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #include "../../includes/minishell.h"
 
-static Token *mk_token(Lexer *lexer, TokenType type) {
+static Token *mk_token(Lexer *lexer, TokenType type, uint variable) {
 	Token *token; 
 
 	token = ft_calloc(1, sizeof(Token));
@@ -30,17 +30,26 @@ static Token *mk_token(Lexer *lexer, TokenType type) {
 		return (NULL);
 	
 	token->type = type;
-	token->size = (uint) (lexer->current_position - lexer->start);
-	token->start = ft_strndup(lexer->start, token->size);
+	if (variable) {
+		StringBuilder *sb = string_builder(lexer->start, (lexer->current_position - lexer->start));
+		token->size  = sb->size;
+		token->start = sb->start;
+		free(sb); 
+	} else {
+		token->size = (uint) (lexer->current_position - lexer->start);
+		token->start = ft_strndup(lexer->start, token->size);
+	}
 	token->error_msg = NULL;
 	return (token);
 }
 
 static Token *scan_command(Lexer *lexer) {
 	uint quote;
-	//char **variable_value;
+	uint variable;
+	
+	quote    = 0;
+	variable = 0;
 
-	quote = 0;
 
 	if ( is_command(lexer) || is_at_end(lexer) )
 		return NULL;
@@ -50,6 +59,10 @@ static Token *scan_command(Lexer *lexer) {
 		if (is_quote(*lexer->current_position)) {
 			quote = !quote;
 		}
+		
+		if ( *lexer->current_position == '$' )
+			variable = 1;
+
 		lexer->current_position++;
 	}
 	if (quote) {
@@ -59,7 +72,7 @@ static Token *scan_command(Lexer *lexer) {
 	if (!is_at_end(lexer))
 		lexer->current_position--;
 
-	return (mk_token(lexer, TOKEN_COMMAND));
+	return (mk_token(lexer, TOKEN_COMMAND, variable));
 }
 
 static Token *scan_operator(Lexer *lexer) {
@@ -70,8 +83,8 @@ static Token *scan_operator(Lexer *lexer) {
 		return NULL; // return token with error
 	}
 	if (ft_strncmp(lexer->start, ";", 1) == 0)
-		return (mk_token(lexer, TOKEN_HIGH_OPERATOR));
-	return (mk_token(lexer, TOKEN_OPERATOR));
+		return (mk_token(lexer, TOKEN_HIGH_OPERATOR, 0));
+	return (mk_token(lexer, TOKEN_OPERATOR, 0));
 }	
 
 static Token *lexer_next_token(ParserContext *context) {

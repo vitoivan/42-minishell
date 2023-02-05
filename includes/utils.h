@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/05 12:01:41 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/05 13:09:04 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,6 @@ void		skip_quotes(char **line);
 void		debug_command_tree(AstNode *root);
 void		debug_token(Token *token);
 
+/*   string builder       */
+StringBuilder   *string_builder(const char *s, uint t_size);
 #endif

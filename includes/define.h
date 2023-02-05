@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/04 06:42:29 by victor.si        ###   ########.fr       */
+/*   Updated: 2023/02/05 12:34:37 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,10 @@ typedef struct ast_node_t
 		} expressions;
 	} as;
 }								AstNode;
+
+typedef struct {
+	uint size;
+	char *start;
+} StringBuilder;
 
 #endif

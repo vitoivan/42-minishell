@@ -35,6 +35,7 @@ TARGETS = 	main.c \
 			utils/ft_isspace.c \
 			utils/ft_isquote.c \
 			utils/skip_quotes.c \
+			utils/string_builder.c \
 			cmd/cmd_is_valid.c \
 			cmd/cmd_try_run.c \
 			cmd/path.c \
