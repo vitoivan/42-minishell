@@ -14,6 +14,7 @@ byte	is_command(Lexer *lexer)
 	case '|':
 	case '>':
 	case ';':
+	case '<':
 		return (1);
 		break ;
 	}

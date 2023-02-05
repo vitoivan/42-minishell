@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 14:22:28 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 15:19:55 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 static Token *mk_token(Lexer *lexer, TokenType type, byte variable) {
 	Token *token; 
+	StringBuilder *sb;
 
 	token = ft_calloc(1, sizeof(Token));
 
@@ -31,15 +32,20 @@ static Token *mk_token(Lexer *lexer, TokenType type, byte variable) {
 	
 	token->type = type;
 	if (variable) {
-		StringBuilder *sb = string_builder(lexer->start, (lexer->current_position - lexer->start));
-		token->size  = sb->size;
-		token->start = sb->start;
-		free(sb); 
+		sb = string_builder(lexer->start, (lexer->current_position - lexer->start));
+		if (sb) {
+			token->size  = sb->size;
+			token->start = sb->start;
+			free(sb); 
+		} else {
+			ft_printf("Lexer Error: Undefined variable\n");
+			token->type = TOKEN_ERROR;
+			token->error_msg = "Lexer Error: Undefined variable\n";
+		}
 	} else {
 		token->size = (uint) (lexer->current_position - lexer->start);
 		token->start = ft_strndup(lexer->start, token->size);
 	}
-	token->error_msg = NULL;
 	return (token);
 }
 
@@ -94,9 +100,10 @@ static Token *lexer_next_token(ParserContext *context) {
 	
 	new_current_token = scan_command(&context->lexer);
 	if (!new_current_token)
-		new_current_token = scan_operator(&context->lexer);
+		new_current_token= scan_operator(&context->lexer);	
 	if (!new_current_token)
 		return (NULL);
+	
 	context->lexer.start = context->lexer.current_position;
 
 	return (new_current_token);
@@ -109,8 +116,8 @@ void del_token(Token *token) {
 	}
 }
 
-void advance_to_next_token(ParserContext *context) {
+void advance_to_next_token(ParserContext *context) {	
 	context->parser.previus_token = context->parser.current_token;
-	context->parser.current_token = lexer_next_token(context);
+	context->parser.current_token = lexer_next_token(context);;
 }
 

@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/05 14:16:54 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 14:52:39 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ void		debug_command_tree(AstNode *root);
 void		debug_token(Token *token);
 
 /*   string builder       */
-StringBuilder   *string_builder(const char *s, uint t_size);
+StringBuilder   *string_builder(const char *s, int t_size);
 #endif
