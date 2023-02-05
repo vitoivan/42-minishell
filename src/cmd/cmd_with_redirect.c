@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 12:23:50 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/05 12:50:05 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	cmd_with_redirect(char *line, char *filepath, t_ctx **ctx)
 	int		status;
 
 	(void)ctx;
-	ft_printf("line: %s\npath: %s\n", line, filepath);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -36,7 +35,6 @@ void	cmd_with_redirect(char *line, char *filepath, t_ctx **ctx)
 			ft_putstr_fd(strerror(errno), STDERR_FILENO);
 			return ;
 		}
-		ft_printf("here4\n");
 		dup2(fileout, STDOUT_FILENO);
 		cmd = get_cmd_from_line(line);
 		binary_path = get_cmd_binary_path(cmd);
