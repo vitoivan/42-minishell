@@ -1,7 +1,28 @@
-### Thoughts
+## TODO:
 
-### References
+-   ❌ Working History
+-   ✅ Search and launch the right executable
+-   ✅ handle single and double quotes
+-   ✅ redirect with ">"
+-   ❌ redirect with ">>"
+-   ❌ redirect with "<"
+-   ❌ "<<" given an delimiter, read the input until a line containing the delimiter and redirect this text to stdin from the command
+-   ❌ implement pipes "|"
+-   ✅ handle environment variables
+-   ❌ handle $? witch should expand to exit status of the most recently executed foreground pipeline
+-   ❌ handle ctrl-C, ctrl-D and ctrl-\
 
--   [Bash V2 Grammar](https://cmdse.github.io/pages/appendix/bash-grammar.html)
+### builtins
 
--   [Let's build a linux shell](https://medium.com/@mohammedisam2000/lets-build-a-linux-shell-part-i-954c95911501)
+-   ✅ echo
+-   ✅ cd
+-   ✅ pwd
+-   ✅ export
+-   ❌ unset
+-   ❌ env
+-   ✅ exit
+
+### bonus
+
+-   ✅ handle with "&&" and "||"
+-   ❌ handle with wildcards "\*"
