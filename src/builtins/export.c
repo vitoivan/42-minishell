@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 14:44:48 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/05 15:27:15 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	builtin_export(char *name, char *value)
 
 	value_to_be_setted = NULL;
 	return_value = True;
-	if (ft_isquote(value[0]))
+	if (ft_is_double_quote(value[0]))
 	{
 		str_len = ft_strlen(value) - 1;
 		value_to_be_setted = calloc(str_len, sizeof(char));

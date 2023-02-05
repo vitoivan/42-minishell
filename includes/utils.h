@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/05 14:52:39 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 15:33:33 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ Token		*get_previus_token(ParserContext *context);
 char		*ft_strndup(const char *str, uint n);
 Precedence	get_precedence(Token *token);
 int			ft_isspace(int c);
-BOOL		ft_isquote(char c);
+BOOL		ft_is_double_quote(char c);
+BOOL	ft_is_single_quote(char c);
 void		skip_quotes(char **line);
 
 /* debug functions */

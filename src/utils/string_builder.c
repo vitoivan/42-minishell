@@ -20,14 +20,18 @@ static int real_string_size(const char *s, int t_size) {
 	int value_size;
 	int i;
 	char *env;
+	int single_quote;
 
 	sub_size = 0;
 	value_size = 0;
 	i = 0;
+	single_quote = 0;
 	while (i < t_size) {
-		if (s[i] == '$') {
+		if (ft_is_single_quote(s[i]))
+			single_quote = !single_quote;
+		if (s[i] == '$' && !single_quote) {
 			int ini_pos = i + 1; // ignorando o $
-			while (!ft_isspace(s[i]) && !ft_isquote(s[i]) && s[i]) {
+			while (!ft_isspace(s[i]) && !ft_is_double_quote(s[i]) && s[i]) {
 				sub_size++;
 				i++;
 			}
@@ -64,9 +68,11 @@ StringBuilder *string_builder(const char *s, int t_size) {
 	int real_size;
 	char *new_str;
 	char *env;
+	int single_quote;
 
 	i  = 0;
 	j  = 0;
+	single_quote = 0;
 
 	real_size = real_string_size(s, t_size);
 	if (real_size < 0)
@@ -77,9 +83,11 @@ StringBuilder *string_builder(const char *s, int t_size) {
 		return (NULL); 
 
 	while (i < t_size) {
-		if (s[i] == '$') {
+		if (ft_is_single_quote(s[i]))
+			single_quote = !single_quote;
+		if (s[i] == '$' && !single_quote) {
 			int ini_pos = i + 1; // ignorando o $
-			while(!ft_isspace(s[i]) && !ft_isquote(s[i])) 
+			while(!ft_isspace(s[i]) && !ft_is_double_quote(s[i])) 
 				i++;
 			env = getenv(get_substr(ini_pos, i, s));
 

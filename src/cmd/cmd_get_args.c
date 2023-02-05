@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 14:10:57 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 15:27:15 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	cmd_get_args(char ***args, char *line)
 		skip_whitespace(&line, False);
 		if (*line == '\0')
 			break ;
-		if (ft_isquote(*line))
+		if (ft_is_double_quote(*line))
 		{
 			tmp = line;
 			skip_quotes(&tmp);

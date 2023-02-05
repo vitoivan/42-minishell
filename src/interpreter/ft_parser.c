@@ -73,7 +73,7 @@ AstNode	*ft_parser(char *source)
 	parser_init(&context.parser);
 	advance_to_next_token(&context);
 	command_tree = parser_expression(&context);
-	//if (command_tree)
-		//debug_command_tree(command_tree);
+	if (command_tree)
+		debug_command_tree(command_tree);
 	return (command_tree);
 }

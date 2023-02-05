@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isquote.c                                       :+:      :+:    :+:   */
+/*   ft_is_double_quote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,11 +12,17 @@
 
 #include "../../includes/minishell.h"
 
-BOOL	ft_isquote(char c)
+BOOL	ft_is_double_quote(char c)
+{
+	if (c == DOUBLE_QUOTE)
+		return (True);
+	return (False);
+}
+
+
+BOOL	ft_is_single_quote(char c)
 {
 	if (c == SINGLE_QUOTE)
-		return (True);
-	if (c == DOUBLE_QUOTE)
 		return (True);
 	return (False);
 }
