@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 15:10:31 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 15:28:29 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void	exec_tree(AstNode *node, t_ctx **ctx)
 				exec_tree(node->as.binaryExpression.right, ctx);
 		}
 	}
-	if (node->type == NODE_REDIRECT)
+	if (node->type == NODE_REDIRECT || node->type == NODE_REDIRECT_APPEND)
 	{
 		// run first command with redirection to the second one
 		cmd_with_redirect(node->as.binaryExpression.left->token->start,
 							node->as.binaryExpression.right->token->start,
+							node->type,
 							ctx);
 	}
 	if (node->type == NODE_PIPE)

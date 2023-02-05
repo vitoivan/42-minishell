@@ -4,7 +4,7 @@
 -   ✅ Search and launch the right executable
 -   ✅ handle single and double quotes
 -   ✅ redirect with ">"
--   ❌ redirect with ">>"
+-   ✅ redirect with ">>"
 -   ❌ redirect with "<"
 -   ❌ "<<" given an delimiter, read the input until a line containing the delimiter and redirect this text to stdin from the command
 -   ❌ implement pipes "|"
