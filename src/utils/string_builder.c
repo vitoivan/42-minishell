@@ -26,7 +26,7 @@ static uint real_string_size(const char *s, uint t_size) {
 	while (i < t_size) {
 		if (s[i] == '$') {
 			uint ini_pos = i + 1; // ignorando o $
-			while (!ft_isspace(s[i]) && s[i]) {
+			while (!ft_isspace(s[i]) &&  !ft_isquote(s[i]) && s[i]) {
 				sub_size++;
 				i++;
 			}
@@ -71,7 +71,7 @@ StringBuilder *string_builder(const char *s, uint t_size) {
 	while (i < t_size) {
 		if (s[i] == '$') {
 			uint ini_pos = i + 1; // ignorando o $
-			while(!ft_isspace(s[i])) 
+			while(!ft_isspace(s[i]) && !ft_isquote(s[i])) 
 				i++;
 			tmp_str = get_substr(ini_pos, i, s);
 

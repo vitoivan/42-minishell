@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 13:02:33 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 14:10:58 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static Token *scan_command(Lexer *lexer) {
 		
 	while (!is_at_end(lexer) && !is_command(lexer)) {
 	
-		if (is_quote(*lexer->current_position)) {
+		if (ft_isquote(*lexer->current_position)) {
 			quote = !quote;
 		}
 		

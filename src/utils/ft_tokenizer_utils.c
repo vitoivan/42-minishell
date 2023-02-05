@@ -6,13 +6,6 @@ byte	is_at_end(Lexer *lexer)
 			*lexer->current_position == '\n');
 }
 
-byte	is_quote(char ch)
-{
-	if (ch == SINGLE_QUOTE || ch == DOUBLE_QUOTE)
-		return (1);
-	return (0);
-}
-
 byte	is_command(Lexer *lexer)
 {
 	switch (*(lexer->current_position))

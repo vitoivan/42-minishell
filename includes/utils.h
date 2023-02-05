@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/05 13:09:04 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/05 14:16:54 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void		advance_to_next_token(ParserContext *context);
 void		lexer_init(Lexer *lexer, char *source);
 void		skip_white_spaces(Lexer *lexer);
 byte		is_at_end(Lexer *lexer);
-byte		is_quote(char ch);
 byte		is_command(Lexer *lexer);
 Token		*get_current_token(ParserContext *context);
 Token		*get_previus_token(ParserContext *context);
