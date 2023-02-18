@@ -19,10 +19,16 @@ BOOL	ft_is_double_quote(char c)
 	return (False);
 }
 
-
 BOOL	ft_is_single_quote(char c)
 {
 	if (c == SINGLE_QUOTE)
+		return (True);
+	return (False);
+}
+
+BOOL	ft_isquote(char c)
+{
+	if (ft_is_double_quote(c) || ft_is_single_quote(c))
 		return (True);
 	return (False);
 }

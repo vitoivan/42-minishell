@@ -1,43 +1,47 @@
 #include "../../includes/minishell.h"
 #include <string.h>
 
-static char * get_substr(int start, int end, const char *s) {
-	static char *ptr = NULL;
+static char	*get_substr(int start, int end, const char *s)
+{
+	static char	*ptr;
 
-	if (!s) {
-		if (ptr) {
+	ptr = NULL;
+	if (!s)
+	{
+		if (ptr)
+		{
 			free(ptr);
 			ptr = NULL;
 		}
 	}
 	else
-		ptr = ft_strndup(s + start, end - start); 
-	return ptr;
+		ptr = ft_strndup(s + start, end - start);
+	return (ptr);
 }
 
-static int real_string_size(const char *s, int t_size) {
-	int sub_size;
-	int value_size;
-	int i;
-	char *env;
-	int single_quote;
+static int	real_string_size(const char *s, int t_size)
+{
+	int		sub_size;
+	int		value_size;
+	int		i;
+	char	*env;
 
 	sub_size = 0;
 	value_size = 0;
 	i = 0;
-	single_quote = 0;
-	while (i < t_size) {
-		if (ft_is_single_quote(s[i]))
-			single_quote = !single_quote;
-		if (s[i] == '$' && !single_quote) {
+	while (i < t_size)
+	{
+		if (s[i] == '$')
+		{
 			int ini_pos = i + 1; // ignorando o $
-			while (!ft_isspace(s[i]) && !ft_is_double_quote(s[i]) && s[i]) {
+			while (!ft_isspace(s[i]) && !ft_isquote(s[i]) && s[i])
+			{
 				sub_size++;
 				i++;
 			}
 			env = getenv(get_substr(ini_pos, i, s));
-			if (!env) 
-				return -1;
+			if (!env)
+				return (-1);
 			value_size += ft_strlen(env);
 			get_substr(0, 0, NULL);
 		}
@@ -47,31 +51,28 @@ static int real_string_size(const char *s, int t_size) {
 	return (t_size - sub_size + value_size);
 }
 
-static StringBuilder *mk_string_builder(char *s, int size) {
-	StringBuilder *sb;
+static StringBuilder	*mk_string_builder(char *s, int size)
+{
+	StringBuilder	*sb;
 
-	sb = (StringBuilder *) ft_calloc(1, sizeof(StringBuilder));
-
+	sb = (StringBuilder *)ft_calloc(1, sizeof(StringBuilder));
 	if (!sb)
 		return (NULL);
-
 	sb->size = size;
 	sb->start = s;
-
 	return (sb);
 }
 
-
-StringBuilder *string_builder(const char *s, int t_size) {
+StringBuilder	*string_builder(const char *s, int t_size)
+{
 	int j;
 	int i;
 	int real_size;
 	char *new_str;
 	int single_quote;
 
-	i  = 0;
-	j  = 0;
-	single_quote = 0;
+	i = 0;
+	j = 0;
 
 	real_size = real_string_size(s, t_size);
 	if (real_size < 0)
@@ -79,24 +80,29 @@ StringBuilder *string_builder(const char *s, int t_size) {
 	new_str = ft_calloc(real_size + 1, sizeof(char));
 
 	if (!new_str)
-		return (NULL); 
+		return (NULL);
 
-	while (i < t_size) {
+	while (i < t_size)
+	{
 		if (ft_is_single_quote(s[i]))
 			single_quote = !single_quote;
-		if (s[i] == '$' && !single_quote) {
+		if (s[i] == '$' && !single_quote)
+		{
 			int ini_pos = i + 1; // ignorando o $
-			while(!ft_isspace(s[i]) && !ft_is_double_quote(s[i])) 
+			while (!ft_isspace(s[i]) && !ft_is_double_quote(s[i]))
 				i++;
 
-			if (!getenv(get_substr(ini_pos, i, s))) 
+			if (!getenv(get_substr(ini_pos, i, s)))
 				return (NULL);
 
-			ft_strlcpy(new_str + j, getenv(get_substr(ini_pos, i, s)), ft_strlen(getenv(get_substr(ini_pos, i, s)) - 1)); // ajustando o tamanho do buffer
+			ft_strlcpy(new_str + j, getenv(get_substr(ini_pos, i, s)),
+					ft_strlen(getenv(get_substr(ini_pos, i, s)) - 1));
+			// ajustando o tamanho do buffer
 			j += ft_strlen(getenv(get_substr(ini_pos, i, s)));
 
 			get_substr(0, 0, NULL);
-		} else
+		}
+		else
 			new_str[j++] = s[i++];
 	}
 	return (mk_string_builder(new_str, j));

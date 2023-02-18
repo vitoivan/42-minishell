@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 12:45:30 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/18 17:13:43 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ static int	is_equal(char *s1, char *s2, int n)
 
 static int	cmd_run_builtin(t_ctx **ctx, char *line)
 {
+	char	*data_fmt;
+
 	if (is_equal(line, "pwd", 3))
-		pwd();
+		pwd(ctx);
 	else if (is_equal(line, "clear", 4))
-		ft_printf("\e[1;1H\e[2J");
+		ctx_populate_buffer(ctx, "\e[1;1H\e[2J");
 	else if (is_equal(line, "cd", 2))
 	{
 		cmd_cd(line);
@@ -36,7 +38,11 @@ static int	cmd_run_builtin(t_ctx **ctx, char *line)
 		exit(0);
 	}
 	else if (is_equal(line, "echo", 4))
-		ft_printf("%s\n", line + 5);
+	{
+		data_fmt = ft_strjoin(line + 5, "\n");
+		ctx_populate_buffer(ctx, data_fmt);
+		free(data_fmt);
+	}
 	return (0);
 }
 
@@ -58,7 +64,7 @@ BOOL	cmd_try_run(t_ctx **ctx, char *line)
 	if (is_builtin(line))
 		cmd_run_builtin(ctx, line);
 	else if (cmd_is_valid(line))
-		cmd_exec(line, (*ctx)->env);
+		cmd_exec(line, ctx);
 	else
 		errno = 127;
 	if (errno != EXIT_SUCCESS)

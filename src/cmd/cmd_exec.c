@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 13:09:22 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/18 15:37:39 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-BOOL	cmd_exec(char *line, char **envp)
+BOOL	cmd_exec(char *line, t_ctx **ctx)
 {
 	char	*cmd;
 	char	*binary_path;
@@ -22,7 +22,7 @@ BOOL	cmd_exec(char *line, char **envp)
 	binary_path = get_cmd_binary_path(cmd);
 	free(cmd);
 	cmd_get_args(&args, line);
-	await_cmd_run(binary_path, args, envp);
+	await_cmd_run(binary_path, args, ctx);
 	free(binary_path);
 	cmd_free_args(&args);
 	return (1);

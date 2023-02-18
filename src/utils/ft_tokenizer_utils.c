@@ -6,18 +6,13 @@ byte	is_at_end(Lexer *lexer)
 			*lexer->current_position == '\n');
 }
 
-byte	is_command(Lexer *lexer)
+byte	is_operator(Lexer *lexer)
 {
-	switch (*(lexer->current_position))
-	{
-	case '&':
-	case '|':
-	case '>':
-	case ';':
-	case '<':
+	char	c;
+
+	c = *(lexer->current_position);
+	if (c == '&' || c == '|' || c == '>' || c == '<' || c == ';')
 		return (1);
-		break ;
-	}
 	return (0);
 }
 

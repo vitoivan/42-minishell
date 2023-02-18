@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 16:00:12 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/18 19:16:17 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 /*
 	Pontos a se resolver:
@@ -18,106 +17,113 @@
 		
 */
 
-
 #include "../../includes/minishell.h"
 
-static Token *mk_token(Lexer *lexer, TokenType type, byte variable) {
-	Token *token; 
-	StringBuilder *sb;
+static Token	*mk_token(Lexer *lexer, TokenType type, byte variable)
+{
+	Token			*token;
+	StringBuilder	*sb;
 
 	token = ft_calloc(1, sizeof(Token));
-
-	if (!token) 
+	if (!token)
 		return (NULL);
-	
 	token->type = type;
-	if (variable) {
-		sb = string_builder(lexer->start, (lexer->current_position - lexer->start));
-		if (sb) {
-			token->size  = sb->size;
+	if (variable)
+	{
+		sb = string_builder(lexer->start, (lexer->current_position
+					- lexer->start));
+		if (sb)
+		{
+			token->size = sb->size;
 			token->start = sb->start;
-			free(sb); 
-		} else {
-			ft_printf("\n");
+			free(sb);
+		}
+		else
+		{
+			ft_printf("LexerError: Undefined variable\n");
 			token->type = TOKEN_ERROR;
 			token->error_msg = "Lexer Error: Undefined variable\n";
 		}
-	} else {
-		token->size = (uint) (lexer->current_position - lexer->start);
+	}
+	else
+	{
+		token->size = (uint)(lexer->current_position - lexer->start);
 		token->start = ft_strndup(lexer->start, token->size);
 	}
 	return (token);
 }
 
-static Token *scan_command(Lexer *lexer) {
-	byte quote;
-	byte variable;
-	
-	quote    = 0;
+static Token	*scan_command(Lexer *lexer)
+{
+	byte	quote;
+	byte	variable;
+
+	quote = 0;
 	variable = 0;
-
-
-	if ( is_command(lexer) || is_at_end(lexer) )
-		return NULL;
-		
-	while (!is_at_end(lexer) && !is_command(lexer)) {
-	
-		if (ft_is_double_quote(*lexer->current_position)) {
-			quote = !quote;
+	if (is_operator(lexer) || is_at_end(lexer))
+		return (NULL);
+	while (!is_at_end(lexer) && !is_operator(lexer))
+	{
+		if (ft_isquote(*lexer->current_position))
+		{
+			skip_quotes((char **)&(lexer->current_position));
+			if (!ft_isquote(*(lexer->current_position - 1)))
+				quote = 1;
 		}
-		
-		if ( *lexer->current_position == '$' )
+		if (*lexer->current_position == '$')
 			variable = 1;
-
 		lexer->current_position++;
 	}
-	if (quote) {
+	if (quote)
+	{
 		ft_printf("Parser Error, UNQUOTED STRING\n");
 		exit(UNQUOTED_STRING_ERROR);
 	}
 	if (!is_at_end(lexer))
 		lexer->current_position--;
-
 	return (mk_token(lexer, TOKEN_COMMAND, variable));
 }
 
-static Token *scan_operator(Lexer *lexer) {
-	while ( !is_at_end(lexer) && is_command(lexer) ) {
+static Token	*scan_operator(Lexer *lexer)
+{
+	while (!is_at_end(lexer) && is_operator(lexer))
 		lexer->current_position++;
-	}
-	if (is_at_end(lexer)) {
-		return NULL; // return token with error
+	// if (!strncmp(lexer->current_position - 1, "||", 2))
+	// 	lexer->current_position++;
+	if (is_at_end(lexer))
+	{
+		return (NULL); // return token with error
 	}
 	if (ft_strncmp(lexer->start, ";", 1) == 0)
 		return (mk_token(lexer, TOKEN_HIGH_OPERATOR, 0));
 	return (mk_token(lexer, TOKEN_OPERATOR, 0));
-}	
+}
 
-static Token *lexer_next_token(ParserContext *context) {
-	Token *new_current_token;
+static Token	*lexer_next_token(ParserContext *context)
+{
+	Token	*new_current_token;
 
 	skip_white_spaces(&context->lexer);
-	
 	new_current_token = scan_command(&context->lexer);
 	if (!new_current_token)
-		new_current_token= scan_operator(&context->lexer);	
+		new_current_token = scan_operator(&context->lexer);
 	if (!new_current_token)
 		return (NULL);
-	
 	context->lexer.start = context->lexer.current_position;
-
 	return (new_current_token);
 }
 
-void del_token(Token *token) {
-	if (token != NULL) {
+void	del_token(Token *token)
+{
+	if (token != NULL)
+	{
 		free(token->start);
 		free(token);
 	}
 }
 
-void advance_to_next_token(ParserContext *context) {	
+void	advance_to_next_token(ParserContext *context)
+{
 	context->parser.previus_token = context->parser.current_token;
-	context->parser.current_token = lexer_next_token(context);;
+	context->parser.current_token = lexer_next_token(context);
 }
-

@@ -1,3 +1,5 @@
+
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,28 +8,22 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/18 17:31:21 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/05 15:27:26 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	cmd_with_redirect(char *filepath, int mode, t_ctx **ctx)
+void	ctx_populate_buffer(t_ctx **ctx, char *data)
 {
-	int	fileout;
+	int		i;
+	char	*buffer;
 
-	if (mode == NODE_REDIRECT_APPEND)
-		fileout = open(filepath, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (mode == NODE_REDIRECT)
-		fileout = open(filepath, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
-		fileout = -1;
-	if (fileout == -1)
-	{
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+	if (!data)
 		return ;
-	}
-	ft_putstr_fd((*ctx)->buffer, fileout);
-	close(fileout);
+	i = -1;
 	ft_bzero((*ctx)->buffer, PIPE_BUFFER);
+	buffer = (*ctx)->buffer;
+	while (data[++i])
+		buffer[i] = data[i];
 }

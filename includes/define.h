@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/05 14:21:09 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/18 19:20:05 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINE_H
 # define DEFINE_H
 
-#include "../libs/libft/includes/libft.h"
+# include "../libs/libft/includes/libft.h"
 
 # define BOOL int
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
 # define BUFFER_SIZE 4096
+# define DEBUG 0
 # define uint unsigned int
 # define byte unsigned char
 
@@ -107,9 +108,10 @@ typedef struct ast_node_t
 	} as;
 }								AstNode;
 
-typedef struct {
-	uint size;
-	char *start;
-} StringBuilder;
+typedef struct
+{
+	uint						size;
+	char						*start;
+}								StringBuilder;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 20:38:19 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/18 15:10:42 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ t_ctx	*ctx_init(int argc, char **argv, char **envp)
 	ctx->argv = argv;
 	ctx->env = envp;
 	ctx->root_cmd = NULL;
+	ctx->buffer = ft_calloc(PIPE_BUFFER, sizeof(char));
 	return (ctx);
 }

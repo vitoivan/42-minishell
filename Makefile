@@ -52,6 +52,7 @@ TARGETS = 	main.c \
 			builtins/cd.c \
 			builtins/export.c \
 			context/init.c \
+			context/populate_buffer.c \
 			context/update.c \
 			context/free.c
 

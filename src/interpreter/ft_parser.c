@@ -50,18 +50,17 @@ static AstNode	*expression_builder(ParserContext *context)
 	return (node);
 }
 
-static AstNode *parser_expression(ParserContext *context) {
+static AstNode	*parser_expression(ParserContext *context)
+{
 	advance_to_next_token(context);
-
 	if (get_previus_token(context)->type == TOKEN_ERROR)
 	{
 		free(get_previus_token(context));
 		return (NULL);
 	}
-		
-	if (get_current_token(context) == NULL) 
-		return mk_node_command(get_previus_token(context));
-	return expression_builder(context);
+	if (get_current_token(context) == NULL)
+		return (mk_node_command(get_previus_token(context)));
+	return (expression_builder(context));
 }
 
 AstNode	*ft_parser(char *source)
@@ -73,7 +72,7 @@ AstNode	*ft_parser(char *source)
 	parser_init(&context.parser);
 	advance_to_next_token(&context);
 	command_tree = parser_expression(&context);
-	if (command_tree)
+	if (command_tree && DEBUG)
 		debug_command_tree(command_tree);
 	return (command_tree);
 }
