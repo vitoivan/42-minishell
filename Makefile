@@ -43,7 +43,7 @@ TARGETS = 	main.c \
 			cmd/cmd_exec.c \
 			cmd/cmd_get_args.c \
 			cmd/cmd_free_args.c \
-			cmd/cmd_with_redirect.c \
+			cmd/cmd_redirect.c \
 			cmd/get_cmd_from_line.c \
 			pipes/close.c \
 			pipes/open.c \

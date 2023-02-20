@@ -18,6 +18,6 @@ BOOL		await_cmd_run(char *binary_path, char **args, t_ctx **ctx);
 void		cmd_get_args(char ***args, char *line);
 void		cmd_free_args(char ***args);
 char		*get_cmd_from_line(char *line);
-void		cmd_with_redirect(char *filepath, int mode, t_ctx **ctx);
+void		cmd_redirect(char *filepath, int mode, t_ctx **ctx);
 
 #endif

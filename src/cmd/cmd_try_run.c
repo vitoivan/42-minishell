@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/18 17:13:43 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/20 11:25:35 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ BOOL	cmd_try_run(t_ctx **ctx, char *line)
 	else
 		errno = 127;
 	if (errno != EXIT_SUCCESS)
+	{
 		print_errno(line);
+		ft_bzero((*ctx)->buffer, PIPE_BUFFER);
+	}
 	return (1);
 }

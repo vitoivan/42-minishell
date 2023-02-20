@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/18 18:54:20 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/20 11:27:40 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	exec_tree(AstNode *node, t_ctx **ctx)
 			exec_tree(node->as.binaryExpression.left, ctx);
 		if (node->type == NODE_OR || errno == EXIT_SUCCESS)
 		{
+			if ((*ctx)->buffer[0])
+			{
+				ft_printf("%s", (*ctx)->buffer);
+				ft_bzero((*ctx)->buffer, PIPE_BUFFER);
+			}
 			if (node->as.binaryExpression.right)
 				exec_tree(node->as.binaryExpression.right, ctx);
 		}
@@ -33,9 +38,9 @@ void	exec_tree(AstNode *node, t_ctx **ctx)
 		if (node->as.binaryExpression.left)
 			exec_tree(node->as.binaryExpression.left, ctx);
 		if ((*ctx)->buffer[0])
-			cmd_with_redirect(node->as.binaryExpression.right->token->start,
-								node->type,
-								ctx);
+			cmd_redirect(node->as.binaryExpression.right->token->start,
+							node->type,
+							ctx);
 	}
 	if (node->type == NODE_PIPE)
 	{

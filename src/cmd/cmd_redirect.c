@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_with_redirect.c                                :+:      :+:    :+:   */
+/*   cmd_redirect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/18 17:31:21 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/20 11:27:30 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	cmd_with_redirect(char *filepath, int mode, t_ctx **ctx)
+void	cmd_redirect(char *filepath, int mode, t_ctx **ctx)
 {
 	int	fileout;
 
