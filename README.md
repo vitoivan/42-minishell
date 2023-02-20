@@ -7,7 +7,7 @@
 -   ✅ redirect with ">>"
 -   ❌ redirect with "<"
 -   ❌ "<<" given an delimiter, read the input until a line containing the delimiter and redirect this text to stdin from the command
--   ❌ implement pipes "|"
+-   ✅ implement pipes "|"
 -   ✅ handle environment variables
 -   ❌ handle $? witch should expand to exit status of the most recently executed foreground pipeline
 -   ❌ handle ctrl-C, ctrl-D and ctrl-\
