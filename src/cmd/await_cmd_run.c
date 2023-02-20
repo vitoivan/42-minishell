@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/18 18:20:03 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/20 12:30:12 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ BOOL	await_cmd_run(char *binary_path, char **args, t_ctx **ctx)
 	int		child_write_pipe[2];
 	int		read_ret;
 	char	buffer[PIPE_BUFFER];
+	char	**env;
 
 	if (!pipe_create(child_write_pipe) || !pipe_create(parent_write_pipe))
 	{
@@ -34,7 +35,8 @@ BOOL	await_cmd_run(char *binary_path, char **args, t_ctx **ctx)
 		pipe_close_both(child_write_pipe);
 		pipe_close_both(parent_write_pipe);
 		ft_printf("-");
-		if (execve(binary_path, (char *const *)args, (*ctx)->env) == -1)
+		env = parse_ldk_lst_to_char_array((*ctx)->env);
+		if (execve(binary_path, (char *const *)args, env) == -1)
 			return (False);
 	}
 	else
@@ -48,6 +50,7 @@ BOOL	await_cmd_run(char *binary_path, char **args, t_ctx **ctx)
 		waitpid(pid, &status, 0);
 		if (status == 0)
 		{
+			ft_bzero(buffer, PIPE_BUFFER);
 			read_ret = read(child_write_pipe[0], &buffer, PIPE_BUFFER);
 			if (read_ret > 1)
 				ft_strlcpy((*ctx)->buffer, buffer + 1, PIPE_BUFFER - 1);

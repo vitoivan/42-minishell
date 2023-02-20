@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/18 19:26:17 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/20 15:37:50 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ BOOL			ft_is_double_quote(char c);
 BOOL			ft_is_single_quote(char c);
 void			skip_quotes(char **line);
 BOOL			ft_isquote(char c);
+void			clear_splitted(char ***splitted);
+
+/* Error handle utils */
+void			print_errno(char *line);
 
 /* debug functions */
 void			debug_command_tree(AstNode *root);

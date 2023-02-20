@@ -1,45 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/20 15:09:13 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/20 17:18:47 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	validate_pwd(char *line)
+static void	validate_unset(char *line)
 {
-	int	i;
+	char	*name;
 
-	i = 4;
-	if ((size_t)i >= ft_strlen(line))
-		return ;
-	while (ft_isspace(line[i]))
-		i++;
-	if (line[i] != '\n' && line[i] != '\0')
+	name = line + 6;
+	if (!name)
+	{
+		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
 		errno = 1;
+	}
+	skip_whitespace(&name, 0);
+	if (strlen(name) == 0)
+	{
+		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
+		errno = 1;
+	}
 }
 
-void	pwd(t_ctx **ctx, char *line)
+void	unset(t_ctx **ctx, char *line)
 {
-	char	*current_path;
-	char	*fmt;
+	char	*name;
+	int		i;
+	int		env_ind;
 
-	validate_pwd(line);
+	i = 0;
+	validate_unset(line);
 	if (errno != EXIT_SUCCESS)
 	{
-		ft_putstr_fd("pwd: too many arguments\n", STDERR_FILENO);
+		cmd_export(ctx, "export $?=1");
+		errno = 0;
 		return ;
 	}
-	current_path = NULL;
-	current_path = getcwd(current_path, PATH_SIZE);
-	fmt = ft_strjoin(current_path, "\n");
-	ctx_populate_buffer(ctx, fmt);
-	free(fmt);
-	free(current_path);
+	name = line + 6;
+	skip_whitespace(&name, 0);
+	env_ind = validate_if_env_already_exists(ctx, name);
+	if (env_ind >= 0)
+		lkd_lst_pop_at(&(*ctx)->env, env_ind, free);
 }

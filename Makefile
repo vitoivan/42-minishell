@@ -31,11 +31,13 @@ TARGETS = 	main.c \
 			utils/print_lkd_list.c \
 			utils/skip_whitespace.c \
 			utils/print_terminal.c \
+			utils/errors.c \
 			utils/get_hostname.c \
 			utils/ft_isspace.c \
 			utils/ft_isquote.c \
 			utils/skip_quotes.c \
 			utils/string_builder.c \
+			utils/clear_splitted.c \
 			cmd/cmd_is_valid.c \
 			cmd/cmd_try_run.c \
 			cmd/path.c \
@@ -50,9 +52,13 @@ TARGETS = 	main.c \
 			builtins/utils.c \
 			builtins/pwd.c \
 			builtins/cd.c \
+			builtins/unset.c \
 			builtins/export.c \
+			builtins/env.c \
+			builtins/builtin_main.c \
 			context/init.c \
 			context/populate_buffer.c \
+			context/parse_env.c \
 			context/update.c \
 			context/free.c
 
