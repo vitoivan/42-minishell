@@ -18,8 +18,8 @@
 -   ✅ cd
 -   ✅ pwd
 -   ✅ export
--   ❌ unset
--   ❌ env
+-   ✅ unset
+-   ✅ env
 -   ✅ exit
 
 ### bonus
