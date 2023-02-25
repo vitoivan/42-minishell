@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/25 17:07:25 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/25 18:05:07 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,58 +56,16 @@ static Token	*mk_token(Lexer *lexer, TokenType type, byte variable)
 
 static Token *mk_wildcard_token(Lexer *lexer)
 {
-	DIR *dir;
-	struct dirent *entry;
-	char **wildcards;
-	char *command;
-	char *tmp;
-	Token *token;
-	byte i;
+	Token *token;	
 
-	tmp = (char *) lexer->current_position;
-	i = 0;
-	command = NULL;
-	
 	token = ft_calloc(1, sizeof(Token));
 	if (!token) 
 		return (NULL);
-		
 	
-	wildcards = ft_wildcard_split_args(lexer);
-
-	while (wildcards[i] != NULL) {
-		if ((dir = opendir(".")) == NULL) 
-			return NULL; // error ao abrir diretorio
-		while ((entry = readdir(dir)) != NULL) 
-		{
-			if (ft_strmatch(entry->d_name, wildcards[i]))
-			{
-				if (command) {
-					char *s1 = command; 
-					command = ft_strjoin(command, " ");
-					free(s1);
-					s1 = command;
-					command = ft_strjoin(command, entry->d_name);
-					free(s1);
-				} else {
-					char *s1 = ft_strndup(lexer->start, tmp - ft_gt_last_sep_pos(tmp) - lexer->start);
-					char *s2 = ft_strdup(entry->d_name);
-					command = ft_strjoin(s1, s2);
-					free(s1); free(s2);
-				}
-			}
-		}
-		free(wildcards[i]);
-		rewinddir(dir);
-		i++;
-	}
-	closedir(dir);
-	free(wildcards);
-
 	token->type = TOKEN_COMMAND;
-	token->start = command;
-	token->size = ft_strlen(command);
-
+	token->start = ft_mk_wildcard_command(lexer);
+	token->size = ft_strlen(token->start);
+	
 	return (token);
 }
 

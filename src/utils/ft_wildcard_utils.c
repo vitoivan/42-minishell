@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:36:18 by jv                #+#    #+#             */
-/*   Updated: 2023/02/25 16:46:33 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/25 18:18:17 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char **ft_wildcard_split_args(Lexer *lexer) {
     return (splited_args);
 }
 
- uint ft_gt_last_sep_pos(char *position) {
+uint ft_gt_last_sep_pos(char *position) {
 	char *end;
 
 	end = position;
@@ -91,28 +91,43 @@ char **ft_wildcard_split_args(Lexer *lexer) {
 	
 	return (uint) (end - position);
 }
-/*
-char *mk_wildcard_command(char *file_name, char *wildcard)
-{
-    static char *command = NULL;
 
-    if (ft_strmatch(file_name, wildcard))
-	{
-		if (command) {
-			char *s1 = command; 
-			command = ft_strjoin(command, " ");
-			free(s1);
-			s1 = command;
-			command = ft_strjoin(command, entry->d_name);
-			free(s1);
-		} else {
-			char *s1 = ft_strndup(lexer->start, tmp - ft_gt_last_sep_pos(tmp) - lexer->start);
-			char *s2 = ft_strdup(entry->d_name);
-			command = ft_strjoin(s1, s2);
-			free(s1); free(s2);
-		}
+void ft_parser_wildcard_exp(char *file_name, char *mask, char **command) {
+
+    if (ft_strmatch(file_name, mask))
+    {
+        char *s1 = *command; 
+		*command = ft_strjoin(*command, " ");
+		free(s1);
+		s1 = *command;
+		*command = ft_strjoin(*command, file_name);
+		free(s1);
 	}
+}
 
+char *ft_mk_wildcard_command(Lexer *lexer)
+{
+    DIR *dir;
+    struct dirent *entry;
+    char **wildcards;
+    char *command;
+    uint size;
+    if ((dir = opendir(".")) == NULL) 
+		return NULL; // error ao abrir diretorio
+    
+    size = lexer->current_position - ft_gt_last_sep_pos(lexer->current_position) - lexer->start - 1;
+    command = ft_strndup(lexer->start, size);
+    wildcards = ft_wildcard_split_args(lexer);
+    
+   	while (*wildcards != NULL) {
+		while ((entry = readdir(dir)) != NULL) 
+		{
+            ft_parser_wildcard_exp(entry->d_name, *wildcards, &command);    
+		}
+		free(*wildcards);
+		rewinddir(dir);
+		wildcards++;
+	}
     return (command);
 }
-*/
+
