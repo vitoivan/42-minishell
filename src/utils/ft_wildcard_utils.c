@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:36:18 by jv                #+#    #+#             */
-/*   Updated: 2023/02/25 19:23:36 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/25 19:28:23 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../includes/minishell.h"
 
 
-byte ft_strmatch(char *entry, char *pattern) 
+static byte ft_strmatch(char *entry, char *pattern) 
 {
 	while(1) {
 		char m = *pattern;
@@ -39,25 +39,8 @@ byte ft_strmatch(char *entry, char *pattern)
 		entry++;
 	}
 }
-
-char *ft_wildcard_get_pattern(Lexer *lexer) {
-	char *start;
-	char *end;
-
-	start = lexer->current_position;
-	end   = lexer->current_position;
-
-	while (!ft_isspace(*(start - 1)))
-		start--;
-	while (!ft_isspace(*end) && *end)
-		end++;
-
-	/* update lexer position */
-	lexer->current_position += (end - lexer->current_position);	
-	return (ft_strndup(start, end - start));
-}
  
-char **ft_wildcard_split_args(Lexer *lexer) {
+static char **ft_wildcard_split_args(Lexer *lexer) {
     char *start;
     char *end; 
     char *args;
@@ -82,7 +65,7 @@ char **ft_wildcard_split_args(Lexer *lexer) {
     return (splited_args);
 }
 
-uint ft_gt_last_sep_pos(char *position) {
+static uint ft_gt_last_sep_pos(char *position) {
 	char *end;
 
 	end = position;
@@ -92,7 +75,7 @@ uint ft_gt_last_sep_pos(char *position) {
 	return (uint) (end - position);
 }
 
-void ft_parser_wildcard_exp(char *file_name, char *mask, char **command)
+static void ft_parser_wildcard_exp(char *file_name, char *mask, char **command)
 {
     char *s1;
     if (ft_strmatch(file_name, mask))

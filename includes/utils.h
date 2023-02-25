@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/25 18:03:12 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/25 19:27:17 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,5 @@ void			debug_token(Token *token);
 StringBuilder	*string_builder(const char *s, int t_size);
 
 /*   wildcard             */
-byte ft_strmatch(char *entry, char *pattern);
-char   *ft_wildcard_get_pattern(Lexer *lexer);
-uint ft_gt_last_sep_pos(char *position);
-char **ft_wildcard_split_args(Lexer *lexer);
 char *ft_mk_wildcard_command(Lexer *lexer);
 #endif
