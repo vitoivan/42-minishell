@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:36:18 by jv                #+#    #+#             */
-/*   Updated: 2023/02/25 18:18:17 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/25 19:21:14 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,12 @@ char *ft_mk_wildcard_command(Lexer *lexer)
     
    	while (*wildcards != NULL) {
 		while ((entry = readdir(dir)) != NULL) 
-		{
             ft_parser_wildcard_exp(entry->d_name, *wildcards, &command);    
-		}
 		free(*wildcards);
 		rewinddir(dir);
 		wildcards++;
 	}
+    free(wildcards);
     return (command);
 }
 
