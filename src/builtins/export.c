@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/20 16:23:47 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/25 14:35:29 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,13 @@ int	validate_if_env_already_exists(t_ctx **ctx, char *name)
 	t_lkd_node		*node;
 	char			**splitted;
 	char			*tmp;
-	int				j;
-
+	
 	i = 0;
 	node = (*ctx)->env->head;
 	while (i < (*ctx)->env->size)
 	{
 		splitted = ft_split(node->content, '=');
 		tmp = splitted[0];
-		j = -1;
 		if (ft_strcmp(name, (char *)tmp) == 0)
 		{
 			clear_splitted(&splitted);
@@ -91,12 +89,10 @@ int	cmd_export(t_ctx **ctx, char *line)
 {
 	char	*args;
 	char	**splitted;
-	int		i;
 	int		status;
 	char	*value;
 
 	args = line + 7;
-	i = 0;
 	if (ft_strchr(args, '=') == NULL)
 		return (0);
 	splitted = ft_split(args, '=');

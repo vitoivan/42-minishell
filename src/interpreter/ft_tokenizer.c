@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2023/02/18 19:16:17 by victor.simo      ###   ########.fr       */
-=======
-/*   Updated: 2023/02/25 14:21:16 by jv               ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2023/02/25 15:33:50 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +80,34 @@ static byte ft_strmatch(char *entry, char *pattern)
 	}
 }
 
+static char *ft_wildcard_get_pattern(Lexer *lexer) {
+	char *start;
+	char *end;
+
+	start = lexer->current_position;
+	end   = lexer->current_position;
+
+	while (!ft_isspace(*(start - 1)))
+		start--;
+	while (!ft_isspace(*end) && *end)
+		end++;
+
+	/* update lexer position */
+	lexer->current_position += (end - lexer->current_position);	
+	return (ft_strndup(start, end - start));
+}
+
+static uint ft_gt_last_sep_pos(char *position) {
+	char *end;
+
+	end = position;
+	while (!(ft_isspace(*(position - 1))))
+		position--;
+	
+	return (uint) (end - position);
+}
+
+
 static Token *mk_wildcard_token(Lexer *lexer)
 {
 	DIR *dir;
@@ -103,15 +127,11 @@ static Token *mk_wildcard_token(Lexer *lexer)
 	if ((dir = opendir(".")) == NULL) 
 		return NULL; // error ao abrir diretorio
 	
-	while (!is_at_end(lexer) && !is_command(lexer))
-		lexer->current_position++;
-	
-	wildcard = ft_strndup(tmp, lexer->current_position - tmp);
+	wildcard = ft_wildcard_get_pattern(lexer);
 
 	while ((entry = readdir(dir)) != NULL) 
 	{
-		char *file_name = ft_strdup(entry->d_name);
-		if (ft_strmatch(file_name, wildcard))
+		if (ft_strmatch(entry->d_name, wildcard))
 		{
 			if (command) {
 				char *s1 = command; 
@@ -121,13 +141,12 @@ static Token *mk_wildcard_token(Lexer *lexer)
 				command = ft_strjoin(command, entry->d_name);
 				free(s1);
 			} else {
-				char *s1 = ft_strndup(lexer->start, tmp - lexer->start);
+				char *s1 = ft_strndup(lexer->start, tmp - ft_gt_last_sep_pos(tmp) - lexer->start);
 				char *s2 = ft_strdup(entry->d_name);
 				command = ft_strjoin(s1, s2);
 				free(s1); free(s2);
 			}
 		}
-		free(file_name);
 	}
 	closedir(dir);
 
@@ -146,10 +165,10 @@ static Token *scan_command(Lexer *lexer) {
 	variable = 0;
 
 
-	if ( is_command(lexer) || is_at_end(lexer) )
+	if ( is_operator(lexer) || is_at_end(lexer) )
 		return NULL;
 		
-	while (!is_at_end(lexer) && !is_command(lexer)) {
+	while (!is_at_end(lexer) && !is_operator(lexer)) {
 	
 		if (ft_is_double_quote(*lexer->current_position)) 
 			quote = !quote;

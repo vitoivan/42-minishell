@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/20 17:18:47 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/25 14:31:02 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ static void	validate_unset(char *line)
 void	unset(t_ctx **ctx, char *line)
 {
 	char	*name;
-	int		i;
 	int		env_ind;
 
-	i = 0;
 	validate_unset(line);
 	if (errno != EXIT_SUCCESS)
 	{
