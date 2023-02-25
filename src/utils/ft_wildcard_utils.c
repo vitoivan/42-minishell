@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:36:18 by jv                #+#    #+#             */
-/*   Updated: 2023/02/25 19:22:47 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/25 19:23:36 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ char *ft_mk_wildcard_command(Lexer *lexer)
 		rewinddir(dir);
 		wildcards++;
 	}
-    free(wildcards);
     return (command);
 }
 
