@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/25 15:33:50 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/25 17:07:25 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,101 +54,55 @@ static Token	*mk_token(Lexer *lexer, TokenType type, byte variable)
 }
 
 
-static byte ft_strmatch(char *entry, char *pattern) 
-{
-	while(1) {
-		char m = *pattern;
-		char c = *entry;
-
-		if (m == 0)
-			return (c == 0);
-		if (m == '*') {
-			if (ft_strmatch(entry, pattern + 1))
-				return (1);
-			if (c == 0)
-				return (0);
-		} else {
-			if (m == '?')
-			{
-				if (c == 0)
-					return (0);
-			} else if (m != c)
-				return (0);
-			pattern++;
-		}
-		entry++;
-	}
-}
-
-static char *ft_wildcard_get_pattern(Lexer *lexer) {
-	char *start;
-	char *end;
-
-	start = lexer->current_position;
-	end   = lexer->current_position;
-
-	while (!ft_isspace(*(start - 1)))
-		start--;
-	while (!ft_isspace(*end) && *end)
-		end++;
-
-	/* update lexer position */
-	lexer->current_position += (end - lexer->current_position);	
-	return (ft_strndup(start, end - start));
-}
-
-static uint ft_gt_last_sep_pos(char *position) {
-	char *end;
-
-	end = position;
-	while (!(ft_isspace(*(position - 1))))
-		position--;
-	
-	return (uint) (end - position);
-}
-
-
 static Token *mk_wildcard_token(Lexer *lexer)
 {
 	DIR *dir;
 	struct dirent *entry;
-	char *tmp;
-	char *wildcard;
+	char **wildcards;
 	char *command;
+	char *tmp;
 	Token *token;
+	byte i;
 
 	tmp = (char *) lexer->current_position;
+	i = 0;
 	command = NULL;
 	
 	token = ft_calloc(1, sizeof(Token));
 	if (!token) 
 		return (NULL);
 		
-	if ((dir = opendir(".")) == NULL) 
-		return NULL; // error ao abrir diretorio
 	
-	wildcard = ft_wildcard_get_pattern(lexer);
+	wildcards = ft_wildcard_split_args(lexer);
 
-	while ((entry = readdir(dir)) != NULL) 
-	{
-		if (ft_strmatch(entry->d_name, wildcard))
+	while (wildcards[i] != NULL) {
+		if ((dir = opendir(".")) == NULL) 
+			return NULL; // error ao abrir diretorio
+		while ((entry = readdir(dir)) != NULL) 
 		{
-			if (command) {
-				char *s1 = command; 
-				command = ft_strjoin(command, " ");
-				free(s1);
-				s1 = command;
-				command = ft_strjoin(command, entry->d_name);
-				free(s1);
-			} else {
-				char *s1 = ft_strndup(lexer->start, tmp - ft_gt_last_sep_pos(tmp) - lexer->start);
-				char *s2 = ft_strdup(entry->d_name);
-				command = ft_strjoin(s1, s2);
-				free(s1); free(s2);
+			if (ft_strmatch(entry->d_name, wildcards[i]))
+			{
+				if (command) {
+					char *s1 = command; 
+					command = ft_strjoin(command, " ");
+					free(s1);
+					s1 = command;
+					command = ft_strjoin(command, entry->d_name);
+					free(s1);
+				} else {
+					char *s1 = ft_strndup(lexer->start, tmp - ft_gt_last_sep_pos(tmp) - lexer->start);
+					char *s2 = ft_strdup(entry->d_name);
+					command = ft_strjoin(s1, s2);
+					free(s1); free(s2);
+				}
 			}
 		}
+		free(wildcards[i]);
+		rewinddir(dir);
+		i++;
 	}
 	closedir(dir);
+	free(wildcards);
 
 	token->type = TOKEN_COMMAND;
 	token->start = command;

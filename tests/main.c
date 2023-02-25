@@ -5,6 +5,7 @@ char	*test_prefix = NULL;
 void	tests_main(void)
 {
 	test_first();
+    test_ft_wildcard_split_args();
 	free(test_prefix);
 }
 

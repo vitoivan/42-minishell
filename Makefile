@@ -38,6 +38,7 @@ TARGETS = 	main.c \
 			utils/skip_quotes.c \
 			utils/string_builder.c \
 			utils/clear_splitted.c \
+			utils/ft_wildcard_utils.c \
 			cmd/cmd_is_valid.c \
 			cmd/cmd_try_run.c \
 			cmd/path.c \
@@ -70,7 +71,8 @@ SRC_OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o))
 # ---------------- tests
 TEST_TARGETS =  tests/main.c \
 				tests/utils.c \
-				tests/first_test.c
+				tests/first_test.c \
+				tests/ft_wildcard_utils.c
 
 TESTS_OBJS = $(addprefix ./$(OBJ_DIR)/,$(TEST_TARGETS:.c=.o))
 
