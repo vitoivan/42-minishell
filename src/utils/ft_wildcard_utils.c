@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:36:18 by jv                #+#    #+#             */
-/*   Updated: 2023/02/25 19:21:14 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/25 19:22:18 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,12 @@ uint ft_gt_last_sep_pos(char *position) {
 	return (uint) (end - position);
 }
 
-void ft_parser_wildcard_exp(char *file_name, char *mask, char **command) {
-
+void ft_parser_wildcard_exp(char *file_name, char *mask, char **command)
+{
+    char *s1;
     if (ft_strmatch(file_name, mask))
     {
-        char *s1 = *command; 
+        *s1 = *command; 
 		*command = ft_strjoin(*command, " ");
 		free(s1);
 		s1 = *command;
