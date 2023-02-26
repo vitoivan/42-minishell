@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:36:18 by jv                #+#    #+#             */
-/*   Updated: 2023/02/25 19:28:23 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/25 22:08:45 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 static byte ft_strmatch(char *entry, char *pattern) 
 {
+
 	while(1) {
 		char m = *pattern;
 		char c = *entry;
@@ -23,7 +24,11 @@ static byte ft_strmatch(char *entry, char *pattern)
 		if (m == 0)
 			return (c == 0);
 		if (m == '*') {
-			if (ft_strmatch(entry, pattern + 1))
+            int n = 0;
+            while (m == '*') 
+                m = *(pattern + ++n);
+
+			if (ft_strmatch(entry, pattern + n))
 				return (1);
 			if (c == 0)
 				return (0);
@@ -78,6 +83,7 @@ static uint ft_gt_last_sep_pos(char *position) {
 static void ft_parser_wildcard_exp(char *file_name, char *mask, char **command)
 {
     char *s1;
+    
     if (ft_strmatch(file_name, mask))
     {
         s1 = *command; 
@@ -96,6 +102,7 @@ char *ft_mk_wildcard_command(Lexer *lexer)
     char **wildcards;
     char *command;
     uint size;
+
     if ((dir = opendir(".")) == NULL) 
 		return NULL; // error ao abrir diretorio
     
