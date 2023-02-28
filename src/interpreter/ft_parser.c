@@ -1,11 +1,11 @@
 
 #include "../../includes/minishell.h"
 
-static AstNode	*mk_node_command(Token *token)
+static t_ast_node	*mk_node_command(t_token *token)
 {
-	AstNode	*node;
+	t_ast_node	*node;
 
-	node = ft_calloc(sizeof(AstNode), 1);
+	node = ft_calloc(sizeof(t_ast_node), 1);
 	if (!node)
 		return (NULL);
 	node->type = NODE_COMMAND;
@@ -13,12 +13,12 @@ static AstNode	*mk_node_command(Token *token)
 	return (node);
 }
 
-static AstNode	*mk_node_binary_expression(Token *token, AstNode *left,
-		AstNode *right)
+static t_ast_node	*mk_node_binary_expression(t_token *token, t_ast_node *left,
+		t_ast_node *right)
 {
-	AstNode	*node;
+	t_ast_node	*node;
 
-	node = ft_calloc(sizeof(AstNode), 1);
+	node = ft_calloc(sizeof(t_ast_node), 1);
 	if (!node)
 		return (NULL);
 	node->type = get_node_type(token);
@@ -28,11 +28,11 @@ static AstNode	*mk_node_binary_expression(Token *token, AstNode *left,
 	return (node);
 }
 
-static AstNode	*expression_builder(ParserContext *context)
+static t_ast_node	*expression_builder(t_parser_context *context)
 {
-	AstNode	*node;
-	AstNode	*right;
-	Token	*operator;
+	t_ast_node	*node;
+	t_ast_node	*right;
+	t_token		*operator;
 
 	node = mk_node_command(get_previus_token(context));
 	right = NULL;
@@ -50,7 +50,7 @@ static AstNode	*expression_builder(ParserContext *context)
 	return (node);
 }
 
-static AstNode	*parser_expression(ParserContext *context)
+static t_ast_node	*parser_expression(t_parser_context *context)
 {
 	advance_to_next_token(context);
 	if (get_previus_token(context)->type == TOKEN_ERROR)
@@ -63,10 +63,10 @@ static AstNode	*parser_expression(ParserContext *context)
 	return (expression_builder(context));
 }
 
-AstNode	*ft_parser(char *source)
+t_ast_node	*ft_parser(char *source)
 {
-	ParserContext	context;
-	AstNode			*command_tree;
+	t_parser_context	context;
+	t_ast_node			*command_tree;
 
 	lexer_init(&context.lexer, source);
 	parser_init(&context.parser);

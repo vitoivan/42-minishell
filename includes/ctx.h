@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/20 12:28:42 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/02/28 08:06:14 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_ctx
 	int			argc;
 	t_lkd_lst	*env;
 	char		**argv;
-	AstNode		*root_cmd;
+	t_ast_node	*root_cmd;
 	char		*buffer;
 }				t_ctx;
 

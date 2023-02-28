@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-AstNodeType	get_node_type(Token *token)
+e_ast_node_type	get_node_type(t_token *token)
 {
 	if (ft_strcmp(token->start, "&&") == 0)
 		return (NODE_AND);
@@ -17,31 +17,31 @@ AstNodeType	get_node_type(Token *token)
 	return (NODE_INVALID);
 }
 
-static void	ast_free_command_node(AstNode *node)
+static void	ast_free_command_node(t_ast_node *node)
 {
 	del_token(node->token);
 	free(node);
 }
 
-Precedence	get_precedence(Token *token)
+e_precedence	get_precedence(t_token *token)
 {
 	if (token->type == TOKEN_HIGH_OPERATOR)
 		return (PREC_HIGH);
 	return (PREC_NONE);
 }
 
-static void	ast_free_binary_exp_node(AstNode *node)
+static void	ast_free_binary_exp_node(t_ast_node *node)
 {
 	ast_node_free(node->as.binaryExpression.left);
 	ast_node_free(node->as.binaryExpression.right);
 	ast_free_command_node(node);
 }
 
-static void	ast_free_semicolon_exp_node(AstNode *node)
+static void	ast_free_semicolon_exp_node(t_ast_node *node)
 {
 	t_lkd_lst	*list;
 	t_lkd_node	*head;
-	uint		i;
+	UINT		i;
 
 	list = get_head_node(node);
 	head = list->head;
@@ -55,12 +55,12 @@ static void	ast_free_semicolon_exp_node(AstNode *node)
 	free(node->as.expressions.nodes);
 }
 
-t_lkd_lst	*get_head_node(AstNode *node)
+t_lkd_lst	*get_head_node(t_ast_node *node)
 {
 	return (node->as.expressions.nodes);
 }
 
-void	ast_node_free(AstNode *node)
+void	ast_node_free(t_ast_node *node)
 {
 	if (!node)
 		return ;
@@ -78,7 +78,7 @@ void	ast_node_free(AstNode *node)
 	}
 }
 
-void	parser_init(Parser *parser)
+void	parser_init(t_parser *parser)
 {
 	parser->current_token = NULL;
 	parser->previus_token = NULL;

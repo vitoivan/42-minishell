@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/25 15:21:04 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/28 08:09:18 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define DOUBLE_QUOTE 34
 # define BUFFER_SIZE 4096
 # define DEBUG 0
-# define uint unsigned int
-# define byte unsigned char
+# define UINT unsigned int
+# define BYTE unsigned char
 
 enum							e_bool
 {
@@ -46,13 +46,13 @@ typedef enum
 	NODE_REDIRECT,
 	NODE_REDIRECT_APPEND,
 	NODE_SEMICOLON
-}								AstNodeType;
+}								e_ast_node_type;
 
 typedef enum
 {
 	PREC_NONE,
 	PREC_HIGH
-}								Precedence;
+}								e_precedence;
 
 typedef enum
 {
@@ -60,58 +60,58 @@ typedef enum
 	TOKEN_COMMAND,
 	TOKEN_OPERATOR,
 	TOKEN_HIGH_OPERATOR
-}								TokenType;
+}								t_token_type;
 
-typedef struct
+typedef struct s_lexer
 {
-	char					*start;
-	char					*current_position;
-}								Lexer;
+	char						*start;
+	char						*current_position;
+}								t_lexer;
 
 typedef struct
 {
 	char						*start;
 	char						*error_msg;
-	TokenType					type;
-	uint						size;
-}								Token;
+	t_token_type				type;
+	UINT						size;
+}								t_token;
 
-typedef struct parser_t
+typedef struct s_parser
 {
-	Token						*previus_token;
-	Token						*current_token;
-	byte						had_error;
-}								Parser;
+	t_token						*previus_token;
+	t_token						*current_token;
+	BYTE						had_error;
+}								t_parser;
 
-typedef struct
+typedef struct s_parser_context
 {
-	Lexer						lexer;
-	Parser						parser;
-}								ParserContext;
+	t_lexer						lexer;
+	t_parser					parser;
+}								t_parser_context;
 
-typedef struct ast_node_t
+typedef struct s_ast_node
 {
-	AstNodeType					type;
-	Token						*token;
-	byte						had_error;
+	e_ast_node_type				type;
+	t_token						*token;
+	BYTE						had_error;
 	union
 	{
 		struct
 		{
-			struct ast_node_t	*left;
-			struct ast_node_t	*right;
+			struct s_ast_node	*left;
+			struct s_ast_node	*right;
 		} binaryExpression;
 		struct
 		{
 			t_lkd_lst			*nodes;
 		} expressions;
 	} as;
-}								AstNode;
+}								t_ast_node;
 
-typedef struct
+typedef struct s_string_builder
 {
-	uint						size;
+	UINT						size;
 	char						*start;
-}								StringBuilder;
+}								t_str_builder;
 
 #endif

@@ -1,7 +1,7 @@
 define plist
   set var $n = $arg0->as.expressions.nodes->head
   while $n
-    printf "%s\n", ((AstNode *) ($n->content))->token->start
+    printf "%s\n", ((t_ast_node *) ($n->content))->token->start
     set var $n = $n->next
   end
 end

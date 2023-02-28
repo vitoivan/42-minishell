@@ -1,12 +1,12 @@
 #include "../../includes/minishell.h"
 
-byte	is_at_end(Lexer *lexer)
+BYTE	is_at_end(t_lexer *lexer)
 {
 	return (*lexer->current_position == '\0' ||
 			*lexer->current_position == '\n');
 }
 
-byte	is_operator(Lexer *lexer)
+BYTE	is_operator(t_lexer *lexer)
 {
 	char	c;
 
@@ -16,30 +16,30 @@ byte	is_operator(Lexer *lexer)
 	return (0);
 }
 
-void	skip_white_spaces(Lexer *lexer)
+void	skip_white_spaces(t_lexer *lexer)
 {
 	while (ft_isspace(*lexer->current_position) && !is_at_end(lexer))
 		lexer->current_position++;
 	lexer->start = lexer->current_position;
 }
 
-void	lexer_init(Lexer *lexer, char *source)
+void	lexer_init(t_lexer *lexer, char *source)
 {
 	lexer->start = source;
 	lexer->current_position = source;
 }
 
-Token	*get_current_token(ParserContext *context)
+t_token	*get_current_token(t_parser_context *context)
 {
 	return (context->parser.current_token);
 }
 
-Token	*get_previus_token(ParserContext *context)
+t_token	*get_previus_token(t_parser_context *context)
 {
 	return (context->parser.previus_token);
 }
 
-char	*ft_strndup(const char *str, uint n)
+char	*ft_strndup(const char *str, UINT n)
 {
 	char *new = NULL;
 

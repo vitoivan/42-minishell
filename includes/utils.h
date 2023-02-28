@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/25 19:27:17 by jv               ###   ########.fr       */
+/*   Updated: 2023/02/28 10:03:35 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,30 @@
 # include "ctx.h"
 # include "define.h"
 
+typedef struct s_str_builder_internal
+{
+	char		*new_str;
+	char		*env_name;
+	char		*env_value;
+	int			ini_pos;
+	int			i;
+	int			j;
+	int			real_size;
+	int			single_quote;
+	int			env_len;
+}				t_str_builder_internal;
+
+typedef struct s_str_builder_real_size
+{
+	int			value_size;
+	int			i;
+	char		*env_value;
+	char		*env_name;
+	int			ini_pos;
+	int			env_name_len;
+	int			env_value_len;
+}				t_str_builder_real_size_internal;
+
 BOOL			get_line_from_terminal(char **line, t_ctx *);
 void			free_if_exists(void **data);
 void			free_token(void *data);
@@ -26,23 +50,23 @@ char			*get_hostname(char **envp);
 void			print_lkd_list(t_lkd_lst **list);
 
 /*	parser functions	*/
-AstNode			*ft_parser(char *source);
-AstNodeType		get_node_type(Token *token);
-void			ast_node_free(AstNode *node);
-void			parser_init(Parser *parser);
-t_lkd_lst		*get_head_node(AstNode *node);
+t_ast_node		*ft_parser(char *source);
+e_ast_node_type	get_node_type(t_token *token);
+void			ast_node_free(t_ast_node *node);
+void			parser_init(t_parser *parser);
+t_lkd_lst		*get_head_node(t_ast_node *node);
 
 /*  tokenizer functions */
-void			del_token(Token *token);
-void			advance_to_next_token(ParserContext *context);
-void			lexer_init(Lexer *lexer, char *source);
-void			skip_white_spaces(Lexer *lexer);
-byte			is_at_end(Lexer *lexer);
-byte			is_operator(Lexer *lexer);
-Token			*get_current_token(ParserContext *context);
-Token			*get_previus_token(ParserContext *context);
-char			*ft_strndup(const char *str, uint n);
-Precedence		get_precedence(Token *token);
+void			del_token(t_token *token);
+void			advance_to_next_token(t_parser_context *context);
+void			lexer_init(t_lexer *lexer, char *source);
+void			skip_white_spaces(t_lexer *lexer);
+BYTE			is_at_end(t_lexer *lexer);
+BYTE			is_operator(t_lexer *lexer);
+t_token			*get_current_token(t_parser_context *context);
+t_token			*get_previus_token(t_parser_context *context);
+char			*ft_strndup(const char *str, UINT n);
+e_precedence	get_precedence(t_token *token);
 int				ft_isspace(int c);
 BOOL			ft_is_double_quote(char c);
 BOOL			ft_is_single_quote(char c);
@@ -54,12 +78,12 @@ void			clear_splitted(char ***splitted);
 void			print_errno(char *line);
 
 /* debug functions */
-void			debug_command_tree(AstNode *root);
-void			debug_token(Token *token);
+void			debug_command_tree(t_ast_node *root);
+void			debug_token(t_token *token);
 
 /*   string builder       */
-StringBuilder	*string_builder(const char *s, int t_size);
+t_str_builder	*string_builder(const char *s, int t_size);
 
 /*   wildcard             */
-char *ft_mk_wildcard_command(Lexer *lexer);
+char			*ft_mk_wildcard_command(t_lexer *lexer);
 #endif
