@@ -106,6 +106,26 @@ static void	debug_node_semicolon(t_ast_node *node)
 	print_with_ident("}");
 }
 
+static void	debug_node_here_document(t_ast_node *node)
+{
+	print_with_ident("Here Document {");
+	begin_scope();
+	debug_command_tree(node->as.binaryExpression.left);
+	debug_command_tree(node->as.binaryExpression.right);
+	end_scope();
+	print_with_ident("}");
+}
+
+static void	debug_node_redirect_input(t_ast_node *node)
+{
+	print_with_ident("Redirect Input {");
+	begin_scope();
+	debug_command_tree(node->as.binaryExpression.left);
+	debug_command_tree(node->as.binaryExpression.right);
+	end_scope();
+	print_with_ident("}");
+}
+
 void	debug_command_tree(t_ast_node *root)
 {
 	switch (root->type)
@@ -122,6 +142,12 @@ void	debug_command_tree(t_ast_node *root)
 	case NODE_REDIRECT:
 		debug_node_redirect(root);
 		break ;
+	case NODE_HERE_DOCUMENT:
+		debug_node_here_document(root);
+		break;
+	case NODE_REDIRECT_INPUT:
+		debug_node_redirect_input(root);
+	break;
 	case NODE_REDIRECT_APPEND:
 		debug_node_redirect_append(root);
 		break ;

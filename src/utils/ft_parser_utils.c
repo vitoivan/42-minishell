@@ -8,6 +8,10 @@ e_ast_node_type	get_node_type(t_token *token)
 		return (NODE_OR);
 	if (ft_strcmp(token->start, "|") == 0)
 		return (NODE_PIPE);
+	if (ft_strcmp(token->start, "<") == 0)
+		return (NODE_REDIRECT_INPUT);
+	if (ft_strcmp(token->start, "<<") == 0)
+		return (NODE_HERE_DOCUMENT);
 	if (ft_strcmp(token->start, ">") == 0)
 		return (NODE_REDIRECT);
 	if (ft_strcmp(token->start, ">>") == 0)

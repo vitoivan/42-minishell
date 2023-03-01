@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/28 08:09:18 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/02/28 22:23:52 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
 # define BUFFER_SIZE 4096
-# define DEBUG 0
+# define DEBUG 1
 # define UINT unsigned int
 # define BYTE unsigned char
 
@@ -43,6 +43,8 @@ typedef enum
 	NODE_AND,
 	NODE_OR,
 	NODE_PIPE,
+	NODE_REDIRECT_INPUT,
+	NODE_HERE_DOCUMENT,
 	NODE_REDIRECT,
 	NODE_REDIRECT_APPEND,
 	NODE_SEMICOLON
