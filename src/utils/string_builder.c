@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:50:01 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/28 10:03:46 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/02/28 22:15:16 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 static int	free_everything(void *rs, void *sb, const char *want_free)
 {
 	t_str_builder_real_size_internal	*aux_rs;
-	t_str_builder_internal				*aux_sb;
+	(void) sb;
 
 	aux_rs = (t_str_builder_real_size_internal *)rs;
-	aux_sb = (t_str_builder_internal *)sb;
 	if (!ft_strcmp(want_free, "real_str"))
 	{
 		if (aux_rs)

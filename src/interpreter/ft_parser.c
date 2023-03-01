@@ -53,6 +53,8 @@ static t_ast_node	*expression_builder(t_parser_context *context)
 static t_ast_node	*parser_expression(t_parser_context *context)
 {
 	advance_to_next_token(context);
+	if (get_previus_token(context) == NULL) 
+		return (NULL);
 	if (get_previus_token(context)->type == TOKEN_ERROR)
 	{
 		free(get_previus_token(context));
