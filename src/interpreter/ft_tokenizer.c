@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/04 14:28:14 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/04 14:35:18 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,26 @@ static t_token	*scan_command(t_lexer *lexer)
 {
 	BYTE	quote;
 	BYTE	variable;
+	BYTE 	single_quote;
 
 	quote = 0;
 	variable = 0;
+	single_quote = 0;
 	if (is_operator(lexer) || is_at_end(lexer))
 		return (NULL);
-	while (!is_at_end(lexer) && (!is_operator(lexer) || quote))
+	while (!is_at_end(lexer) && (!is_operator(lexer) || quote || single_quote))
 	{
 		if (ft_is_double_quote(*lexer->current_position))
 			quote = !quote;
+		if (ft_is_single_quote(*lexer->current_position))
+			single_quote = !single_quote;
 		if (*lexer->current_position == '$')
 			variable = 1;
 		if (*lexer->current_position == '*')
 			return (mk_wildcard_token(lexer));
 		lexer->current_position++;
 	}
-	if (quote)
+	if (quote || single_quote)
 	{
 		ft_printf("t_parser Error, UNQUOTED STRING\n");
 		exit(UNQUOTED_STRING_ERROR);
