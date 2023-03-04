@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/28 08:09:18 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/04 14:28:14 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static t_token	*scan_command(t_lexer *lexer)
 	variable = 0;
 	if (is_operator(lexer) || is_at_end(lexer))
 		return (NULL);
-	while (!is_at_end(lexer) && !is_operator(lexer))
+	while (!is_at_end(lexer) && (!is_operator(lexer) || quote))
 	{
 		if (ft_is_double_quote(*lexer->current_position))
 			quote = !quote;
