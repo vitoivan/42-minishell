@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/28 22:23:52 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/04 18:14:49 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define DEBUG 1
 # define UINT unsigned int
 # define BYTE unsigned char
+# define HERE_DOC  "EOF"
+# define HERE_DOC_2 "_"
 
 enum							e_bool
 {
@@ -61,7 +63,14 @@ typedef enum
 	TOKEN_ERROR,
 	TOKEN_COMMAND,
 	TOKEN_OPERATOR,
-	TOKEN_HIGH_OPERATOR
+	TOKEN_OPERATOR_HERE_DOC,
+	TOKEN_OPERATOR_REDIRECT_INPUT,
+	TOKEN_OPERATOR_AND,
+	TOKEN_OPERATOR_OR,
+	TOKEN_OPERATOR_PIPE,
+	TOKEN_OPERATOR_REDIRECT,
+	TOKEN_OPERATOR_REDIRECT_APPEND,
+	TOKEN_OPERATOR_SEMICOLON
 }								t_token_type;
 
 typedef struct s_lexer

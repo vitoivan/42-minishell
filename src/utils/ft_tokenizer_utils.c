@@ -16,29 +16,30 @@ BYTE	is_operator(t_lexer *lexer)
 	return (0);
 }
 
-t_token_type	ft_get_token_type(t_lexer *lexer)
-{
-	char *token_content;
-	t_token_type type;
 
-	token_content = ft_strndup(lexer->start, lexer->current_position - lexer->start);
-	type = TOKEN_ERROR;
-	if (ft_strcmp(token_content, "||") == 0)
-		type = TOKEN_OPERATOR_OR;
-	if (ft_strcmp(token_content, "|") == 0)
-		type = TOKEN_OPERATOR_PIPE;
-	if (ft_strcmp(token_content, "<") == 0)
-		type = TOKEN_OPERATOR_REDIRECT_INPUT;
-	if (ft_strcmp(token_content, "<<") == 0)
-		type = TOKEN_OPERATOR_HERE_DOC;
-	if (ft_strcmp(token_content, ">") == 0)
-		type = TOKEN_OPERATOR_REDIRECT;
-	if (ft_strcmp(token_content, ">>") == 0)
-		type = TOKEN_OPERATOR_REDIRECT_APPEND;
-	if (ft_strcmp(token_content, ";") == 0)
-		type = TOKEN_OPERATOR_SEMICOLON;
-	free(token_content);
-	return (type);
+
+
+t_token_type	ft_get_token_type(t_token *token)
+{
+
+	if (ft_strcmp(token->start, "&&") == 0)
+		return (TOKEN_OPERATOR_AND);
+	if (ft_strcmp(token->start, "||") == 0)
+		return (TOKEN_OPERATOR_OR);
+	if (ft_strcmp(token->start, "|") == 0)
+		return (TOKEN_OPERATOR_PIPE);
+	if (ft_strcmp(token->start, "<") == 0)
+		return (TOKEN_OPERATOR_REDIRECT_INPUT);
+	if (ft_strcmp(token->start, "<<") == 0)
+		return (TOKEN_OPERATOR_HERE_DOC);
+	if (ft_strcmp(token->start, ">") == 0)
+		return (TOKEN_OPERATOR_REDIRECT);
+	if (ft_strcmp(token->start, ">>") == 0)
+		return (TOKEN_OPERATOR_REDIRECT_APPEND);
+	if (ft_strcmp(token->start, ";") == 0)
+		return (TOKEN_OPERATOR_SEMICOLON);
+
+	return (TOKEN_COMMAND);
 }
 
 void	skip_white_spaces(t_lexer *lexer)

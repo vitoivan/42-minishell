@@ -37,10 +37,9 @@ static t_ast_node	*expression_builder(t_parser_context *context)
 	node = mk_node_command(get_previus_token(context));
 	right = NULL;
 	operator= get_current_token(context);
-	if (operator->type != TOKEN_OPERATOR || operator== NULL)
+	if (!operator || operator->type == TOKEN_COMMAND)
 		return (node);
-	while ((operator= get_current_token(context)) != NULL
-		&& operator->type != TOKEN_HIGH_OPERATOR)
+	while ((operator= get_current_token(context)) != NULL)
 	{
 		advance_to_next_token(context);
 		right = mk_node_command(get_current_token(context));

@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/04 14:35:18 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/04 22:31:01 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@
 
 #include "../../includes/minishell.h"
 
-static t_token	*mk_token(t_lexer *lexer, t_token_type type, BYTE variable)
+static t_token	*lexer_next_token(t_lexer *lexer);
+static t_token	*scan_command(t_lexer *lexer);
+static t_token	*scan_operator(t_lexer *lexer);
+
+static t_token	*mk_token(t_lexer *lexer, BYTE variable)
 {
 	t_token			*token;
 	t_str_builder	*sb;
@@ -27,7 +31,7 @@ static t_token	*mk_token(t_lexer *lexer, t_token_type type, BYTE variable)
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->type = type;
+	
 	if (variable)
 	{
 		sb = string_builder(lexer->start, (lexer->current_position
@@ -50,6 +54,7 @@ static t_token	*mk_token(t_lexer *lexer, t_token_type type, BYTE variable)
 		token->size = (UINT)(lexer->current_position - lexer->start);
 		token->start = ft_strndup(lexer->start, token->size);
 	}
+	token->type = ft_get_token_type(token);
 	return (token);
 }
 
@@ -66,17 +71,39 @@ static t_token	*mk_wildcard_token(t_lexer *lexer)
 	return (token);
 }
 
+t_token *ft_tmp_next_token(t_lexer *lexer)
+{
+	char	*curr;
+	t_token	*tmp_token;
+
+	curr = lexer->current_position;
+	tmp_token = ft_calloc(1, sizeof(t_token));
+
+	while (!ft_isspace(*lexer->current_position) && !is_at_end(lexer))
+		lexer->current_position++;
+	tmp_token->start = ft_strndup(curr + 1, lexer->current_position - curr);
+	tmp_token->size  = (UINT) (lexer->current_position - curr);
+	tmp_token->type  = ft_get_token_type(tmp_token);
+	lexer->current_position = curr;
+	return (tmp_token);
+}
+
 static t_token	*scan_command(t_lexer *lexer)
 {
 	BYTE	quote;
 	BYTE	variable;
 	BYTE 	single_quote;
+	//t_token *next;
 
 	quote = 0;
 	variable = 0;
 	single_quote = 0;
 	if (is_operator(lexer) || is_at_end(lexer))
 		return (NULL);
+	/*if ((next = ft_tmp_next_token(lexer)) != NULL)
+	{
+		if (next->type)
+	}*/
 	while (!is_at_end(lexer) && (!is_operator(lexer) || quote || single_quote))
 	{
 		if (ft_is_double_quote(*lexer->current_position))
@@ -96,35 +123,29 @@ static t_token	*scan_command(t_lexer *lexer)
 	}
 	if (!is_at_end(lexer))
 		lexer->current_position--;
-	return (mk_token(lexer, TOKEN_COMMAND, variable));
+	return (mk_token(lexer, variable));
 }
 
 static t_token	*scan_operator(t_lexer *lexer)
 {
 	while (!is_at_end(lexer) && is_operator(lexer))
 		lexer->current_position++;
-	// if (!strncmp(lexer->current_position - 1, "||", 2))
-	// 	lexer->current_position++;
 	if (is_at_end(lexer))
-	{
 		return (NULL); // return token with error
-	}
-	if (ft_strncmp(lexer->start, ";", 1) == 0)
-		return (mk_token(lexer, TOKEN_HIGH_OPERATOR, 0));
-	return (mk_token(lexer, TOKEN_OPERATOR, 0));
+	return (mk_token(lexer, 0));
 }
 
-static t_token	*lexer_next_token(t_parser_context *context)
+static t_token	*lexer_next_token(t_lexer *lexer)
 {
 	t_token	*new_current_token;
 
-	skip_white_spaces(&context->lexer);
-	new_current_token = scan_command(&context->lexer);
+	skip_white_spaces(lexer);
+	new_current_token = scan_command(lexer);
 	if (!new_current_token)
-		new_current_token = scan_operator(&context->lexer);
+		new_current_token = scan_operator(lexer);
 	if (!new_current_token)
 		return (NULL);
-	context->lexer.start = context->lexer.current_position;
+	lexer->start = lexer->current_position;
 	return (new_current_token);
 }
 
@@ -140,5 +161,6 @@ void	del_token(t_token *token)
 void	advance_to_next_token(t_parser_context *context)
 {
 	context->parser.previus_token = context->parser.current_token;
-	context->parser.current_token = lexer_next_token(context);
+	context->parser.current_token = lexer_next_token(&context->lexer);
+	
 }
