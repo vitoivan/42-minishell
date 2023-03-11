@@ -6,50 +6,11 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/28 08:06:14 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 17:39:47 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	exec_tree(t_ast_node *node, t_ctx **ctx)
-{
-	if (node == NULL)
-		return ;
-	if (node->type == NODE_COMMAND)
-		cmd_try_run(ctx, node->token->start);
-	if (node->type == NODE_AND || node->type == NODE_OR)
-	{
-		if (node->as.binaryExpression.left)
-			exec_tree(node->as.binaryExpression.left, ctx);
-		if (node->type == NODE_OR || errno == EXIT_SUCCESS)
-		{
-			if ((*ctx)->buffer[0])
-			{
-				ft_printf("%s", (*ctx)->buffer);
-				ft_bzero((*ctx)->buffer, PIPE_BUFFER);
-			}
-			if (node->as.binaryExpression.right)
-				exec_tree(node->as.binaryExpression.right, ctx);
-		}
-	}
-	if (node->type == NODE_REDIRECT || node->type == NODE_REDIRECT_APPEND)
-	{
-		if (node->as.binaryExpression.left)
-			exec_tree(node->as.binaryExpression.left, ctx);
-		if ((*ctx)->buffer[0])
-			cmd_redirect(node->as.binaryExpression.right->token->start,
-							node->type,
-							ctx);
-	}
-	if (node->type == NODE_PIPE)
-	{
-		if (node->as.binaryExpression.left)
-			exec_tree(node->as.binaryExpression.left, ctx);
-		if (node->as.binaryExpression.right)
-			exec_tree(node->as.binaryExpression.right, ctx);
-	}
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -63,10 +24,12 @@ int	main(int argc, char **argv, char **envp)
 		if (!get_line_from_terminal(&line, ctx) || !line)
 			return (1);
 		if (line[0] == '\0' || line[0] == '\n')
+		{
+			free_if_exists((void **)&line);
 			continue ;
+		}
 		ctx->root_cmd = ft_parser(line);
-		if (line)
-			free(line);
+		free_if_exists((void **)&line);
 		if (ctx->root_cmd)
 		{
 			exec_tree(ctx->root_cmd, &ctx);

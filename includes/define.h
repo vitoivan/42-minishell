@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/10 22:37:31 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 17:40:09 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
 # define BUFFER_SIZE 4096
-# define DEBUG 1
+# define DEBUG 0
 # define UINT unsigned int
 # define BYTE unsigned char
 # define HERE_DOC "EOF"

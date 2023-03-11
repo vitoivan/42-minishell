@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/11 16:52:10 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 17:27:53 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
 # include <string.h>

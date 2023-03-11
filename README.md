@@ -1,6 +1,6 @@
 ## TODO:
 
--   ❌ Working History
+-   ✅ Working History
 -   ✅ Search and launch the right executable
 -   ✅ handle single and double quotes
 -   ✅ redirect with ">"

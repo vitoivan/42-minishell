@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/11 16:44:30 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 17:40:17 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void			parser_init(t_parser *parser);
 t_lkd_lst		*get_head_node(t_ast_node *node);
 
 /*  tokenizer functions */
+void			exec_tree(t_ast_node *node, t_ctx **ctx);
 void			del_token(t_token *token);
 void			advance_to_next_token(t_parser_context *context);
 void			lexer_init(t_lexer *lexer, char *source);

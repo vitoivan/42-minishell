@@ -27,6 +27,7 @@ TARGETS = 	main.c \
 			utils/ft_parser_utils.c \
 			utils/ft_tokenizer_utils.c \
 			interpreter/ft_tokenizer.c \
+			interpreter/exec_tree.c \
 			interpreter/ft_parser.c \
 			utils/print_lkd_list.c \
 			utils/skip_whitespace.c \
@@ -83,7 +84,7 @@ TESTS_OBJS = $(addprefix ./$(OBJ_DIR)/,$(TEST_TARGETS:.c=.o))
 LIBFT = $(OBJ_DIR)/libft.a
 
 
-VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.supp -s 
+VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.supp -s
 
 all: $(NAME) 
 

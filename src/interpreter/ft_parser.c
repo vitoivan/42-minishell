@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parser.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
+/*   Updated: 2023/03/11 17:40:25 by vivan-de         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -37,7 +48,7 @@ static t_ast_node	*expression_builder(t_parser_context *context)
 	node = mk_node_command(get_previus_token(context));
 	right = NULL;
 	operator= get_current_token(context);
-	if (!operator || operator->type == TOKEN_COMMAND)
+	if (!operator|| operator->type == TOKEN_COMMAND)
 		return (node);
 	while ((operator= get_current_token(context)) != NULL)
 	{
@@ -52,7 +63,7 @@ static t_ast_node	*expression_builder(t_parser_context *context)
 static t_ast_node	*parser_expression(t_parser_context *context)
 {
 	advance_to_next_token(context);
-	if (get_previus_token(context) == NULL) 
+	if (get_previus_token(context) == NULL)
 		return (NULL);
 	if (get_previus_token(context)->type == TOKEN_ERROR)
 	{
@@ -73,7 +84,7 @@ t_ast_node	*ft_parser(char *source)
 	parser_init(&context.parser);
 	advance_to_next_token(&context);
 	command_tree = parser_expression(&context);
-	if (command_tree)
+	if (command_tree && DEBUG)
 		debug_command_tree(command_tree);
 	return (command_tree);
 }
