@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/10 22:17:37 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:52:07 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 BOOL	get_line_from_terminal(char **line, t_ctx *ctx)
 {
-	print_terminal(ctx);
-	*line = get_next_line(STDIN_FILENO, 4096, True);
+	char	*prompt;
+
+	prompt = get_prompt(ctx);
+	*line = readline(prompt);
+	free(prompt);
 	if (*line)
 		return (True);
 	free_if_exists((void **)line);

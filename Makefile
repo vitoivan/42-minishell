@@ -83,7 +83,7 @@ TESTS_OBJS = $(addprefix ./$(OBJ_DIR)/,$(TEST_TARGETS:.c=.o))
 LIBFT = $(OBJ_DIR)/libft.a
 
 
-VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
+VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.supp -s 
 
 all: $(NAME) 
 

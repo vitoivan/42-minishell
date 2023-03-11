@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/31 08:34:50 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:51:45 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static char	*get_path_fmt(t_ctx *ctx)
 	char	**splitted;
 	int		skip_n_home;
 	char	*path_fmt;
+	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -28,39 +29,59 @@ static char	*get_path_fmt(t_ctx *ctx)
 	}
 	else
 		path_fmt = ft_strdup(ctx->path);
-	while (splitted[i])
-		free(splitted[i++]);
-	free(splitted);
+	clear_splitted(&splitted);
+	tmp = ft_strjoin(COLOR_BOLD BLU, path_fmt);
+	free(path_fmt);
+	path_fmt = ft_strjoin(tmp, RESET_COLOR REMOVE_BOLD);
+	free(tmp);
 	return (path_fmt);
 }
 
-static const char	*get_printf_str(void)
+static char	*get_dolar_ginal(void)
 {
-	char	*s;
+	char	*dolar_signal;
+	char	*dolar_signal_tmp;
 
-	s = COLOR_BOLD GREEN "%s" WHT ":" BLU "%s" WHT "$ " RESET_COLOR REMOVE_BOLD;
-	return ((const char *)s);
+	dolar_signal = ft_strdup("$ ");
+	dolar_signal_tmp = ft_strjoin(COLOR_BOLD WHT, dolar_signal);
+	free(dolar_signal);
+	dolar_signal = ft_strjoin(dolar_signal_tmp, RESET_COLOR REMOVE_BOLD "\0");
+	free(dolar_signal_tmp);
+	return (dolar_signal);
 }
 
 static char	*get_user_and_host(t_ctx *ctx)
 {
 	char	*user_and_host;
 	char	*tmp;
+	char	*tmp2;
 
 	tmp = ft_strjoin(ctx->user, "@");
 	user_and_host = ft_strjoin(tmp, ctx->hostname);
 	free(tmp);
-	return (user_and_host);
+	tmp = ft_strjoin(COLOR_BOLD GREEN, user_and_host);
+	tmp2 = ft_strjoin(tmp, RESET_COLOR REMOVE_BOLD);
+	free(tmp);
+	free(user_and_host);
+	return (tmp2);
 }
 
-void	print_terminal(t_ctx *ctx)
+char	*get_prompt(t_ctx *ctx)
 {
 	char	*user_and_host;
 	char	*path;
+	char	*dolar;
+	char	*tmp1;
+	char	*tmp2;
 
 	user_and_host = get_user_and_host(ctx);
 	path = get_path_fmt(ctx);
-	ft_printf(get_printf_str(), user_and_host, path);
-	free_if_exists((void **)&path);
-	free_if_exists((void **)&user_and_host);
+	dolar = get_dolar_ginal();
+	tmp1 = ft_strjoin(user_and_host, path);
+	tmp2 = ft_strjoin(tmp1, dolar);
+	free(user_and_host);
+	free(path);
+	free(dolar);
+	free(tmp1);
+	return (tmp2);
 }

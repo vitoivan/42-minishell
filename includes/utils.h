@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/10 22:33:01 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:44:30 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ BOOL			get_line_from_terminal(char **line, t_ctx *);
 void			free_if_exists(void **data);
 void			free_token(void *data);
 void			skip_whitespace(char **line, int always_skip_one);
-void			print_terminal(t_ctx *ctx);
+char			*get_prompt(t_ctx *ctx);
 char			*get_hostname(char **envp);
 void			print_lkd_list(t_lkd_lst **list);
 

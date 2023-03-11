@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/18 20:03:20 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/11 16:52:10 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 # include "ctx.h"
 # include "pipes.h"
 # include "utils.h"
+# include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <readline/readline.h>
 # include <stdio.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <dirent.h>
 
 #endif
