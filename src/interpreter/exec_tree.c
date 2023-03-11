@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:38:20 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 17:51:19 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 19:17:51 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	exec_tree(t_ast_node *node, t_ctx **ctx)
 {
 	if (node == NULL)
 		return ;
-	else if (node->type == NODE_COMMAND)
+	else if (node->type == NODE_COMMAND && node->token->start)
 		cmd_try_run(ctx, node->token->start);
 	else if (node->type == NODE_AND || node->type == NODE_OR)
 		exec_and_or(node, ctx);

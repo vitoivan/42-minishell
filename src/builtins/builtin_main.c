@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/10 19:18:08 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 19:03:07 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	builtin_main(t_ctx **ctx, char *line)
 		ctx_populate_buffer(ctx, "\e[1;1H\e[2J");
 	else if (is_equal(line, "cd", 2))
 	{
-		cmd_cd(line);
+		cmd_cd(ctx, line);
 		ctx_update(ctx);
 	}
 	else if (is_equal(line, "export", 6))

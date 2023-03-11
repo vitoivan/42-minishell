@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 18:45:38 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/11 19:03:43 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@ static int	cd(char *path)
 	return (True);
 }
 
-int	cmd_cd(char *line)
+int	cmd_cd(t_ctx **ctx, char *line)
 {
 	char	*path;
+	int		return_value;
 
 	path = line + 3;
 	errno = 0;
-	return (cd(path));
+	return_value = cd(path);
+	if (return_value == -1)
+		(*ctx)->status_code = errno;
+	return (return_value);
 }

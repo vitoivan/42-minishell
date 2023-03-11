@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_from_line.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 12:03:56 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/11 18:29:46 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*get_cmd_from_line(char *line)
 	char *cmd;
 	char *tmp;
 
+	if (!line)
+		return (NULL);
 	tmp = line;
 	while (*tmp && *tmp != ' ')
 		tmp++;

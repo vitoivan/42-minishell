@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 17:40:27 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 19:12:29 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 
 #include "../../includes/minishell.h"
 
-static t_token	*lexer_next_token(t_lexer *lexer);
-static t_token	*scan_command(t_lexer *lexer);
-static t_token	*scan_operator(t_lexer *lexer);
+static t_token	*lexer_next_token(t_ctx **ctx, t_lexer *lexer);
+static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer);
+static t_token	*scan_operator(t_ctx **ctx, t_lexer *lexer);
 
-static t_token	*mk_token(t_lexer *lexer, BYTE variable)
+static t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable)
 {
 	t_token			*token;
 	t_str_builder	*sb;
@@ -33,7 +33,7 @@ static t_token	*mk_token(t_lexer *lexer, BYTE variable)
 		return (NULL);
 	if (variable)
 	{
-		sb = string_builder(lexer->start, (lexer->current_position
+		sb = string_builder(ctx, lexer->start, (lexer->current_position
 					- lexer->start));
 		if (sb)
 		{
@@ -44,6 +44,8 @@ static t_token	*mk_token(t_lexer *lexer, BYTE variable)
 		else
 		{
 			ft_printf("LexerError: Undefined variable\n");
+			errno = 1;
+			(*ctx)->status_code = 1;
 			token->type = TOKEN_ERROR;
 			token->error_msg = "t_lexer Error: Undefined variable\n";
 		}
@@ -86,7 +88,7 @@ t_token	*ft_tmp_next_token(t_lexer *lexer)
 	return (tmp_token);
 }
 
-static t_token	*scan_command(t_lexer *lexer)
+static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 {
 	BYTE	quote;
 	BYTE	variable;
@@ -121,26 +123,26 @@ static t_token	*scan_command(t_lexer *lexer)
 	}
 	if (!is_at_end(lexer))
 		lexer->current_position--;
-	return (mk_token(lexer, variable));
+	return (mk_token(ctx, lexer, variable));
 }
 
-static t_token	*scan_operator(t_lexer *lexer)
+static t_token	*scan_operator(t_ctx **ctx, t_lexer *lexer)
 {
 	while (!is_at_end(lexer) && is_operator(lexer))
 		lexer->current_position++;
 	if (is_at_end(lexer))
 		return (NULL); // return token with error
-	return (mk_token(lexer, 0));
+	return (mk_token(ctx, lexer, 0));
 }
 
-static t_token	*lexer_next_token(t_lexer *lexer)
+static t_token	*lexer_next_token(t_ctx **ctx, t_lexer *lexer)
 {
 	t_token	*new_current_token;
 
 	skip_white_spaces(lexer);
-	new_current_token = scan_command(lexer);
+	new_current_token = scan_command(ctx, lexer);
 	if (!new_current_token)
-		new_current_token = scan_operator(lexer);
+		new_current_token = scan_operator(ctx, lexer);
 	if (!new_current_token)
 		return (NULL);
 	lexer->start = lexer->current_position;
@@ -156,8 +158,8 @@ void	del_token(t_token *token)
 	}
 }
 
-void	advance_to_next_token(t_parser_context *context)
+void	advance_to_next_token(t_ctx **ctx, t_parser_context *context)
 {
 	context->parser.previus_token = context->parser.current_token;
-	context->parser.current_token = lexer_next_token(&context->lexer);
+	context->parser.current_token = lexer_next_token(ctx, &context->lexer);
 }

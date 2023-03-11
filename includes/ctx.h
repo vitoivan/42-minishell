@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/02/28 08:06:14 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:54:39 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_ctx
 	char		*user;
 	char		*path;
 	char		*hostname;
+	int			status_code;
 	int			argc;
 	t_lkd_lst	*env;
 	char		**argv;

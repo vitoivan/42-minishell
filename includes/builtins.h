@@ -6,7 +6,7 @@
 
 BOOL	is_builtin(char *cmd);
 void	pwd(t_ctx **ctx, char *line);
-int		cmd_cd(char *line);
+int		cmd_cd(t_ctx **ctx, char *line);
 int		cmd_export(t_ctx **ctx, char *line);
 void	builtin_main(t_ctx **ctx, char *line);
 void	unset(t_ctx **ctx, char *line);

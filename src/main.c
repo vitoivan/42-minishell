@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 17:39:47 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 19:08:37 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 			free_if_exists((void **)&line);
 			continue ;
 		}
-		ctx->root_cmd = ft_parser(line);
+		ctx->root_cmd = ft_parser(&ctx, line);
 		free_if_exists((void **)&line);
 		if (ctx->root_cmd)
 		{

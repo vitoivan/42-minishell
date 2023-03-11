@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/11 17:40:17 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/11 19:08:12 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ typedef struct s_str_builder_real_size
 BOOL			get_line_from_terminal(char **line, t_ctx *);
 void			free_if_exists(void **data);
 void			free_token(void *data);
-void			skip_whitespace(char **line, int always_skip_one);
+int				skip_whitespace(char **line, int always_skip_one);
 char			*get_prompt(t_ctx *ctx);
 char			*get_hostname(char **envp);
 void			print_lkd_list(t_lkd_lst **list);
 
 /*	parser functions	*/
-t_ast_node		*ft_parser(char *source);
+t_ast_node		*ft_parser(t_ctx **ctx, char *source);
 t_ast_node_type	get_node_type(t_token *token);
 void			ast_node_free(t_ast_node *node);
 void			parser_init(t_parser *parser);
@@ -59,7 +59,7 @@ t_lkd_lst		*get_head_node(t_ast_node *node);
 /*  tokenizer functions */
 void			exec_tree(t_ast_node *node, t_ctx **ctx);
 void			del_token(t_token *token);
-void			advance_to_next_token(t_parser_context *context);
+void			advance_to_next_token(t_ctx **ctx, t_parser_context *context);
 void			lexer_init(t_lexer *lexer, char *source);
 void			skip_white_spaces(t_lexer *lexer);
 BYTE			is_at_end(t_lexer *lexer);
@@ -84,7 +84,7 @@ void			debug_command_tree(t_ast_node *root);
 void			debug_token(t_token *token);
 
 /*   string builder       */
-t_str_builder	*string_builder(const char *s, int t_size);
+t_str_builder	*string_builder(t_ctx **ctx, const char *s, int t_size);
 
 /*   wildcard             */
 char			*ft_mk_wildcard_command(t_lexer *lexer);

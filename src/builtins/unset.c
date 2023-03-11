@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/25 14:31:02 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/11 18:59:13 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	validate_unset(char *line)
+static void	validate_unset(t_ctx **ctx, char *line)
 {
 	char	*name;
 
@@ -20,12 +20,14 @@ static void	validate_unset(char *line)
 	if (!name)
 	{
 		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
+		(*ctx)->status_code = 1;
 		errno = 1;
 	}
 	skip_whitespace(&name, 0);
 	if (strlen(name) == 0)
 	{
 		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
+		(*ctx)->status_code = 1;
 		errno = 1;
 	}
 }
@@ -35,13 +37,9 @@ void	unset(t_ctx **ctx, char *line)
 	char	*name;
 	int		env_ind;
 
-	validate_unset(line);
+	validate_unset(ctx, line);
 	if (errno != EXIT_SUCCESS)
-	{
-		cmd_export(ctx, "export $?=1");
-		errno = 0;
 		return ;
-	}
 	name = line + 6;
 	skip_whitespace(&name, 0);
 	env_ind = validate_if_env_already_exists(ctx, name);
