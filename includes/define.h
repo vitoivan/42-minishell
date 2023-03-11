@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/10 22:32:57 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:37:31 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef enum e_token_type
 	TOKEN_OPERATOR_PIPE,
 	TOKEN_OPERATOR_REDIRECT,
 	TOKEN_OPERATOR_REDIRECT_APPEND,
-	TOKEN_OPERATOR_SEMICOLON
+	TOKEN_OPERATOR_SEMICOLON,
+	TOKEN_HIGH_OPERATOR
 }								t_token_type;
 
 typedef struct s_lexer
