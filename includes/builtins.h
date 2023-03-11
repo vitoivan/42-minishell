@@ -11,5 +11,6 @@ int		cmd_export(t_ctx **ctx, char *line);
 void	builtin_main(t_ctx **ctx, char *line);
 void	unset(t_ctx **ctx, char *line);
 int		validate_if_env_already_exists(t_ctx **ctx, char *name);
+void	echo(t_ctx **ctx, char *line);
 
 #endif

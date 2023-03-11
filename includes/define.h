@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/04 18:14:49 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/10 22:32:57 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define DEBUG 1
 # define UINT unsigned int
 # define BYTE unsigned char
-# define HERE_DOC  "EOF"
+# define HERE_DOC "EOF"
 # define HERE_DOC_2 "_"
 
 enum							e_bool
@@ -38,7 +38,7 @@ enum							e_erros
 	PARSER_ERROR
 };
 
-typedef enum
+typedef enum e_ast_node_type
 {
 	NODE_INVALID,
 	NODE_COMMAND,
@@ -50,15 +50,15 @@ typedef enum
 	NODE_REDIRECT,
 	NODE_REDIRECT_APPEND,
 	NODE_SEMICOLON
-}								e_ast_node_type;
+}								t_ast_node_type;
 
-typedef enum
+typedef enum e_precedence
 {
 	PREC_NONE,
 	PREC_HIGH
-}								e_precedence;
+}								t_precedence;
 
-typedef enum
+typedef enum e_token_type
 {
 	TOKEN_ERROR,
 	TOKEN_COMMAND,
@@ -79,7 +79,7 @@ typedef struct s_lexer
 	char						*current_position;
 }								t_lexer;
 
-typedef struct
+typedef struct s_token
 {
 	char						*start;
 	char						*error_msg;
@@ -102,7 +102,7 @@ typedef struct s_parser_context
 
 typedef struct s_ast_node
 {
-	e_ast_node_type				type;
+	t_ast_node_type				type;
 	t_token						*token;
 	BYTE						had_error;
 	union

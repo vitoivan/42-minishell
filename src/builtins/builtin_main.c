@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/20 16:27:26 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/10 19:18:08 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static int	is_equal(char *s1, char *s2, int len)
 
 void	builtin_main(t_ctx **ctx, char *line)
 {
-	char	*data_fmt;
-
 	if (is_equal(line, "pwd", 3))
 		pwd(ctx, line);
 	else if (is_equal(line, "clear", 5))
@@ -38,11 +36,7 @@ void	builtin_main(t_ctx **ctx, char *line)
 		exit(0);
 	}
 	else if (is_equal(line, "echo", 4))
-	{
-		data_fmt = ft_strjoin(line + 5, "\n");
-		ctx_populate_buffer(ctx, data_fmt);
-		free(data_fmt);
-	}
+		echo(ctx, line);
 	else if (is_equal(line, "env", 3))
 		env(ctx);
 	else if (is_equal(line, "unset", 5))

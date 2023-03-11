@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/04 22:18:00 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/10 22:33:01 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void			print_lkd_list(t_lkd_lst **list);
 
 /*	parser functions	*/
 t_ast_node		*ft_parser(char *source);
-e_ast_node_type	get_node_type(t_token *token);
+t_ast_node_type	get_node_type(t_token *token);
 void			ast_node_free(t_ast_node *node);
 void			parser_init(t_parser *parser);
 t_lkd_lst		*get_head_node(t_ast_node *node);
@@ -66,7 +66,7 @@ BYTE			is_operator(t_lexer *lexer);
 t_token			*get_current_token(t_parser_context *context);
 t_token			*get_previus_token(t_parser_context *context);
 char			*ft_strndup(const char *str, UINT n);
-e_precedence	get_precedence(t_token *token);
+t_precedence	get_precedence(t_token *token);
 int				ft_isspace(int c);
 BOOL			ft_is_double_quote(char c);
 BOOL			ft_is_single_quote(char c);

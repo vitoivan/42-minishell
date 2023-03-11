@@ -56,6 +56,7 @@ TARGETS = 	main.c \
 			builtins/unset.c \
 			builtins/export.c \
 			builtins/env.c \
+			builtins/echo.c \
 			builtins/builtin_main.c \
 			context/init.c \
 			context/populate_buffer.c \

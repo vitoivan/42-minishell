@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parser_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/10 22:16:59 by vivan-de          #+#    #+#             */
+/*   Updated: 2023/03/10 22:17:32 by vivan-de         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-e_ast_node_type	get_node_type(t_token *token)
+t_ast_node_type	get_node_type(t_token *token)
 {
 	if (ft_strcmp(token->start, "&&") == 0)
 		return (NODE_AND);
@@ -27,7 +39,7 @@ static void	ast_free_command_node(t_ast_node *node)
 	free(node);
 }
 
-e_precedence	get_precedence(t_token *token)
+t_precedence	get_precedence(t_token *token)
 {
 	if (token->type == TOKEN_HIGH_OPERATOR)
 		return (PREC_HIGH);

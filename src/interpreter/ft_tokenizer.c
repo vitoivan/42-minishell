@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/04 22:31:01 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/10 22:33:03 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static t_token	*mk_token(t_lexer *lexer, BYTE variable)
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
 		return (NULL);
-	
 	if (variable)
 	{
 		sb = string_builder(lexer->start, (lexer->current_position
@@ -71,19 +70,18 @@ static t_token	*mk_wildcard_token(t_lexer *lexer)
 	return (token);
 }
 
-t_token *ft_tmp_next_token(t_lexer *lexer)
+t_token	*ft_tmp_next_token(t_lexer *lexer)
 {
 	char	*curr;
 	t_token	*tmp_token;
 
 	curr = lexer->current_position;
 	tmp_token = ft_calloc(1, sizeof(t_token));
-
 	while (!ft_isspace(*lexer->current_position) && !is_at_end(lexer))
 		lexer->current_position++;
 	tmp_token->start = ft_strndup(curr + 1, lexer->current_position - curr);
-	tmp_token->size  = (UINT) (lexer->current_position - curr);
-	tmp_token->type  = ft_get_token_type(tmp_token);
+	tmp_token->size = (UINT)(lexer->current_position - curr);
+	tmp_token->type = ft_get_token_type(tmp_token);
 	lexer->current_position = curr;
 	return (tmp_token);
 }
@@ -92,9 +90,9 @@ static t_token	*scan_command(t_lexer *lexer)
 {
 	BYTE	quote;
 	BYTE	variable;
-	BYTE 	single_quote;
-	//t_token *next;
+	BYTE	single_quote;
 
+	//t_token *next;
 	quote = 0;
 	variable = 0;
 	single_quote = 0;
@@ -162,5 +160,4 @@ void	advance_to_next_token(t_parser_context *context)
 {
 	context->parser.previus_token = context->parser.current_token;
 	context->parser.current_token = lexer_next_token(&context->lexer);
-	
 }

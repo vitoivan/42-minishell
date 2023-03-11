@@ -1,5 +1,4 @@
 #include "../../includes/minishell.h"
-
 static int	depth = 0;
 static char	*indent = "  ";
 
