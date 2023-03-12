@@ -16,9 +16,6 @@ BYTE	is_operator(t_lexer *lexer)
 	return (0);
 }
 
-
-
-
 t_token_type	ft_get_token_type(t_token *token)
 {
 

@@ -169,8 +169,7 @@ void	debug_command_tree(t_ast_node *root)
 		debug_node_here_args(root);
 		break;
 	default:
-		ft_printf("Node invalido: %s\n", root->token->start);
-		exit(1);
+		ft_printf("%s\n", root->token->start);
 		break ;
 	}
 }

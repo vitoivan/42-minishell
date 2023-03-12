@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2023/03/12 16:25:12 by vivan-de         ###   ########.fr       */
-=======
-/*   Updated: 2023/03/12 18:28:58 by jv               ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2023/03/12 19:38:00 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +89,7 @@ static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 {
 	BYTE	quote;
 	BYTE	variable;
-<<<<<<< Updated upstream
-	BYTE	single_quote;
-	t_token	*next;
-=======
 	BYTE 	single_quote;
->>>>>>> Stashed changes
 
 	//t_token *next;
 	quote = 0;
@@ -147,7 +138,17 @@ static t_token *scan_here_document(t_lexer *lexer)
 	line 	   = NULL;
 	final_line = NULL;
 
-	/* handling signal do stop here_doc */
+
+	if ((token = ft_calloc(1, sizeof(t_token))) == NULL)
+		return (NULL);
+
+	if (!(*lexer->current_position == '_' ) || !ft_strcmp(lexer->current_position, "EOF"))
+	{
+			token->start = ft_strdup("minishell: erro de sintaxe próximo ao token inesperado `newline'");
+			token->size  = ft_strlen(token->start);
+			token->type  = TOKEN_ERROR;
+			return (token);
+	}
 	while (1)
 	{
 		line = readline("heredoc> ");
@@ -171,15 +172,12 @@ static t_token *scan_here_document(t_lexer *lexer)
 		
 		free_if_exists((void **)&line);
 	}
-
-	if ((token = ft_calloc(1, sizeof(t_token))) == NULL)
-		return (NULL);
 	token->type  = TOKEN_OPERATOR_HERE_DOC_ARGS;
 	token->start = final_line;
 	token->size = ft_strlen(final_line);
 
-	while(!is_at_end(lexer))
-		lexer->current_position++;
+	lexer->current_position++;
+		
 	return (token);
 }
 
