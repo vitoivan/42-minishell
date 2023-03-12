@@ -125,6 +125,15 @@ static void	debug_node_redirect_input(t_ast_node *node)
 	print_with_ident("}");
 }
 
+static void	debug_node_here_args(t_ast_node *node)
+{
+	print_with_ident("Here Document Args {");
+	begin_scope();
+	print_with_ident(node->token->start);
+	end_scope();
+	print_with_ident("}");
+}
+
 void	debug_command_tree(t_ast_node *root)
 {
 	switch (root->type)
@@ -156,6 +165,9 @@ void	debug_command_tree(t_ast_node *root)
 	case NODE_SEMICOLON:
 		debug_node_semicolon(root);
 		break ;
+	case NODE_HERE_ARGS:
+		debug_node_here_args(root);
+		break;
 	default:
 		ft_printf("Node invalido: %s\n", root->token->start);
 		exit(1);

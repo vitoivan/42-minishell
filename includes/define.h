@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/12 09:53:53 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 17:39:52 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
 # define BUFFER_SIZE 4096
-# define DEBUG 0
+# define DEBUG 1
 # define UINT unsigned int
 # define BYTE unsigned char
 # define HERE_DOC "EOF"
@@ -47,6 +47,7 @@ typedef enum e_ast_node_type
 	NODE_PIPE,
 	NODE_REDIRECT_INPUT,
 	NODE_HERE_DOCUMENT,
+	NODE_HERE_ARGS,
 	NODE_REDIRECT,
 	NODE_REDIRECT_APPEND,
 	NODE_SEMICOLON
@@ -64,6 +65,7 @@ typedef enum e_token_type
 	TOKEN_COMMAND,
 	TOKEN_OPERATOR,
 	TOKEN_OPERATOR_HERE_DOC,
+	TOKEN_OPERATOR_HERE_DOC_ARGS,
 	TOKEN_OPERATOR_REDIRECT_INPUT,
 	TOKEN_OPERATOR_AND,
 	TOKEN_OPERATOR_OR,

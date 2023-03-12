@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 19:08:17 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 18:29:56 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ static t_ast_node	*mk_node_command(t_token *token)
 	node = ft_calloc(sizeof(t_ast_node), 1);
 	if (!node)
 		return (NULL);
-	node->type = NODE_COMMAND;
+	if (!token)
+		node->type = NODE_INVALID;
+	else
+		node->type = get_node_type(token);
 	node->token = token;
 	return (node);
 }

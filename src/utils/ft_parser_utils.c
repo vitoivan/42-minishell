@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:16:59 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/10 22:37:24 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 18:30:53 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,15 @@ t_ast_node_type	get_node_type(t_token *token)
 		return (NODE_REDIRECT_APPEND);
 	if (ft_strcmp(token->start, ";") == 0)
 		return (NODE_SEMICOLON);
-	return (NODE_INVALID);
+	if (token->type == TOKEN_OPERATOR_HERE_DOC_ARGS)
+		return (NODE_HERE_ARGS);
+	return (NODE_COMMAND);
 }
 
 static void	ast_free_command_node(t_ast_node *node)
 {
 	del_token(node->token);
 	free(node);
-}
-
-t_precedence	get_precedence(t_token *token)
-{
-	if (token->type == TOKEN_HIGH_OPERATOR)
-		return (PREC_HIGH);
-	return (PREC_NONE);
 }
 
 static void	ast_free_binary_exp_node(t_ast_node *node)
