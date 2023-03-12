@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/12 14:48:10 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 20:33:21 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void			skip_quotes(char **line);
 BOOL			ft_isquote(char c);
 void			clear_splitted(char ***splitted);
 t_token_type	ft_get_token_type(t_token *token);
+t_token			*ft_mk_generic_token(t_token_type type, char *start , uint size);
 
 /* Error handle utils */
 void			print_errno(char *line);

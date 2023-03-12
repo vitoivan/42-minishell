@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 19:38:00 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/12 20:34:48 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,12 +143,9 @@ static t_token *scan_here_document(t_lexer *lexer)
 		return (NULL);
 
 	if (!(*lexer->current_position == '_' ) || !ft_strcmp(lexer->current_position, "EOF"))
-	{
-			token->start = ft_strdup("minishell: erro de sintaxe próximo ao token inesperado `newline'");
-			token->size  = ft_strlen(token->start);
-			token->type  = TOKEN_ERROR;
-			return (token);
-	}
+			return (ft_mk_generic_token(TOKEN_ERROR, 
+										ft_strdup("minishell: erro de sintaxe próximo ao token inesperado `newline'"),
+										ft_strlen(token->start)));
 	while (1)
 	{
 		line = readline("heredoc> ");
@@ -166,19 +163,17 @@ static t_token *scan_here_document(t_lexer *lexer)
 				break;
 			}
 			char *tmp = final_line;
+			final_line = ft_strjoin(final_line, "\n");
+			free_if_exists((void **)&tmp);
+			tmp = final_line;
 			final_line = ft_strjoin(final_line, line);
 			free_if_exists((void **)&tmp);
 		}
 		
 		free_if_exists((void **)&line);
 	}
-	token->type  = TOKEN_OPERATOR_HERE_DOC_ARGS;
-	token->start = final_line;
-	token->size = ft_strlen(final_line);
-
 	lexer->current_position++;
-		
-	return (token);
+	return (ft_mk_generic_token(TOKEN_OPERATOR_HERE_DOC_ARGS, final_line, ft_strlen(final_line)));
 }
 
 static t_token	*lexer_next_token(t_ctx **ctx, t_lexer *lexer, BYTE is_here_doc)

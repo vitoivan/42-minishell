@@ -62,6 +62,20 @@ t_token	*get_previus_token(t_parser_context *context)
 	return (context->parser.previus_token);
 }
 
+t_token *ft_mk_generic_token(t_token_type type, char *start , uint size)
+{
+	t_token *token;
+
+	if ((token = ft_calloc(1, sizeof(t_token))) == NULL)
+		return (NULL);
+
+	token->type  = type;
+	token->size  = size;
+	token->start = start;
+
+	return (token);
+}
+
 char	*ft_strndup(const char *str, UINT n)
 {
 	char *new = NULL;
