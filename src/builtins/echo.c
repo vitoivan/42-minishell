@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/10 22:10:40 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 14:54:15 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,9 @@ void	echo(t_ctx **ctx, char *line)
 	char	**args;
 	char	*str;
 	int		args_qty;
-	int		i;
 
 	args_qty = get_args_qty(line + 5);
 	args = (char **)ft_calloc(args_qty + 1, sizeof(char *));
-	i = 0;
 	if (args_qty <= 0)
 		return ;
 	populate_args(line, args_qty, args);

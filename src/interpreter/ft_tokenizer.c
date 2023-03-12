@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 19:12:29 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 14:51:58 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 {
 	BYTE	quote;
 	BYTE	variable;
-	BYTE	single_quote;
+	BYTE 	single_quote;
+	t_token *next;
 
 	//t_token *next;
 	quote = 0;
@@ -100,10 +101,12 @@ static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 	single_quote = 0;
 	if (is_operator(lexer) || is_at_end(lexer))
 		return (NULL);
-	/*if ((next = ft_tmp_next_token(lexer)) != NULL)
+	if ((next = ft_tmp_next_token(lexer)) != NULL)
 	{
-		if (next->type)
-	}*/
+		if (next->type == TOKEN_OPERATOR_HERE_DOC)
+			ft_printf("Essa linha tem um heredoc\n");
+		del_token(next);
+	}
 	while (!is_at_end(lexer) && (!is_operator(lexer) || quote || single_quote))
 	{
 		if (ft_is_double_quote(*lexer->current_position))
@@ -146,6 +149,7 @@ static t_token	*lexer_next_token(t_ctx **ctx, t_lexer *lexer)
 	if (!new_current_token)
 		return (NULL);
 	lexer->start = lexer->current_position;
+	
 	return (new_current_token);
 }
 
