@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:38:20 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 19:17:51 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 09:40:58 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,16 @@ static void	exec_redirect(t_ast_node *node, t_ctx **ctx)
 	}
 }
 
+static void	exec_redirect_input(t_ast_node *node, t_ctx **ctx)
+{
+	t_ast_node	*tmp;
+
+	tmp = node->as.binaryExpression.right;
+	cmd_redirect(tmp->token->start, node->type, ctx);
+	if (node->as.binaryExpression.left)
+		exec_tree(node->as.binaryExpression.left, ctx);
+}
+
 void	exec_tree(t_ast_node *node, t_ctx **ctx)
 {
 	if (node == NULL)
@@ -60,6 +70,8 @@ void	exec_tree(t_ast_node *node, t_ctx **ctx)
 		exec_and_or(node, ctx);
 	else if (node->type == NODE_REDIRECT || node->type == NODE_REDIRECT_APPEND)
 		exec_redirect(node, ctx);
+	else if (node->type == NODE_REDIRECT_INPUT)
+		exec_redirect_input(node, ctx);
 	else if (node->type == NODE_PIPE)
 		exec_pipe(node, ctx);
 }

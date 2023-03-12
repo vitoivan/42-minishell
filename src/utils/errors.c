@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 15:37:22 by jv                #+#    #+#             */
-/*   Updated: 2023/03/10 22:45:22 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 09:52:21 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	print_errno(char *line)
 	char	*err_str;
 
 	cmd = get_cmd_from_line(line);
+	err_str = NULL;
 	if (errno == 127)
 	{
 		err_str = get_cmd_not_found_err(cmd);
