@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 14:51:58 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/12 16:25:12 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable)
 		}
 		else
 		{
-			ft_printf("LexerError: Undefined variable\n");
+			ft_putstr_fd("LexerError: Undefined variable\n", STDERR_FILENO);
 			errno = 1;
 			(*ctx)->status_code = 1;
 			token->type = TOKEN_ERROR;
@@ -92,8 +92,8 @@ static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 {
 	BYTE	quote;
 	BYTE	variable;
-	BYTE 	single_quote;
-	t_token *next;
+	BYTE	single_quote;
+	t_token	*next;
 
 	//t_token *next;
 	quote = 0;
@@ -121,7 +121,7 @@ static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 	}
 	if (quote || single_quote)
 	{
-		ft_printf("t_parser Error, UNQUOTED STRING\n");
+		ft_putstr_fd("t_parser Error, UNQUOTED STRING\n", STDERR_FILENO);
 		exit(UNQUOTED_STRING_ERROR);
 	}
 	if (!is_at_end(lexer))
@@ -149,7 +149,6 @@ static t_token	*lexer_next_token(t_ctx **ctx, t_lexer *lexer)
 	if (!new_current_token)
 		return (NULL);
 	lexer->start = lexer->current_position;
-	
 	return (new_current_token);
 }
 

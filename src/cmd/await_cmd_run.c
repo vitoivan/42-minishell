@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 18:59:26 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 14:33:35 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ BOOL	await_cmd_run(char *binary_path, char **args, t_ctx **ctx)
 
 	if (!pipe_create(child_write_pipe) || !pipe_create(parent_write_pipe))
 	{
-		ft_printf("pipe error\n");
+		ft_putstr_fd("pipe error\n", STDERR_FILENO);
 		exit(1);
 	}
 	pid = fork();

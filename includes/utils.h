@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/11 19:08:12 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 14:48:10 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,6 @@ t_str_builder	*string_builder(t_ctx **ctx, const char *s, int t_size);
 
 /*   wildcard             */
 char			*ft_mk_wildcard_command(t_lexer *lexer);
+
+char			*ctx_get_env(t_ctx **ctx, char *env_name);
 #endif

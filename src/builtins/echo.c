@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 14:54:15 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/12 16:25:07 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ void	echo(t_ctx **ctx, char *line)
 	args_qty = get_args_qty(line + 5);
 	args = (char **)ft_calloc(args_qty + 1, sizeof(char *));
 	if (args_qty <= 0)
+	{
+		clear_splitted(&args);
 		return ;
+	}
 	populate_args(line, args_qty, args);
 	str = parse_to_string(args);
 	ctx_populate_buffer(ctx, str);

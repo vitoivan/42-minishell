@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ctx_get_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 14:28:30 by vivan-de         ###   ########.fr       */
+/*   Created: 2023/03/12 14:43:11 by vivan-de          #+#    #+#             */
+/*   Updated: 2023/03/12 15:05:01 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ctx	*ctx_init(int argc, char **argv, char **envp)
+char	*ctx_get_env(t_ctx **ctx, char *env_name)
 {
-	t_ctx	*ctx;
+	unsigned int i;
+	char *env_value;
+	char **data;
 
-	ctx = (t_ctx *)ft_calloc(1, sizeof(t_ctx));
-	ctx->user = getenv("USERNAME");
-	ctx->path = getcwd(ctx->path, PATH_SIZE);
-	ctx->hostname = get_hostname(envp);
-	ctx->argc = argc;
-	ctx->argv = argv;
-	ctx->env = ctx_parse_env(envp);
-	ctx->root_cmd = NULL;
-	ctx->buffer = ft_calloc(PIPE_BUFFER, sizeof(char));
-	return (ctx);
+	i = 0;
+	env_value = NULL;
+	t_lkd_node *node = (*ctx)->env->head;
+	while (i < (*ctx)->env->size)
+	{
+		data = ft_split((char *)node->content, '=');
+		if (ft_strcmp(data[0], env_name) == 0)
+		{
+			env_value = ft_strdup(data[1]);
+			clear_splitted(&data);
+			break ;
+		}
+		node = node->next;
+		clear_splitted(&data);
+		i++;
+	}
+	return (env_value);
 }

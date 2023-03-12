@@ -39,6 +39,7 @@ TARGETS = 	main.c \
 			utils/skip_quotes.c \
 			utils/string_builder.c \
 			utils/clear_splitted.c \
+			utils/ctx_get_env.c \
 			utils/ft_wildcard_utils.c \
 			cmd/cmd_is_valid.c \
 			cmd/cmd_try_run.c \

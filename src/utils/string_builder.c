@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:50:01 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 19:10:52 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 15:09:15 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	real_string_size(t_ctx **ctx, char *s, int size)
 			if (ft_strncmp(rs.env_name, "?", 2) == 0)
 				rs.env_value = ft_itoa((*ctx)->status_code);
 			else
-				rs.env_value = getenv(rs.env_name);
+				rs.env_value = ctx_get_env(ctx, rs.env_name);
 			if (rs.env_value == NULL)
 				return (free_everything((void *)&rs,
 										NULL,
@@ -59,6 +59,7 @@ static int	real_string_size(t_ctx **ctx, char *s, int size)
 						2);
 			rs.env_name_len += ft_strlen(rs.env_name);
 			rs.env_value_len += ft_strlen(rs.env_value);
+			free(rs.env_value);
 			free(rs.env_name);
 		}
 		else
@@ -66,7 +67,6 @@ static int	real_string_size(t_ctx **ctx, char *s, int size)
 	}
 	return (size - rs.env_name_len + rs.env_value_len + 1);
 }
-
 static t_str_builder	*mk_string_builder(char *s, int size)
 {
 	t_str_builder	*sb;
@@ -111,23 +111,26 @@ t_str_builder	*string_builder(t_ctx **ctx, const char *s, int size)
 			sb.env_value = ft_itoa((*ctx)->status_code);
 			sb.env_len = ft_strlen(sb.env_value);
 			ft_strlcpy(sb.new_str + sb.j, sb.env_value, sb.env_len + 1);
+			free(sb.env_value);
 			sb.j += sb.env_len;
 			sb.i += 2;
 		}
 		else if (s[sb.i] == '$' && !sb.single_quote)
 		{
 			sb.ini_pos = sb.i + 1;
-			if (s[sb.ini_pos] == '?')
-				while (!ft_isspace(s[sb.i]) && !ft_is_double_quote(s[sb.i]))
-					sb.i++;
+			while (!ft_isspace(s[sb.i]) && !ft_is_double_quote(s[sb.i]))
+				sb.i++;
 			sb.env_name = ft_strndup(s + sb.ini_pos, sb.i - sb.ini_pos);
-			sb.env_value = getenv(sb.env_name);
+			sb.env_value = ctx_get_env(ctx, sb.env_name);
+			ft_printf("env_name: %s, env_value %s\n", sb.env_name,
+					sb.env_value);
 			free(sb.env_name);
 			sb.env_len = ft_strlen(sb.env_value);
 			if (!sb.env_value)
 				if (free_everything(NULL, (void *)&sb, "sb_internal"))
 					return (NULL);
 			ft_strlcpy(sb.new_str + sb.j, sb.env_value, sb.env_len + 1);
+			free(sb.env_value);
 			sb.j += sb.env_len;
 		}
 		else
