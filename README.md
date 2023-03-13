@@ -10,9 +10,8 @@
 -   ✅ implement pipes "|"
 -   ✅ handle environment variables
 -   ✅ handle $? witch should expand to exit status of the most recently executed foreground pipeline
--   ❌ handle ctrl-C, ctrl-D and ctrl-\
+-   ✅ handle ctrl-C, ctrl-D and ctrl-\
 -   ❌ handle signals to stop here_doc
-
 
 ### builtins
 
