@@ -37,6 +37,7 @@ TARGETS = 	main.c \
 			utils/ft_isspace.c \
 			utils/ft_isquote.c \
 			utils/skip_quotes.c \
+			utils/handle_signals.c \
 			utils/string_builder.c \
 			utils/clear_splitted.c \
 			utils/ctx_get_env.c \

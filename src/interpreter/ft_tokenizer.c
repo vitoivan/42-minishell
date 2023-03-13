@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 20:34:48 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/13 11:44:51 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable)
 		else
 		{
 			ft_putstr_fd("LexerError: Undefined variable\n", STDERR_FILENO);
-			errno = 1;
 			(*ctx)->status_code = 1;
 			token->type = TOKEN_ERROR;
 			token->error_msg = "t_lexer Error: Undefined variable\n";

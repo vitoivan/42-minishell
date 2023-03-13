@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 18:57:38 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 20:00:23 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ static void	validate_pwd(t_ctx **ctx, char *line)
 	while (ft_isspace(line[i]))
 		i++;
 	if (line[i] != '\n' && line[i] != '\0')
-	{
-		errno = 1;
 		(*ctx)->status_code = 1;
-	}
 }
 
 void	pwd(t_ctx **ctx, char *line)
@@ -34,7 +31,7 @@ void	pwd(t_ctx **ctx, char *line)
 	char	*fmt;
 
 	validate_pwd(ctx, line);
-	if (errno != EXIT_SUCCESS)
+	if ((*ctx)->status_code != EXIT_SUCCESS)
 	{
 		ft_putstr_fd("pwd: too many arguments\n", STDERR_FILENO);
 		return ;

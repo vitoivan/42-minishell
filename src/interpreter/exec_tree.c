@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:38:20 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 09:40:58 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 20:00:32 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	exec_and_or(t_ast_node *node, t_ctx **ctx)
 {
 	if (node->as.binaryExpression.left)
 		exec_tree(node->as.binaryExpression.left, ctx);
-	if ((node->type == NODE_AND && errno == EXIT_SUCCESS)
-		|| (node->type == NODE_OR && errno != EXIT_SUCCESS))
+	if ((node->type == NODE_AND && (*ctx)->status_code == EXIT_SUCCESS)
+		|| (node->type == NODE_OR && (*ctx)->status_code != EXIT_SUCCESS))
 	{
 		if ((*ctx)->buffer[0])
 		{

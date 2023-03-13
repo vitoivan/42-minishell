@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 19:03:43 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 19:58:07 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ int	cmd_cd(t_ctx **ctx, char *line)
 	int		return_value;
 
 	path = line + 3;
-	errno = 0;
 	return_value = cd(path);
 	if (return_value == -1)
-		(*ctx)->status_code = errno;
+		(*ctx)->status_code = 1;
 	return (return_value);
 }

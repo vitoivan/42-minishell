@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:50:01 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 15:09:15 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/13 09:49:46 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,6 @@ t_str_builder	*string_builder(t_ctx **ctx, const char *s, int size)
 				sb.i++;
 			sb.env_name = ft_strndup(s + sb.ini_pos, sb.i - sb.ini_pos);
 			sb.env_value = ctx_get_env(ctx, sb.env_name);
-			ft_printf("env_name: %s, env_value %s\n", sb.env_name,
-					sb.env_value);
 			free(sb.env_name);
 			sb.env_len = ft_strlen(sb.env_value);
 			if (!sb.env_value)

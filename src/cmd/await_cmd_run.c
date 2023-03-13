@@ -6,15 +6,14 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 14:33:35 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 20:19:05 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-BOOL	await_cmd_run(char *binary_path, char **args, t_ctx **ctx)
+BOOL	await_cmd_run(t_ctx **ctx, char *binary_path, char **args)
 {
-	int		pid;
 	int		status;
 	int		parent_write_pipe[2];
 	int		child_write_pipe[2];
@@ -27,8 +26,8 @@ BOOL	await_cmd_run(char *binary_path, char **args, t_ctx **ctx)
 		ft_putstr_fd("pipe error\n", STDERR_FILENO);
 		exit(1);
 	}
-	pid = fork();
-	if (pid == 0)
+	(*ctx)->pid = fork();
+	if ((*ctx)->pid == 0)
 	{
 		dup2(parent_write_pipe[0], STDIN_FILENO);
 		dup2(child_write_pipe[1], STDOUT_FILENO);
@@ -47,7 +46,7 @@ BOOL	await_cmd_run(char *binary_path, char **args, t_ctx **ctx)
 			ft_bzero((*ctx)->buffer, PIPE_BUFFER);
 		}
 		pipe_close_both(parent_write_pipe);
-		waitpid(pid, &status, 0);
+		waitpid((*ctx)->pid, &status, 0);
 		if (status == 0)
 		{
 			ft_bzero(buffer, PIPE_BUFFER);
@@ -59,8 +58,8 @@ BOOL	await_cmd_run(char *binary_path, char **args, t_ctx **ctx)
 		else
 			ft_bzero((*ctx)->buffer, PIPE_BUFFER);
 		pipe_close_both(child_write_pipe);
-		errno = WEXITSTATUS(status);
-		(*ctx)->status_code = errno;
+		(*ctx)->status_code = WEXITSTATUS(status);
+		(*ctx)->pid = -1;
 	}
 	return (True);
 }

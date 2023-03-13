@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 09:38:23 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 19:58:54 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	cmd_redirect(char *filepath, int mode, t_ctx **ctx)
 		fileout = -1;
 	if (fileout == -1)
 	{
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd(strerror((*ctx)->status_code), STDERR_FILENO);
 		return ;
 	}
 	ft_putstr_fd((*ctx)->buffer, fileout);
@@ -46,7 +46,7 @@ static void	cmd_redirect_input(char *filepath, t_ctx **ctx)
 	filein = open(filepath, O_RDONLY);
 	if (filein == -1)
 	{
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd(strerror((*ctx)->status_code), STDERR_FILENO);
 		return ;
 	}
 	ft_bzero((*ctx)->buffer, PIPE_BUFFER);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/12 20:33:21 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/13 11:44:47 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_token_type	ft_get_token_type(t_token *token);
 t_token			*ft_mk_generic_token(t_token_type type, char *start , uint size);
 
 /* Error handle utils */
-void			print_errno(char *line);
+void			print_errno(t_ctx **ctx, char *line);
 
 /* debug functions */
 void			debug_command_tree(t_ast_node *root);
@@ -91,4 +91,5 @@ t_str_builder	*string_builder(t_ctx **ctx, const char *s, int t_size);
 char			*ft_mk_wildcard_command(t_lexer *lexer);
 
 char			*ctx_get_env(t_ctx **ctx, char *env_name);
+void			handle_signals(void);
 #endif

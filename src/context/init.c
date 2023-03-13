@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 14:28:30 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/12 19:56:58 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ t_ctx	*ctx_init(int argc, char **argv, char **envp)
 	ctx->env = ctx_parse_env(envp);
 	ctx->root_cmd = NULL;
 	ctx->buffer = ft_calloc(PIPE_BUFFER, sizeof(char));
+	ctx->pid = -1;
 	return (ctx);
 }
