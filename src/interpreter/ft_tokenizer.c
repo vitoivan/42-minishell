@@ -68,22 +68,6 @@ static t_token	*mk_wildcard_token(t_lexer *lexer)
 	return (token);
 }
 
-t_token	*ft_tmp_next_token(t_lexer *lexer)
-{
-	char	*curr;
-	t_token	*tmp_token;
-
-	curr = lexer->current_position;
-	tmp_token = ft_calloc(1, sizeof(t_token));
-	while (!ft_isspace(*lexer->current_position) && !is_at_end(lexer))
-		lexer->current_position++;
-	tmp_token->start = ft_strndup(curr + 1, lexer->current_position - curr);
-	tmp_token->size = (UINT)(lexer->current_position - curr);
-	tmp_token->type = ft_get_token_type(tmp_token);
-	lexer->current_position = curr;
-	return (tmp_token);
-}
-
 static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 {
 	BYTE	quote;
@@ -109,13 +93,8 @@ static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 		lexer->current_position++;
 	}
 	if (quote || single_quote)
-	{
 		if (!(quote && single_quote))
-		{
-			ft_putstr_fd("t_parser Error, UNQUOTED STRING\n", STDERR_FILENO);
 			return ft_mk_generic_token(TOKEN_ERROR, ft_strdup("minishell: unquoted string error"), 0);
-		}
-	}
 	if (!is_at_end(lexer))
 		lexer->current_position--;
 	return (mk_token(ctx, lexer, variable));
