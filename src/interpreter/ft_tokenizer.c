@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/15 22:51:38 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/15 22:59:47 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,11 @@ static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 	}
 	if (quote || single_quote)
 	{
-		ft_putstr_fd("t_parser Error, UNQUOTED STRING\n", STDERR_FILENO);
-		exit(UNQUOTED_STRING_ERROR);
+		if (!(quote && single_quote))
+		{
+			ft_putstr_fd("t_parser Error, UNQUOTED STRING\n", STDERR_FILENO);
+			return ft_mk_generic_token(TOKEN_ERROR, ft_strdup("minishell: unquoted string error"), 0);
+		}
 	}
 	if (!is_at_end(lexer))
 		lexer->current_position--;
