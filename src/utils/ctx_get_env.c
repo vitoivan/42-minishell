@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:43:11 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 15:05:01 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:46:16 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 char	*ctx_get_env(t_ctx **ctx, char *env_name)
 {
-	unsigned int i;
-	char *env_value;
-	char **data;
+	unsigned int	i;
+	char			*env_value;
+	char			**data;
+	t_lkd_node		*node;
 
 	i = 0;
 	env_value = NULL;
-	t_lkd_node *node = (*ctx)->env->head;
+	node = (*ctx)->env->head;
 	while (i < (*ctx)->env->size)
 	{
 		data = ft_split((char *)node->content, '=');

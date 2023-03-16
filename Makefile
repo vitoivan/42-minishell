@@ -33,6 +33,10 @@ TARGETS = 	main.c \
 			utils/skip_whitespace.c \
 			utils/print_terminal.c \
 			utils/errors.c \
+			utils/ft_parser_utils2.c \
+			utils/string_builder_utils.c \
+			utils/ft_strmatch.c \
+			utils/ft_tokenizer_utils2.c \
 			utils/get_hostname.c \
 			utils/ft_isspace.c \
 			utils/ft_isquote.c \

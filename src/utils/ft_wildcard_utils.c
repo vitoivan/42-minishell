@@ -6,48 +6,11 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:36:18 by jv                #+#    #+#             */
-/*   Updated: 2023/03/16 11:49:30 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 14:15:49 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static BYTE	ft_strmatch(char *entry, char *pattern)
-{
-	char	m;
-	char	c;
-	int		n;
-
-	while (1)
-	{
-		m = *pattern;
-		c = *entry;
-		if (m == 0)
-			return (c == 0);
-		if (m == '*')
-		{
-			n = 0;
-			while (m == '*')
-				m = *(pattern + ++n);
-			if (ft_strmatch(entry, pattern + n))
-				return (1);
-			if (c == 0)
-				return (0);
-		}
-		else
-		{
-			if (m == '?')
-			{
-				if (c == 0)
-					return (0);
-			}
-			else if (m != c)
-				return (0);
-			pattern++;
-		}
-		entry++;
-	}
-}
 
 static char	**ft_wildcard_split_args(t_lexer *lexer)
 {
@@ -71,11 +34,13 @@ static char	**ft_wildcard_split_args(t_lexer *lexer)
 static UINT	ft_gt_last_sep_pos(char *position)
 {
 	char	*end;
+	UINT	ret;
 
 	end = position;
 	while (!(ft_isspace(*(position - 1))))
 		position--;
-	return (UINT)(end - position);
+	ret = (UINT)(end - position);
+	return (ret);
 }
 
 static void	ft_parser_wildcard_exp(char *file_name, char *mask, char **command)
@@ -93,6 +58,15 @@ static void	ft_parser_wildcard_exp(char *file_name, char *mask, char **command)
 	}
 }
 
+static void	init_vars(t_lexer *lexer, UINT *size, char **command,
+		char ***wildcards)
+{
+	*size = lexer->current_position
+		- ft_gt_last_sep_pos(lexer->current_position) - lexer->start - 1;
+	*command = ft_strndup(lexer->start, *size);
+	*wildcards = ft_wildcard_split_args(lexer);
+}
+
 char	*ft_mk_wildcard_command(t_lexer *lexer)
 {
 	DIR				*dir;
@@ -101,16 +75,18 @@ char	*ft_mk_wildcard_command(t_lexer *lexer)
 	char			*command;
 	UINT			size;
 
-	if ((dir = opendir(".")) == NULL)
-		return (NULL); // error ao abrir diretorio
-	size = lexer->current_position - ft_gt_last_sep_pos(lexer->current_position)
-		- lexer->start - 1;
-	command = ft_strndup(lexer->start, size);
-	wildcards = ft_wildcard_split_args(lexer);
+	dir = opendir(".");
+	if (dir == NULL)
+		return (NULL);
+	init_vars(lexer, &size, &command, &wildcards);
 	while (*wildcards != NULL)
 	{
-		while ((entry = readdir(dir)) != NULL)
+		entry = readdir(dir);
+		while (entry != NULL)
+		{
 			ft_parser_wildcard_exp(entry->d_name, *wildcards, &command);
+			entry = readdir(dir);
+		}
 		free(*wildcards);
 		rewinddir(dir);
 		wildcards++;

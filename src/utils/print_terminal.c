@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_terminal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 14:53:39 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/16 14:16:46 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*get_path_fmt(t_ctx *ctx)
 	int		skip_n_home;
 	char	*path_fmt;
 	char	*tmp;
-	
+
 	splitted = ft_split(ctx->path, '/');
 	if (!ft_strcmp(splitted[0], "home") && !ft_strcmp(splitted[1], ctx->user))
 	{

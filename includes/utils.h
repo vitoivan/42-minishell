@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/15 22:51:26 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/16 14:56:13 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_str_builder_real_size
 	int			ini_pos;
 	int			env_name_len;
 	int			env_value_len;
+	int			aux;
 }				t_str_builder_real_size_internal;
 
 BOOL			get_line_from_terminal(char **line, t_ctx *);
@@ -75,7 +76,11 @@ void			skip_quotes(char **line);
 BOOL			ft_isquote(char c);
 void			clear_splitted(char ***splitted);
 t_token_type	ft_get_token_type(t_token *token);
-t_token			*ft_mk_generic_token(t_token_type type, char *start , uint size);
+t_token			*ft_mk_generic_token(t_token_type type, char *start,
+					unsigned int size);
+void			ast_free_command_node(t_ast_node *node);
+BYTE			ft_strmatch(char *entry, char *pattern);
+int				real_string_size(t_ctx **ctx, char *s, int size);
 
 /* Error handle utils */
 void			print_errno(t_ctx **ctx, char *line);
@@ -92,4 +97,6 @@ char			*ft_mk_wildcard_command(t_lexer *lexer);
 
 char			*ctx_get_env(t_ctx **ctx, char *env_name);
 void			handle_signals(void);
+int				string_builder_free_everything(void *rs, void *sb,
+					const char *want_free);
 #endif
