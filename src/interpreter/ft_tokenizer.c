@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:39:42 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:45:50 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ static t_token	*scan_here_document(t_lexer *lexer)
 	char	*tmp;
 	t_token	*token;
 	char	*delimiter;
-	char	*tmp;
 
 	line = NULL;
 	final_line = NULL;

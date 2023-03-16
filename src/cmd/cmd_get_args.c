@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:30:15 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:45:57 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static int	handle_double_quotes(char **line, t_lkd_lst **lkd_args)
 void	cmd_get_args(char ***args, char *line)
 {
 	t_lkd_lst	*lkd_args;
-	char		*tmp;
 	char		*arg;
 
 	lkd_args = lkd_lst_new_list();
