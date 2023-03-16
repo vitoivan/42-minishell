@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/15 22:44:37 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/16 15:34:31 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static t_ast_node	*mk_node_binary_expression(t_token *token, t_ast_node *left,
 		return (NULL);
 	node->type = get_node_type(token);
 	node->token = token;
-	node->as.binaryExpression.left = left;
-	node->as.binaryExpression.right = right;
+	node->u_as.s_binary_expression.left = left;
+	node->u_as.s_binary_expression.right = right;
 	return (node);
 }
 
@@ -51,21 +51,21 @@ static t_ast_node	*expression_builder(t_ctx **ctx, t_parser_context *context)
 	node = mk_node_command(get_previus_token(context));
 	right = NULL;
 	operator= get_current_token(context);
-	if (!operator || operator->type == TOKEN_COMMAND)
+	if (!operator|| operator->type == TOKEN_COMMAND)
 		return (node);
-
-	while ((operator = get_current_token(context)) != NULL && operator->type != TOKEN_ERROR)
+	while ((operator= get_current_token(context)) != NULL
+		&& operator->type != TOKEN_ERROR)
 	{
 		advance_to_next_token(ctx, context);
 		right = mk_node_command(get_current_token(context));
 		node = mk_node_binary_expression(operator, node, right);
 		advance_to_next_token(ctx, context);
 	}
-	if (operator && operator->type == TOKEN_ERROR)
+	if (operator&& operator->type == TOKEN_ERROR)
 	{
 		ft_printf("%s\n", operator->start);
 		del_token(operator);
-		return (NULL);	
+		return (NULL);
 	}
 	return (node);
 }

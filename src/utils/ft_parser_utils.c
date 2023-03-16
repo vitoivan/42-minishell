@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:16:59 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 13:51:02 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:34:31 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	ast_free_binary_exp_node(t_ast_node *node)
 {
-	ast_node_free(node->as.binaryExpression.left);
-	ast_node_free(node->as.binaryExpression.right);
+	ast_node_free(node->u_as.s_binary_expression.left);
+	ast_node_free(node->u_as.s_binary_expression.right);
 	ast_free_command_node(node);
 }
 
@@ -34,12 +34,12 @@ static void	ast_free_semicolon_exp_node(t_ast_node *node)
 		head = head->next;
 		i++;
 	}
-	free(node->as.expressions.nodes);
+	free(node->u_as.expressions.nodes);
 }
 
 t_lkd_lst	*get_head_node(t_ast_node *node)
 {
-	return (node->as.expressions.nodes);
+	return (node->u_as.expressions.nodes);
 }
 
 void	ast_node_free(t_ast_node *node)

@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/16 14:56:13 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:35:10 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_str_builder_real_size
 	int			aux;
 }				t_str_builder_real_size_internal;
 
-BOOL			get_line_from_terminal(char **line, t_ctx *);
+BOOL			get_line_from_terminal(char **line, t_ctx *ctx);
 void			free_if_exists(void **data);
 void			free_token(void *data);
 int				skip_whitespace(char **line, int always_skip_one);

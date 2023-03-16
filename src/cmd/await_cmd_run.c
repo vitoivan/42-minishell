@@ -6,59 +6,71 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 20:19:05 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:26:54 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-BOOL	await_cmd_run(t_ctx **ctx, char *binary_path, char **args)
+static BOOL	run_child(t_ctx **ctx, t_await_cmd_run_props *data,
+		char *binary_path, char **args)
 {
-	int		status;
-	int		parent_write_pipe[2];
-	int		child_write_pipe[2];
-	int		read_ret;
-	char	buffer[PIPE_BUFFER];
-	char	**env;
+	dup2(data->parent_write_pipe[0], STDIN_FILENO);
+	dup2(data->child_write_pipe[1], STDOUT_FILENO);
+	pipe_close_both(data->child_write_pipe);
+	pipe_close_both(data->parent_write_pipe);
+	ft_printf("-");
+	data->env = parse_ldk_lst_to_char_array((*ctx)->env);
+	if (execve(binary_path, (char *const *)args, data->env) == -1)
+		return (False);
+	return (True);
+}
 
-	if (!pipe_create(child_write_pipe) || !pipe_create(parent_write_pipe))
+static void	create_pipes(t_await_cmd_run_props *data)
+{
+	if (!pipe_create(data->child_write_pipe)
+		|| !pipe_create(data->parent_write_pipe))
 	{
 		ft_putstr_fd("pipe error\n", STDERR_FILENO);
 		exit(1);
 	}
-	(*ctx)->pid = fork();
-	if ((*ctx)->pid == 0)
+}
+
+static void	populate_buffer(t_ctx **ctx, t_await_cmd_run_props *data)
+{
+	if (data->status == 0)
 	{
-		dup2(parent_write_pipe[0], STDIN_FILENO);
-		dup2(child_write_pipe[1], STDOUT_FILENO);
-		pipe_close_both(child_write_pipe);
-		pipe_close_both(parent_write_pipe);
-		ft_printf("-");
-		env = parse_ldk_lst_to_char_array((*ctx)->env);
-		if (execve(binary_path, (char *const *)args, env) == -1)
-			return (False);
+		ft_bzero(data->buffer, PIPE_BUFFER);
+		data->read_ret = read(data->child_write_pipe[0], &(data->buffer),
+				PIPE_BUFFER);
+		if (data->read_ret > 1)
+			ft_strlcpy((*ctx)->buffer, data->buffer + 1, PIPE_BUFFER - 1);
+		ft_bzero(data->buffer, PIPE_BUFFER);
 	}
+	else
+		ft_bzero((*ctx)->buffer, PIPE_BUFFER);
+}
+
+BOOL	await_cmd_run(t_ctx **ctx, char *binary_path, char **args)
+{
+	t_await_cmd_run_props	data;
+
+	create_pipes(&data);
+	(*ctx)->pid = fork();
+	if ((*ctx)->pid == 0 && run_child(ctx, &data, binary_path, args) == False)
+		return (False);
 	else
 	{
 		if ((*ctx)->buffer[0])
 		{
-			ft_putstr_fd((*ctx)->buffer, parent_write_pipe[1]);
+			ft_putstr_fd((*ctx)->buffer, data.parent_write_pipe[1]);
 			ft_bzero((*ctx)->buffer, PIPE_BUFFER);
 		}
-		pipe_close_both(parent_write_pipe);
-		waitpid((*ctx)->pid, &status, 0);
-		if (status == 0)
-		{
-			ft_bzero(buffer, PIPE_BUFFER);
-			read_ret = read(child_write_pipe[0], &buffer, PIPE_BUFFER);
-			if (read_ret > 1)
-				ft_strlcpy((*ctx)->buffer, buffer + 1, PIPE_BUFFER - 1);
-			ft_bzero(buffer, PIPE_BUFFER);
-		}
-		else
-			ft_bzero((*ctx)->buffer, PIPE_BUFFER);
-		pipe_close_both(child_write_pipe);
-		(*ctx)->status_code = WEXITSTATUS(status);
+		pipe_close_both(data.parent_write_pipe);
+		waitpid((*ctx)->pid, &(data.status), 0);
+		populate_buffer(ctx, &data);
+		pipe_close_both(data.child_write_pipe);
+		(*ctx)->status_code = WEXITSTATUS(data.status);
 		(*ctx)->pid = -1;
 	}
 	return (True);

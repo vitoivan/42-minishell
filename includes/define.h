@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/16 11:54:15 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:33:42 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,12 @@ typedef struct s_ast_node
 		{
 			struct s_ast_node	*left;
 			struct s_ast_node	*right;
-		} binaryExpression;
+		} s_binary_expression;
 		struct
 		{
 			t_lkd_lst			*nodes;
-		} expressions;
-	} as;
+		} s_expressions;
+	} u_as;
 }								t_ast_node;
 
 typedef struct s_string_builder

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_get_args.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/05 15:27:15 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/16 15:30:15 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,24 @@ static char	**get_args_from_ldk_lst(t_lkd_lst **list)
 	return (str_args);
 }
 
+static int	handle_double_quotes(char **line, t_lkd_lst **lkd_args)
+{
+	char	*tmp;
+	char	*arg;
+
+	tmp = *line;
+	skip_quotes(&tmp);
+	if (*tmp == ' ' || *tmp == '\0')
+	{
+		arg = ft_calloc(tmp - *line + 1, sizeof(char));
+		ft_strlcpy(arg, *line, tmp - *line + 1);
+		lkd_lst_add_back(lkd_args, lkd_lst_new_node((void *)arg));
+		*line = tmp;
+		return (1);
+	}
+	return (0);
+}
+
 void	cmd_get_args(char ***args, char *line)
 {
 	t_lkd_lst	*lkd_args;
@@ -64,16 +82,8 @@ void	cmd_get_args(char ***args, char *line)
 			break ;
 		if (ft_is_double_quote(*line))
 		{
-			tmp = line;
-			skip_quotes(&tmp);
-			if (*tmp == ' ' || *tmp == '\0')
-			{
-				arg = ft_calloc(tmp - line + 1, sizeof(char));
-				ft_strlcpy(arg, line, tmp - line + 1);
-				lkd_lst_add_back(&lkd_args, lkd_lst_new_node((void *)arg));
-				line = tmp;
+			if (handle_double_quotes(&line, &lkd_args) == 1)
 				continue ;
-			}
 		}
 		arg = get_arg(&line);
 		if (arg == NULL)

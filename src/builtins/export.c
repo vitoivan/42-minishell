@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/25 14:35:29 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/16 15:30:51 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	validate_if_env_already_exists(t_ctx **ctx, char *name)
 	t_lkd_node		*node;
 	char			**splitted;
 	char			*tmp;
-	
+
 	i = 0;
 	node = (*ctx)->env->head;
 	while (i < (*ctx)->env->size)

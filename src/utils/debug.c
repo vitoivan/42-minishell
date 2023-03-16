@@ -38,8 +38,8 @@ static void	debug_node_and(t_ast_node *node)
 {
 	print_with_ident("AND {");
 	begin_scope();
-	debug_command_tree(node->as.binaryExpression.left);
-	debug_command_tree(node->as.binaryExpression.right);
+	debug_command_tree(node->u_as.s_binary_expression.left);
+	debug_command_tree(node->u_as.s_binary_expression.right);
 	end_scope();
 	print_with_ident("}");
 }
@@ -48,8 +48,8 @@ static void	debug_node_or(t_ast_node *node)
 {
 	print_with_ident("OR {");
 	begin_scope();
-	debug_command_tree(node->as.binaryExpression.left);
-	debug_command_tree(node->as.binaryExpression.right);
+	debug_command_tree(node->u_as.s_binary_expression.left);
+	debug_command_tree(node->u_as.s_binary_expression.right);
 	end_scope();
 	print_with_ident("}");
 }
@@ -58,8 +58,8 @@ static void	debug_node_pipe(t_ast_node *node)
 {
 	print_with_ident("PIPE {");
 	begin_scope();
-	debug_command_tree(node->as.binaryExpression.left);
-	debug_command_tree(node->as.binaryExpression.right);
+	debug_command_tree(node->u_as.s_binary_expression.left);
+	debug_command_tree(node->u_as.s_binary_expression.right);
 	end_scope();
 	print_with_ident("}");
 }
@@ -68,8 +68,8 @@ static void	debug_node_redirect(t_ast_node *node)
 {
 	print_with_ident("Redirect {");
 	begin_scope();
-	debug_command_tree(node->as.binaryExpression.left);
-	debug_command_tree(node->as.binaryExpression.right);
+	debug_command_tree(node->u_as.s_binary_expression.left);
+	debug_command_tree(node->u_as.s_binary_expression.right);
 	end_scope();
 	print_with_ident("}");
 }
@@ -78,8 +78,8 @@ static void	debug_node_redirect_append(t_ast_node *node)
 {
 	print_with_ident("Append {");
 	begin_scope();
-	debug_command_tree(node->as.binaryExpression.left);
-	debug_command_tree(node->as.binaryExpression.right);
+	debug_command_tree(node->u_as.s_binary_expression.left);
+	debug_command_tree(node->u_as.s_binary_expression.right);
 	end_scope();
 	print_with_ident("}");
 }
@@ -109,8 +109,8 @@ static void	debug_node_here_document(t_ast_node *node)
 {
 	print_with_ident("Here Document {");
 	begin_scope();
-	debug_command_tree(node->as.binaryExpression.left);
-	debug_command_tree(node->as.binaryExpression.right);
+	debug_command_tree(node->u_as.s_binary_expression.left);
+	debug_command_tree(node->u_as.s_binary_expression.right);
 	end_scope();
 	print_with_ident("}");
 }
@@ -119,8 +119,8 @@ static void	debug_node_redirect_input(t_ast_node *node)
 {
 	print_with_ident("Redirect Input {");
 	begin_scope();
-	debug_command_tree(node->as.binaryExpression.left);
-	debug_command_tree(node->as.binaryExpression.right);
+	debug_command_tree(node->u_as.s_binary_expression.left);
+	debug_command_tree(node->u_as.s_binary_expression.right);
 	end_scope();
 	print_with_ident("}");
 }
@@ -152,10 +152,10 @@ void	debug_command_tree(t_ast_node *root)
 		break ;
 	case NODE_HERE_DOCUMENT:
 		debug_node_here_document(root);
-		break;
+		break ;
 	case NODE_REDIRECT_INPUT:
 		debug_node_redirect_input(root);
-	break;
+		break ;
 	case NODE_REDIRECT_APPEND:
 		debug_node_redirect_append(root);
 		break ;
@@ -167,7 +167,7 @@ void	debug_command_tree(t_ast_node *root)
 		break ;
 	case NODE_HERE_ARGS:
 		debug_node_here_args(root);
-		break;
+		break ;
 	default:
 		ft_printf("%s\n", root->token->start);
 		break ;

@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 19:58:54 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:30:24 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	cmd_redirect(char *filepath, int mode, t_ctx **ctx)
 
 static void	cmd_redirect_input(char *filepath, t_ctx **ctx)
 {
-	int filein;
+	int	filein;
 
 	filein = open(filepath, O_RDONLY);
 	if (filein == -1)

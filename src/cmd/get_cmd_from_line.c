@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/11 18:29:46 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:30:29 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*get_cmd_from_line(char *line)
 {
-	char *cmd;
-	char *tmp;
+	char	*cmd;
+	char	*tmp;
 
 	if (!line)
 		return (NULL);
