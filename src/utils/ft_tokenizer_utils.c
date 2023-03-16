@@ -6,11 +6,11 @@ BYTE	is_at_end(t_lexer *lexer)
 			*lexer->current_position == '\n');
 }
 
-BYTE	is_operator(t_lexer *lexer)
+BYTE	is_operator(t_lexer *lexer, UINT offset)
 {
 	char	c;
 
-	c = *(lexer->current_position);
+	c = *(lexer->current_position - offset);
 	if (c == '&' || c == '|' || c == '>' || c == '<' || c == ';')
 		return (1);
 	return (0);

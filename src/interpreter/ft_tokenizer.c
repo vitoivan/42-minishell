@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/13 11:44:51 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/15 22:51:38 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 	quote = 0;
 	variable = 0;
 	single_quote = 0;
-	if (is_operator(lexer) || is_at_end(lexer))
+	if (is_operator(lexer, 0) || is_at_end(lexer))
 		return (NULL);
-	while (!is_at_end(lexer) && (!is_operator(lexer) || quote || single_quote))
+	while (!is_at_end(lexer) && (!is_operator(lexer, 0) || quote || single_quote))
 	{
 		if (ft_is_double_quote(*lexer->current_position))
 			quote = !quote;
@@ -120,11 +120,12 @@ static t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 
 static t_token	*scan_operator(t_ctx **ctx, t_lexer *lexer)
 {
-	while (!is_at_end(lexer) && is_operator(lexer))
+	while (!is_at_end(lexer) && is_operator(lexer, 0))
 		lexer->current_position++;
-	if (is_at_end(lexer))
-		return (NULL); // return token with error
-	
+	if (is_at_end(lexer) && is_operator(lexer, 1))
+		return ft_mk_generic_token(TOKEN_ERROR, ft_strdup("minishell: invalid here document operator"), 0);
+	if (ft_strlen(lexer->current_position) < 1)
+		return (NULL);
 	return mk_token(ctx, lexer, 0);
 }
 
@@ -132,19 +133,28 @@ static t_token *scan_here_document(t_lexer *lexer)
 {
 	char *line;
 	char *final_line;
+	char *tmp;
 	t_token *token;
 
 	line 	   = NULL;
 	final_line = NULL;
+	tmp 	   = NULL;
 
 
 	if ((token = ft_calloc(1, sizeof(t_token))) == NULL)
 		return (NULL);
 
-	if (!(*lexer->current_position == '_' ) || !ft_strcmp(lexer->current_position, "EOF"))
-			return (ft_mk_generic_token(TOKEN_ERROR, 
-										ft_strdup("minishell: erro de sintaxe próximo ao token inesperado `newline'"),
-										ft_strlen(token->start)));
+	skip_white_spaces(lexer);
+	tmp = lexer->current_position;
+
+	while (!ft_isspace(*lexer->current_position) && !is_at_end(lexer))
+		lexer->current_position++;
+	char *delimiter = ft_strndup(tmp, lexer->current_position - tmp);
+
+	if ( *delimiter == '\0' || is_operator(lexer, 1))
+		return (ft_mk_generic_token(TOKEN_ERROR, ft_strdup("Error: Here Document Syntax Error"), 0));
+
+
 	while (1)
 	{
 		line = readline("heredoc> ");
@@ -156,7 +166,7 @@ static t_token *scan_here_document(t_lexer *lexer)
 			final_line = ft_strdup(line);
 		else
 		{
-			if (!ft_strcmp(line, "_") || !ft_strcmp(line, "EOF"))
+			if (!ft_strcmp(line, delimiter))
 			{
 				free_if_exists((void **)&line);
 				break;
@@ -171,7 +181,7 @@ static t_token *scan_here_document(t_lexer *lexer)
 		
 		free_if_exists((void **)&line);
 	}
-	lexer->current_position++;
+	free(delimiter);
 	return (ft_mk_generic_token(TOKEN_OPERATOR_HERE_DOC_ARGS, final_line, ft_strlen(final_line)));
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/13 11:44:47 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/15 22:51:26 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			advance_to_next_token(t_ctx **ctx, t_parser_context *context);
 void			lexer_init(t_lexer *lexer, char *source);
 void			skip_white_spaces(t_lexer *lexer);
 BYTE			is_at_end(t_lexer *lexer);
-BYTE			is_operator(t_lexer *lexer);
+BYTE			is_operator(t_lexer *lexer, UINT offset);
 t_token			*get_current_token(t_parser_context *context);
 t_token			*get_previus_token(t_parser_context *context);
 char			*ft_strndup(const char *str, UINT n);
