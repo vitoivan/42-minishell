@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:36:18 by jv                #+#    #+#             */
-/*   Updated: 2023/02/28 08:09:18 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 11:49:30 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	**ft_wildcard_split_args(t_lexer *lexer)
 	start = lexer->current_position;
 	while (start != lexer->start && !ft_isspace(*(start - 1)))
 		start--;
-	while (!is_at_end(lexer) && !is_operator(lexer))
+	while (!is_at_end(lexer) && !is_operator(lexer, 0))
 		lexer->current_position++;
 	end = lexer->current_position;
 	args = ft_strndup(start, end - start);

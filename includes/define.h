@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/12 17:39:52 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/16 11:54:15 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define SINGLE_QUOTE 39
 # define DOUBLE_QUOTE 34
 # define BUFFER_SIZE 4096
-# define DEBUG 1
+# define DEBUG 0
 # define UINT unsigned int
 # define BYTE unsigned char
 # define HERE_DOC "EOF"

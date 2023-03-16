@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:38:20 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 20:00:32 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/16 11:53:25 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,22 @@ static void	exec_redirect(t_ast_node *node, t_ctx **ctx)
 static void	exec_redirect_input(t_ast_node *node, t_ctx **ctx)
 {
 	t_ast_node	*tmp;
+	char *tmp2;
 
 	tmp = node->as.binaryExpression.right;
-	cmd_redirect(tmp->token->start, node->type, ctx);
+	if (node->type == NODE_REDIRECT_INPUT)
+		cmd_redirect(tmp->token->start, node->type, ctx);
+	else if (node->type == NODE_HERE_DOCUMENT)
+	{
+		tmp2 = ft_strjoin(tmp->token->start, "\n");
+		ft_bzero((*ctx)->buffer, PIPE_BUFFER);
+		ft_strlcpy((*ctx)->buffer, tmp2, PIPE_BUFFER);
+		free(tmp2);
+	}
 	if (node->as.binaryExpression.left)
 		exec_tree(node->as.binaryExpression.left, ctx);
 }
+
 
 void	exec_tree(t_ast_node *node, t_ctx **ctx)
 {
@@ -70,7 +80,7 @@ void	exec_tree(t_ast_node *node, t_ctx **ctx)
 		exec_and_or(node, ctx);
 	else if (node->type == NODE_REDIRECT || node->type == NODE_REDIRECT_APPEND)
 		exec_redirect(node, ctx);
-	else if (node->type == NODE_REDIRECT_INPUT)
+	else if (node->type == NODE_REDIRECT_INPUT || node->type == NODE_HERE_DOCUMENT)
 		exec_redirect_input(node, ctx);
 	else if (node->type == NODE_PIPE)
 		exec_pipe(node, ctx);
