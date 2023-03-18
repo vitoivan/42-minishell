@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/12 19:55:57 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:52:17 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ char			**parse_ldk_lst_to_char_array(t_lkd_lst *list);
 # define USER_SIZE 1024
 # define PATH_SIZE 4096
 # define HOSTNAME_SIZE 256
-# define PIPE_BUFFER 65536
+# define PIPE_BUFFER 150000
 
 #endif
