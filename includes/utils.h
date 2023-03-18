@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/18 10:56:35 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/18 19:47:28 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_str_builder_internal
 	int			j;
 	int			real_size;
 	int			single_quote;
+	int			double_quote;
 	int			env_len;
 }				t_str_builder_internal;
 

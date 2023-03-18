@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:50:01 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:11:59 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/18 20:07:00 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static BOOL	populate_str_builder_internal(t_ctx **ctx,
 	sb->i = 0;
 	sb->j = 0;
 	sb->single_quote = 0;
+	sb->double_quote = 0;
 	sb->real_size = real_string_size(ctx, (char *)s, size);
 	if (sb->real_size < 0)
 		return (False);
@@ -80,15 +81,16 @@ t_str_builder	*string_builder(t_ctx **ctx, const char *s, int size)
 		return (NULL);
 	while (sb.i < size)
 	{
-		if (ft_is_single_quote(s[sb.i]))
+		if (ft_is_double_quote(s[sb.i]))
+			sb.double_quote = !sb.double_quote;
+		if (ft_is_single_quote(s[sb.i]) && !sb.double_quote)
 			sb.single_quote = !sb.single_quote;
 		if (handle_status_var(ctx, &sb, s, size) == 1)
 			continue ;
 		else if (s[sb.i] == '$' && !sb.single_quote)
 		{
-			sb.ini_pos = sb.i + 1;
-			while (!ft_isspace(s[sb.i]) && !ft_is_double_quote(s[sb.i])
-				&& s[sb.i])
+			sb.ini_pos = ++sb.i;
+			while (s[sb.i] && ft_isalpha(s[sb.i]))
 				sb.i++;
 			if (handle_var(ctx, &sb, s) == -1)
 				return (NULL);
