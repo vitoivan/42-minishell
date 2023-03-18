@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:16:59 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 13:48:37 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/18 10:16:23 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,10 @@ void	ast_free_command_node(t_ast_node *node)
 {
 	del_token(node->token);
 	free(node);
+}
+
+void	clean_token_with_error(t_token *token)
+{
+	ft_printf("%s\n", token->start);
+	del_token(token);
 }
