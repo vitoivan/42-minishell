@@ -17,6 +17,7 @@ t_ctx	*ctx_init(int argc, char **argv, char **envp)
 	t_ctx	*ctx;
 
 	ctx = (t_ctx *)ft_calloc(1, sizeof(t_ctx));
+	ctx->env = ctx_parse_env(envp);
 	ctx->user = getenv("USER");
 	ctx->path = getcwd(ctx->path, PATH_SIZE);
 	ctx->hostname = get_hostname(envp);

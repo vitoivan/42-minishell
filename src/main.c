@@ -39,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 
 	line = NULL;
 	g_ctx = ctx_init(argc, argv, envp);
+	g_ctx->hostname = get_hostname(envp);
 	handle_signals();
 	while (True)
 	{
