@@ -23,7 +23,6 @@ OBJ_DIRS = $(OBJ_DIR) \
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
 			utils/free_if_exists.c \
-			utils/debug.c \
 			utils/ft_parser_utils.c \
 			utils/ft_tokenizer_utils.c \
 			interpreter/ft_tokenizer.c \
@@ -77,7 +76,6 @@ SRC = $(addprefix ./src/,$(TARGETS))
 SRC_OBJ = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o)) 
 # --------------------- end source code
 
-
 # ---------------- tests
 TEST_TARGETS =  tests/main.c \
 				tests/utils.c \
@@ -87,46 +85,25 @@ TEST_TARGETS =  tests/main.c \
 TESTS_OBJS = $(addprefix ./$(OBJ_DIR)/,$(TEST_TARGETS:.c=.o))
 
 # -------------------- end tests
-			
  
 LIBFT = $(OBJ_DIR)/libft.a
-
 
 VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.supp -s
 
 all: $(NAME) 
 
-test: $(NAME_LIB) $(TESTS_OBJS)
-	@clear
-	@$(CC) $(TESTS_OBJS) $(LFLAGS) -o $(NAME)_test
-	@./$(NAME)_test
-	@rm -f $(NAME)_test $(NAME_LIB)
-
-
-test-valgrind: $(NAME_LIB) $(TESTS_OBJS)
-	@clear
-	@$(CC) $(TESTS_OBJS) $(LFLAGS) -o $(NAME)_test
-	@valgrind $(VALGRIND_FLAGS) ./$(NAME)_test
-	@rm -f $(NAME)_test $(NAME_LIB)
-
-$(OBJ_DIR)/tests/%.o: tests/%.c
-	$(CC) $(CFLAGS) $< -o $@
-
-$(NAME_LIB): $(LIBFT) $(OBJ) 
-	$(AR) $(NAME_LIB) $(LIBFT) $(OBJ)
-
 valgrind: $(NAME)	
 	valgrind $(VALGRIND_FLAGS) ./$(NAME) 
 
-$(NAME): $(LIBFT) $(OBJ_DIRS) $(SRC_OBJ)
+$(NAME): $(OBJ_DIR) $(LIBFT) $(SRC_OBJ)
+	cp libs/libft/libft.a $(LIBFT)
 	$(CC) $(SRC_OBJ) $(LFLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: src/%.c
 	$(CC) $(CFLAGS) $< -o $@
 
-$(LIBFT): $(OBJ_DIRS)
+$(LIBFT): $(OBJ_DIR)
 	make -C libs/libft
-	cp libs/libft/libft.a $(LIBFT) 
 
 $(OBJ_DIRS):
 	mkdir -p $(OBJ_DIRS)
@@ -148,4 +125,4 @@ fclean: clean
 
 re: fclean $(NAME)
 
-.PHONY: dclean clean fclean all re run valgrind test test-valgrind 
+.PHONY: dclean clean fclean all re
