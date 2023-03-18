@@ -40,6 +40,6 @@ char			**parse_ldk_lst_to_char_array(t_lkd_lst *list);
 # define USER_SIZE 1024
 # define PATH_SIZE 4096
 # define HOSTNAME_SIZE 256
-# define PIPE_BUFFER 150000
+# define PIPE_BUFFER 250000
 
 #endif
