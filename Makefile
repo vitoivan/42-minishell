@@ -37,6 +37,7 @@ TARGETS = 	main.c \
 			utils/string_builder_utils.c \
 			utils/ft_strmatch.c \
 			utils/ft_tokenizer_utils2.c \
+			utils/ft_tokenizer_utils3.c \
 			utils/get_hostname.c \
 			utils/ft_isspace.c \
 			utils/ft_isquote.c \
@@ -46,6 +47,7 @@ TARGETS = 	main.c \
 			utils/clear_splitted.c \
 			utils/ctx_get_env.c \
 			utils/ft_wildcard_utils.c \
+			utils/mk_token_utils.c \
 			cmd/cmd_is_valid.c \
 			cmd/cmd_try_run.c \
 			cmd/path.c \
