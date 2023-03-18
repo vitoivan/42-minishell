@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:34:31 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/18 09:52:48 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,22 @@ static t_ast_node	*expression_builder(t_ctx **ctx, t_parser_context *context)
 	t_token		*operator;
 
 	node = mk_node_command(get_previus_token(context));
-	right = NULL;
-	operator= get_current_token(context);
-	if (!operator|| operator->type == TOKEN_COMMAND)
+	operator = get_current_token(context);
+	if (!operator || operator->type == TOKEN_COMMAND)
 		return (node);
-	while ((operator= get_current_token(context)) != NULL
-		&& operator->type != TOKEN_ERROR)
+	while (1)
 	{
+		operator = get_current_token(context);
+		if (!operator || operator->type == TOKEN_ERROR)
+			break ;
 		advance_to_next_token(ctx, context);
 		right = mk_node_command(get_current_token(context));
 		node = mk_node_binary_expression(operator, node, right);
 		advance_to_next_token(ctx, context);
 	}
-	if (operator&& operator->type == TOKEN_ERROR)
+	if (operator && operator->type == TOKEN_ERROR)
 	{
-		ft_printf("%s\n", operator->start);
-		del_token(operator);
+		clean_token_with_error(operator);
 		return (NULL);
 	}
 	return (node);
