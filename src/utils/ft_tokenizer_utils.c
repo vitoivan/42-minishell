@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:51:11 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 13:58:26 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/18 09:40:52 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token	*get_previus_token(t_parser_context *context)
 	return (context->parser.previus_token);
 }
 
-t_token	*ft_mk_generic_token(t_token_type type, char *start, unsigned int size)
+t_token	*ft_mk_generic_token(t_token_type type, char *start, UINT size)
 {
 	t_token	*token;
 
