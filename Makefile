@@ -23,7 +23,6 @@ OBJ_DIRS = $(OBJ_DIR) \
 TARGETS = 	main.c \
 			utils/get_line_from_terminal.c \
 			utils/free_if_exists.c \
-			utils/debug.c \
 			utils/ft_parser_utils.c \
 			utils/ft_tokenizer_utils.c \
 			interpreter/ft_tokenizer.c \

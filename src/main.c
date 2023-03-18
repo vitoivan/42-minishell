@@ -6,11 +6,13 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:44:57 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/18 11:19:47 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_ctx	*g_ctx;
 
 static void	clear(void)
 {
@@ -25,7 +27,7 @@ static int	handle_empty_line(char **line)
 		return (-1);
 	if ((*line)[0] == '\0' || (*line)[0] == '\n')
 	{
-		free_if_exists((void **)&line);
+		free_if_exists((void **)line);
 		return (-1);
 	}
 	return (1);
