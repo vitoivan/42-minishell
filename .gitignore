@@ -6,5 +6,4 @@ minishell
 *.txt
 
 *libft.a
-libft
 bash-src
