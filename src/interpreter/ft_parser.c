@@ -6,7 +6,11 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2023/03/18 09:52:48 by jv               ###   ########.fr       */
+=======
+/*   Updated: 2023/03/18 12:34:13 by jv               ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +81,7 @@ static t_ast_node	*parser_expression(t_ctx **ctx, t_parser_context *context)
 		return (NULL);
 	if (get_previus_token(context)->type == TOKEN_ERROR)
 	{
-		free(get_previus_token(context));
+		clean_token_with_error(get_previus_token(context));
 		return (NULL);
 	}
 	if (get_current_token(context) == NULL)
