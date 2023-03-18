@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2023/03/18 09:52:48 by jv               ###   ########.fr       */
-=======
-/*   Updated: 2023/03/18 12:34:13 by jv               ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2023/03/18 11:19:28 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +94,5 @@ t_ast_node	*ft_parser(t_ctx **ctx, char *source)
 	parser_init(&context.parser);
 	advance_to_next_token(ctx, &context);
 	command_tree = parser_expression(ctx, &context);
-	if (command_tree && DEBUG)
-		debug_command_tree(command_tree);
 	return (command_tree);
 }

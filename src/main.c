@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/18 12:17:49 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/18 11:19:47 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	handle_empty_line(char **line)
 		return (-1);
 	if ((*line)[0] == '\0' || (*line)[0] == '\n')
 	{
-		free_if_exists((void **)&line);
+		free_if_exists((void **)line);
 		return (-1);
 	}
 	return (1);
