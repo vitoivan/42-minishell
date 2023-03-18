@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:38:20 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:38:55 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/18 10:29:29 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	exec_tree(t_ast_node *node, t_ctx **ctx)
 	else if (node->type == NODE_REDIRECT || node->type == NODE_REDIRECT_APPEND)
 		exec_redirect(node, ctx);
 	else if (node->type == NODE_REDIRECT_INPUT
-			|| node->type == NODE_HERE_DOCUMENT)
+		|| node->type == NODE_HERE_DOCUMENT)
 		exec_redirect_input(node, ctx);
 	else if (node->type == NODE_PIPE)
 		exec_pipe(node, ctx);
