@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/19 15:38:03 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 18:47:12 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef enum e_precedence
 
 typedef enum e_token_type
 {
+	TOKEN_UNDEFINED,
 	TOKEN_ERROR,
 	TOKEN_COMMAND,
 	TOKEN_OPERATOR,

@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:44:00 by jv                #+#    #+#             */
-/*   Updated: 2023/03/19 15:36:03 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 15:56:57 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	token_string_builder(t_token *token, t_ctx **ctx, t_lexer *lexer)
 	{
 		(*ctx)->status_code = 1;
 		token->type = TOKEN_ERROR;
-		token->error_msg = "t_lexer Error: Undefined variable\n";
+		token->start = ft_strdup("t_lexer Error: Undefined variable\n");
 	}
 }
 

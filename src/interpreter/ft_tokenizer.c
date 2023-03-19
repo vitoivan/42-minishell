@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 14:15:12 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 18:46:12 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,20 @@ t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable, t_token_type type)
 		token->size = (UINT)(lexer->current_position - lexer->start);
 		token->start = ft_strndup(lexer->start, token->size);
 	}
-	if (type == TOKEN_COMMAND)
+	if (token->type != TOKEN_ERROR)
 	{
-		args = ft_split(token->start, ' ');
-		token->command = *args;
-		token->args = args + 1;
+		if (type == TOKEN_COMMAND)
+		{
+			args = ft_split(token->start, ' ');
+			token->command = *args;
+			token->args = args + 1;
+		}
+		else {
+			token->args	= NULL;
+			token->command = NULL;
+		}
+		token->type = type;
 	}
-	else {
-		token->args	= NULL;
-		token->command = NULL;
-	}
-	token->type = type;
 	return (token);
 }
 

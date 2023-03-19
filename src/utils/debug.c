@@ -171,24 +171,29 @@ void	debug_token(t_token *token)
 void debug_list_of_tokens(t_lkd_lst *commands) 
 {
     t_lkd_node *node;
-    UINT i; 
 
     node = commands->head; 
-    i = 0;
     ft_printf("[\n");
-    while (i < commands->size - 1 && node->content != NULL)
+    while (node && node->content != NULL)
     {
         if (((t_token *) node->content)->type == TOKEN_ERROR)
-            ft_printf("\tTOKEN_ERROR");
-        if (((t_token *) node->content)->type == TOKEN_COMMAND) {
+		{
             t_token *tk = (t_token *) node->content;
+            ft_printf("\tTOKEN_ERROR -> %s", tk->start);
+		}
+        if (((t_token *) node->content)->type == TOKEN_COMMAND) {
+			 t_token *tk = (t_token *) node->content;
 			ft_printf("\tTOKEN_COMMAND -> ");
 			ft_printf("command: %s ", tk->command);
 			ft_printf("args: [");
 			UINT index = 0;
-			for (; tk->args[index + 1]; index++)
-				ft_printf("%s, ", tk->args[index]);
-			ft_printf("%s]", tk->args[index]);
+			if (tk->args[index]) {
+				for (; tk->args[index + 1]; index++)
+					ft_printf("%s, ", tk->args[index]);
+				ft_printf("%s]", tk->args[index]);
+			} else {
+				ft_printf("]");
+			}
 		}
         if (((t_token *) node->content)->type == TOKEN_OPERATOR)
             ft_printf("\tTOKEN_OPERATOR");
@@ -211,7 +216,6 @@ void debug_list_of_tokens(t_lkd_lst *commands)
         if (((t_token *) node->content)->type == TOKEN_OPERATOR_SEMICOLON)
             ft_printf("\tTOKEN_OPERATOR_SEMICOLON");
         node = node->next;
-        i++;
 		ft_printf("\n");
     }
     ft_printf("]\n");
