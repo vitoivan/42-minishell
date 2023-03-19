@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 08:19:25 by jv                #+#    #+#             */
-/*   Updated: 2023/03/19 10:16:51 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 12:28:34 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ void	del_token(t_token *token)
 		free(token->start);
 		free(token);
 	}
+}
+
+void del_token_list(void *token) 
+{
+	del_token((t_token *)token);
 }
 
 void	advance_to_next_token(t_ctx **ctx, t_parser_context *context)

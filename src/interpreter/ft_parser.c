@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 09:07:33 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 12:29:20 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ static t_ast_node	*expression_builder(t_ctx **ctx, t_parser_context *context)
 	return (node);
 }
 
-static t_ast_node	*parser_expression(t_ctx **ctx, t_parser_context *context)
+
+
+static t_ast_node	*parser_expression_tree(t_ctx **ctx, t_parser_context *context)
 {
 	advance_to_next_token(ctx, context);
 	if (get_previus_token(context) == NULL)
@@ -85,7 +87,30 @@ static t_ast_node	*parser_expression(t_ctx **ctx, t_parser_context *context)
 	return (expression_builder(ctx, context));
 }
 
-t_ast_node	*ft_parser(t_ctx **ctx, char *source)
+
+static t_lkd_lst *parser_expression_linked(t_ctx **ctx, t_parser_context *context)
+{
+	t_token *operator;
+	t_lkd_lst *lst_of_tokens;
+
+
+	lst_of_tokens = lkd_lst_new_list();
+	while(1) {
+		operator = get_current_token(context);
+		if (!operator)
+			break ;
+		lkd_lst_add_back(&lst_of_tokens, lkd_lst_new_node(operator));
+		advance_to_next_token(ctx, context);
+	}
+	if (lst_of_tokens->size < 1) {
+		free(lst_of_tokens);
+		return (NULL);
+	}
+	return (lst_of_tokens);
+}
+
+
+t_ast_node	*ft_parser_tree(t_ctx **ctx, char *source)
 {
 	t_parser_context	context;
 	t_ast_node			*command_tree;
@@ -93,8 +118,33 @@ t_ast_node	*ft_parser(t_ctx **ctx, char *source)
 	lexer_init(&context.lexer, source);
 	parser_init(&context.parser);
 	advance_to_next_token(ctx, &context);
-	command_tree = parser_expression(ctx, &context);
-	if (command_tree)
-		debug_command_tree(command_tree);
+	command_tree = parser_expression_tree(ctx, &context);
 	return (command_tree);
+}
+
+t_lkd_lst *ft_parser_linked(t_ctx **ctx, char *source)
+{
+	t_parser_context	context;
+	t_lkd_lst *lst;
+
+	lexer_init(&context.lexer, source);
+	parser_init(&context.parser);
+	advance_to_next_token(ctx, &context);
+	
+	lst = parser_expression_linked(ctx, &context);
+
+	if (lst)
+		debug_list_of_tokens(lst);
+	lkd_lst_kill_list(&lst, del_token_list);
+	return (NULL);
+
+	//return (parser_expression_linked(ctx, &context));
+
+}
+
+void *ft_parser(t_ctx **ctx, char *source)
+{
+	if (USE_LIST)
+		return (ft_parser_linked(ctx, source));
+	return (ft_parser_tree(ctx, source));
 }
