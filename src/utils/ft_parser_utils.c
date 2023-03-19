@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:16:59 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:45:41 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/19 13:01:17 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,12 @@ static void	ast_free_binary_exp_node(t_ast_node *node)
 	ast_free_command_node(node);
 }
 
-static void	ast_free_semicolon_exp_node(t_ast_node *node)
-{
-	t_lkd_lst	*list;
-	t_lkd_node	*head;
-	UINT		i;
-
-	list = get_head_node(node);
-	head = list->head;
-	i = 0;
-	while (i < list->size)
-	{
-		ast_node_free(head->content);
-		head = head->next;
-		i++;
-	}
-	free(node->u_as.s_expressions.nodes);
-}
-
-t_lkd_lst	*get_head_node(t_ast_node *node)
-{
-	return (node->u_as.s_expressions.nodes);
-}
-
 void	ast_node_free(t_ast_node *node)
 {
 	if (!node)
 		return ;
 	if (node->type == NODE_COMMAND)
 		ast_free_command_node(node);
-	else if (node->type == NODE_SEMICOLON)
-		ast_free_semicolon_exp_node(node);
 	else
 		ast_free_binary_exp_node(node);
 }

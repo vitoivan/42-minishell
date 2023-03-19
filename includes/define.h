@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/19 12:03:24 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 15:38:03 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct s_token
 {
 	char						*start;
 	char						*error_msg;
+	char						*command;
+	char						**args;
 	t_token_type				type;
 	UINT						size;
 }								t_token;
@@ -116,10 +118,6 @@ typedef struct s_ast_node
 			struct s_ast_node	*left;
 			struct s_ast_node	*right;
 		} s_binary_expression;
-		struct
-		{
-			t_lkd_lst			*nodes;
-		} s_expressions;
 	} u_as;
 }								t_ast_node;
 

@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/18 11:19:47 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/19 15:14:41 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		g_ctx->root_cmd = ft_parser(&g_ctx, line);
 		free_if_exists((void **)&line);
+		
 		if (g_ctx->root_cmd)
 		{
 			exec_tree(g_ctx->root_cmd, &g_ctx);
 			clear();
 		}
+		
 	}
 	return (0);
 }

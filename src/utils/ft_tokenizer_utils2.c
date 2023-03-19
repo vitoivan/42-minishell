@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:51:11 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 13:52:18 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/19 15:04:37 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,28 @@ BYTE	is_operator(t_lexer *lexer, UINT offset)
 	return (0);
 }
 
-t_token_type	ft_get_token_type(t_token *token)
+t_token_type	ft_get_token_type(t_lexer *lexer)
 {
-	if (ft_strcmp(token->start, "&&") == 0)
+	char	*curr; 
+	
+	curr = lexer->current_position;
+	if (ft_strncmp(curr, "&&", 2) == 0)
 		return (TOKEN_OPERATOR_AND);
-	if (ft_strcmp(token->start, "||") == 0)
+	if (ft_strncmp(curr, "||", 2) == 0)
 		return (TOKEN_OPERATOR_OR);
-	if (ft_strcmp(token->start, "|") == 0)
+	if (ft_strncmp(curr, "|", 1) == 0)
 		return (TOKEN_OPERATOR_PIPE);
-	if (ft_strcmp(token->start, "<") == 0)
-		return (TOKEN_OPERATOR_REDIRECT_INPUT);
-	if (ft_strcmp(token->start, "<<") == 0)
+	if (ft_strncmp(curr, "<<", 2) == 0)
 		return (TOKEN_OPERATOR_HERE_DOC);
-	if (ft_strcmp(token->start, ">") == 0)
-		return (TOKEN_OPERATOR_REDIRECT);
-	if (ft_strcmp(token->start, ">>") == 0)
+	if (ft_strncmp(curr, "<", 1) == 0)
+		return (TOKEN_OPERATOR_REDIRECT_INPUT);
+	if (ft_strncmp(curr, ">>", 2) == 0)
 		return (TOKEN_OPERATOR_REDIRECT_APPEND);
-	if (ft_strcmp(token->start, ";") == 0)
+	if (ft_strncmp(curr, ">", 1) == 0)
+		return (TOKEN_OPERATOR_REDIRECT);
+	if (ft_strncmp(curr, ";", 1) == 0)
 		return (TOKEN_OPERATOR_SEMICOLON);
-	return (TOKEN_COMMAND);
+	return (TOKEN_ERROR);
 }
 
 void	skip_white_spaces(t_lexer *lexer)

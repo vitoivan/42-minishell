@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 12:29:20 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 14:43:44 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,11 @@ static t_lkd_lst *parser_expression_linked(t_ctx **ctx, t_parser_context *contex
 	lst_of_tokens = lkd_lst_new_list();
 	while(1) {
 		operator = get_current_token(context);
-		if (!operator)
+		if (!operator || operator->type == TOKEN_ERROR)
+		{
+			lkd_lst_add_back(&lst_of_tokens, lkd_lst_new_node(operator));
 			break ;
+		}
 		lkd_lst_add_back(&lst_of_tokens, lkd_lst_new_node(operator));
 		advance_to_next_token(ctx, context);
 	}

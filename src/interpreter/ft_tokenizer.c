@@ -6,15 +6,16 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 08:44:28 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 14:15:12 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable)
+t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable, t_token_type type)
 {
 	t_token			*token;
+	char 			**args;
 
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
@@ -26,7 +27,17 @@ t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable)
 		token->size = (UINT)(lexer->current_position - lexer->start);
 		token->start = ft_strndup(lexer->start, token->size);
 	}
-	token->type = ft_get_token_type(token);
+	if (type == TOKEN_COMMAND)
+	{
+		args = ft_split(token->start, ' ');
+		token->command = *args;
+		token->args = args + 1;
+	}
+	else {
+		token->args	= NULL;
+		token->command = NULL;
+	}
+	token->type = type;
 	return (token);
 }
 
@@ -43,7 +54,7 @@ t_token	*mk_wildcard_token(t_lexer *lexer)
 	return (token);
 }
 
-t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
+t_token	*scan_command(t_ctx **ctx, t_parser_context *context)
 {
 	BYTE	double_quote;
 	BYTE	variable;
@@ -53,9 +64,9 @@ t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 	double_quote = 0;
 	variable = 0;
 	single_quote = 0;
-	if (is_operator(lexer, 0) || is_at_end(lexer))
+	if (is_operator(&context->lexer, 0) || is_at_end(&context->lexer))
 		return (NULL);
-	token = token_scan_command_run(lexer, &variable,
+	token = token_scan_command_run(&context->lexer, &variable,
 			&single_quote, &double_quote);
 	if (token)
 		return (token);
@@ -63,20 +74,29 @@ t_token	*scan_command(t_ctx **ctx, t_lexer *lexer)
 		if ((single_quote && double_quote))
 			return (ft_mk_generic_token(TOKEN_ERROR,
 					ft_strdup("minishell: unquoted string error"), 0));
-	return (mk_token(ctx, lexer, variable));
+	return (mk_token(ctx, &context->lexer, variable, TOKEN_COMMAND));
 }
 
-t_token	*scan_operator(t_ctx **ctx, t_lexer *lexer)
+t_token	*scan_operator(t_ctx **ctx, t_parser_context *context)
 {
-	while (!is_at_end(lexer) && is_operator(lexer, 0))
-		lexer->current_position++;
-	if (is_at_end(lexer) && is_operator(lexer, 1))
+	t_token_type type;
+	
+	type = ft_get_token_type(&context->lexer);
+	while (!is_at_end(&context->lexer) && is_operator(&context->lexer, 0))
+		context->lexer.current_position++;
+	if (is_at_end(&context->lexer) && is_operator(&context->lexer, 1))
 		return (ft_mk_generic_token(TOKEN_ERROR,
-				ft_strdup("minishell: invalid here document operator"),
+				ft_strdup("minishell: Error, invalid Syntax"),
 				0));
-	if (ft_strlen(lexer->current_position) < 1)
+	if (!get_previus_token(context) || get_previus_token(context)->type == TOKEN_ERROR)
+		return (ft_mk_generic_token(TOKEN_ERROR,
+				ft_strdup("minishell: Error, invalid Syntax"),
+				0));
+	if (ft_strlen(context->lexer.current_position) < 1)
 		return (NULL);
-	return (mk_token(ctx, lexer, 0));
+	
+	
+	return (mk_token(ctx, &context->lexer, 0, type));
 }
 
 t_token	*scan_here_document(t_lexer *lexer)
@@ -91,7 +111,7 @@ t_token	*scan_here_document(t_lexer *lexer)
 			lexer->current_position - lexer->start);
 	if (*delimiter == '\0' || is_operator(lexer, 1))
 		return (ft_mk_generic_token(TOKEN_ERROR,
-				ft_strdup("Error: Here Document Syntax Error"),
+				ft_strdup("Error: Invalid Syntax"),
 				0));
 	final_line = token_here_doc_args(delimiter);
 	free(delimiter);

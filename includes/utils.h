@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/19 12:28:22 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 15:39:10 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,12 @@ void			*ft_parser(t_ctx **ctx, char *source);
 t_ast_node_type	get_node_type(t_token *token);
 void			ast_node_free(t_ast_node *node);
 void			parser_init(t_parser *parser);
-t_lkd_lst		*get_head_node(t_ast_node *node);
 void			clean_token_with_error(t_token *token);
 
 /*  tokenizer functions */
 void			exec_tree(t_ast_node *node, t_ctx **ctx);
 void			del_token(t_token *token);
-void 			del_token_list(void *token);
+void			del_token_list(void *token);
 void			advance_to_next_token(t_ctx **ctx, t_parser_context *context);
 void			lexer_init(t_lexer *lexer, char *source);
 void			skip_white_spaces(t_lexer *lexer);
@@ -83,7 +82,7 @@ int				real_string_size(t_ctx **ctx, char *s, int size);
 BOOL			ft_is_double_quote(char c);
 BOOL			ft_is_single_quote(char c);
 BOOL			ft_isquote(char c);
-t_token_type	ft_get_token_type(t_token *token);
+t_token_type	ft_get_token_type(t_lexer *lexer);
 t_token			*token_scan_command_run(t_lexer *lexer,
 					BYTE *var, BYTE *s_quote, BYTE *d_quote);
 t_token			*get_current_token(t_parser_context *context);
@@ -91,12 +90,13 @@ t_token			*get_previus_token(t_parser_context *context);
 t_token			*ft_mk_generic_token(t_token_type type,
 					char *start, UINT size	);
 t_token			*lexer_next_token(t_ctx **ctx,
-					t_lexer *lexer, BYTE is_here_doc);
+					t_parser_context *context, BYTE is_here_doc);
 t_token			*scan_here_document(t_lexer *lexer);
-t_token			*scan_operator(t_ctx **ctx, t_lexer *lexer);
-t_token			*scan_command(t_ctx **ctx, t_lexer *lexer);
+t_token			*scan_operator(t_ctx **ctx, t_parser_context *context);
+t_token			*scan_command(t_ctx **ctx, t_parser_context *context);
 t_token			*mk_wildcard_token(t_lexer *lexer);
-t_token			*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable);
+t_token			*mk_token(t_ctx **ctx, t_lexer *lexer,
+					BYTE variable, t_token_type type);
 
 /* Error handle utils */
 void			print_errno(t_ctx **ctx, char *line);
@@ -104,7 +104,7 @@ void			print_errno(t_ctx **ctx, char *line);
 /* debug functions */
 void			debug_command_tree(t_ast_node *root);
 void			debug_token(t_token *token);
-void 			debug_list_of_tokens(t_lkd_lst *commands);
+void			debug_list_of_tokens(t_lkd_lst *commands);
 
 /*   string builder       */
 t_str_builder	*string_builder(t_ctx **ctx, const char *s, int t_size);
