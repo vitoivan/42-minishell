@@ -1,0 +1,8 @@
+PING google.com(2800:3f0:4001:82e::200e (2800:3f0:4001:82e::200e)) 56 data bytes
+64 bytes from 2800:3f0:4001:82e::200e (2800:3f0:4001:82e::200e): icmp_seq=1 ttl=56 time=69.2 ms
+64 bytes from 2800:3f0:4001:82e::200e (2800:3f0:4001:82e::200e): icmp_seq=2 ttl=56 time=68.7 ms
+64 bytes from 2800:3f0:4001:82e::200e (2800:3f0:4001:82e::200e): icmp_seq=3 ttl=56 time=68.4 ms
+64 bytes from 2800:3f0:4001:82e::200e (2800:3f0:4001:82e::200e): icmp_seq=4 ttl=56 time=68.7 ms
+64 bytes from 2800:3f0:4001:82e::200e (2800:3f0:4001:82e::200e): icmp_seq=5 ttl=56 time=68.7 ms
+64 bytes from 2800:3f0:4001:82e::200e (2800:3f0:4001:82e::200e): icmp_seq=6 ttl=56 time=68.8 ms
+64 bytes from 2800:3f0:4001:82e::200e (2800:3f0:4001:82e::200e): icmp_seq=7 ttl=56 time=68.8 ms

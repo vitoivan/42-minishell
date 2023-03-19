@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:34:52 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:34:52 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/19 07:55:16 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char		*get_cmd_binary_path(char *cmd);
 char		**get_path(void);
 BOOL		cmd_is_valid(char *cmd);
 BOOL		cmd_exec(char *line, t_ctx **ctx);
-BOOL		cmd_try_run(t_ctx **ctx, char *line);
+BOOL		cmd_try_run(t_ctx **ctx, char *line, int in_pipe);
 BOOL		await_cmd_run(t_ctx **ctx, char *binary_path, char **args);
 void		cmd_get_args(char ***args, char *line);
 void		cmd_free_args(char ***args);

@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/12 19:55:57 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/19 08:45:29 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define CTX_H
 
 # include "./define.h"
+
+# define PID_LIST_SIZE 1024
+# define PIPE_LIST_SIZE 1024
 
 typedef struct s_ctx
 {
@@ -27,6 +30,10 @@ typedef struct s_ctx
 	char		**argv;
 	t_ast_node	*root_cmd;
 	char		*buffer;
+	int			*pid_list;
+	int			pid_list_i;
+	int			**pipe_list;
+	int			pipe_list_i;
 }				t_ctx;
 
 t_ctx			*ctx_init(int argc, char **argv, char **envp);

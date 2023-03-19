@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 15:01:51 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/19 08:20:03 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	env(t_ctx **ctx)
 {
 	unsigned int	i;
 	t_lkd_node		*node;
-	char			buffer[PIPE_BUFFER];
-	char			*content;
 	int				buff_idx;
 
 	i = -1;
@@ -25,14 +23,7 @@ void	env(t_ctx **ctx)
 	node = (*ctx)->env->head;
 	while (++i < (*ctx)->env->size)
 	{
-		content = ft_strjoin((char *)node->content, "\n");
-		if (content)
-		{
-			ft_strlcpy(&buffer[buff_idx], content, ft_strlen(content) + 1);
-			buff_idx += ft_strlen(content);
-			node = node->next;
-			free(content);
-		}
+		ft_printf("%s\n", (char *)node->content);
+		node = node->next;
 	}
-	ctx_populate_buffer(ctx, buffer);
 }

@@ -45,6 +45,7 @@ TARGETS = 	main.c \
 			utils/string_builder.c \
 			utils/clear_splitted.c \
 			utils/ctx_get_env.c \
+			utils/debug.c \
 			utils/ft_wildcard_utils.c \
 			utils/mk_token_utils.c \
 			cmd/cmd_is_valid.c \

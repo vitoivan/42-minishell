@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/18 11:19:28 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/19 07:19:57 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,20 @@ static t_ast_node	*expression_builder(t_ctx **ctx, t_parser_context *context)
 	t_token		*operator;
 
 	node = mk_node_command(get_previus_token(context));
-	operator = get_current_token(context);
-	if (!operator || operator->type == TOKEN_COMMAND)
+	operator= get_current_token(context);
+	if (!operator|| operator->type == TOKEN_COMMAND)
 		return (node);
 	while (1)
 	{
-		operator = get_current_token(context);
-		if (!operator || operator->type == TOKEN_ERROR)
+		operator= get_current_token(context);
+		if (!operator|| operator->type == TOKEN_ERROR)
 			break ;
 		advance_to_next_token(ctx, context);
 		right = mk_node_command(get_current_token(context));
 		node = mk_node_binary_expression(operator, node, right);
 		advance_to_next_token(ctx, context);
 	}
-	if (operator && operator->type == TOKEN_ERROR)
+	if (operator&& operator->type == TOKEN_ERROR)
 	{
 		clean_token_with_error(operator);
 		return (NULL);
@@ -94,5 +94,7 @@ t_ast_node	*ft_parser(t_ctx **ctx, char *source)
 	parser_init(&context.parser);
 	advance_to_next_token(ctx, &context);
 	command_tree = parser_expression(ctx, &context);
+	if (command_tree)
+		debug_command_tree(command_tree);
 	return (command_tree);
 }
