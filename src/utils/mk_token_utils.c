@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:44:00 by jv                #+#    #+#             */
-/*   Updated: 2023/03/18 20:10:39 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 10:17:38 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	token_string_builder(t_token *token, t_ctx **ctx, t_lexer *lexer)
 t_token	*token_scan_command_run(t_lexer *lexer,
 								BYTE *var, BYTE *s_quote, BYTE *d_quote)
 {	
-	while (!is_at_end(lexer) && (!is_operator(lexer, 0) || *d_quote
-			|| *s_quote))
+	while (ft_lexer_is_readable(lexer) || (*d_quote && *s_quote))
 	{
 		if (ft_is_double_quote(*lexer->current_position))
 			*d_quote = !(*d_quote);

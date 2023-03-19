@@ -39,6 +39,7 @@ TARGETS = 	main.c \
 			utils/ft_tokenizer_utils3.c \
 			utils/get_hostname.c \
 			utils/ft_isspace.c \
+			utils/debug.c \
 			utils/ft_isquote.c \
 			utils/skip_quotes.c \
 			utils/handle_signals.c \

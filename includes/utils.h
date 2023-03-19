@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/18 19:47:28 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 09:51:35 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ char			*ft_strndup(const char *str, UINT n);
 char			*token_here_doc_args(char *delimiter);
 t_precedence	get_precedence(t_token *token);
 int				ft_isspace(int c);
+BYTE			ft_lexer_is_readable(t_lexer *lexer);
 int				real_string_size(t_ctx **ctx, char *s, int size);
 BOOL			ft_is_double_quote(char c);
 BOOL			ft_is_single_quote(char c);
