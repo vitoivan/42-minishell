@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 16:25:07 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/20 00:55:59 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,14 @@ static void	populate_args(char *line, int args_qty, char **args)
 	}
 }
 
-void	echo(t_ctx **ctx, char *line)
+void	echo(t_ctx **ctx, char *line, t_token *token)
 {
 	char	**args;
 	char	*str;
 	int		args_qty;
 
+	(void)ctx;
+	(void)token;
 	args_qty = get_args_qty(line + 5);
 	args = (char **)ft_calloc(args_qty + 1, sizeof(char *));
 	if (args_qty <= 0)
@@ -114,7 +116,7 @@ void	echo(t_ctx **ctx, char *line)
 	}
 	populate_args(line, args_qty, args);
 	str = parse_to_string(args);
-	ctx_populate_buffer(ctx, str);
+	ft_putstr_fd(str, STDOUT_FILENO);
 	clear_splitted(&args);
 	free(str);
 }

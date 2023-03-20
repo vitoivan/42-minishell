@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 14:43:11 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 13:46:16 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/19 17:19:07 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*ctx_get_env(t_ctx **ctx, char *env_name)
 		data = ft_split((char *)node->content, '=');
 		if (ft_strcmp(data[0], env_name) == 0)
 		{
+			if (env_value != NULL)
+				free(env_value);
 			env_value = ft_strdup(data[1]);
 			clear_splitted(&data);
 			break ;

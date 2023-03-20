@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 20:00:23 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/19 17:02:47 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	validate_pwd(t_ctx **ctx, char *line)
 void	pwd(t_ctx **ctx, char *line)
 {
 	char	*current_path;
-	char	*fmt;
 
 	validate_pwd(ctx, line);
 	if ((*ctx)->status_code != EXIT_SUCCESS)
@@ -38,8 +37,6 @@ void	pwd(t_ctx **ctx, char *line)
 	}
 	current_path = NULL;
 	current_path = getcwd(current_path, PATH_SIZE);
-	fmt = ft_strjoin(current_path, "\n");
-	ctx_populate_buffer(ctx, fmt);
-	free(fmt);
+	ft_printf("%s\n", current_path);
 	free(current_path);
 }

@@ -29,6 +29,7 @@ TARGETS = 	main.c \
 			interpreter/exec_tree.c \
 			interpreter/ft_parser.c \
 			utils/print_lkd_list.c \
+			utils/debug.c \
 			utils/skip_whitespace.c \
 			utils/print_terminal.c \
 			utils/errors.c \
@@ -39,7 +40,6 @@ TARGETS = 	main.c \
 			utils/ft_tokenizer_utils3.c \
 			utils/get_hostname.c \
 			utils/ft_isspace.c \
-			utils/debug.c \
 			utils/ft_isquote.c \
 			utils/skip_quotes.c \
 			utils/handle_signals.c \

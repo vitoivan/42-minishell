@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/18 17:10:48 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 15:07:31 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ typedef struct s_ctx
 	char		*path;
 	char		*hostname;
 	int			pid;
+	int			*pids;
 	int			status_code;
 	int			argc;
 	t_lkd_lst	*env;
 	char		**argv;
 	t_ast_node	*root_cmd;
 	char		*buffer;
+	t_lkd_lst	*cmdlist;
+
 }				t_ctx;
 
 t_ctx			*ctx_init(int argc, char **argv, char **envp);
