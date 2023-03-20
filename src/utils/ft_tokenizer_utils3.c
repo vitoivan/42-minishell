@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 08:19:25 by jv                #+#    #+#             */
-/*   Updated: 2023/03/19 15:27:22 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 21:52:33 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,7 @@ BYTE	ft_lexer_is_readable(t_lexer *lexer)
 	while (ft_isspace(*c))
 		c++;
 	result = 1;
-	if (!(ft_isalnum(*c)
-			|| ft_is_double_quote(*c)
-			|| ft_is_single_quote(*c)
-			|| (*c == '$')
-			|| (*c == '-')
-			|| (*c == '.')
-			|| (*c == '*')
-			)
-		)
+	if (ft_isspace(*c) || *c == '\0')
 		result = 0;
 	return (result);
 }

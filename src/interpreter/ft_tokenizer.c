@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 18:46:12 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 21:45:53 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,16 @@ t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable, t_token_type type)
 t_token	*mk_wildcard_token(t_lexer *lexer)
 {
 	t_token	*token;
+	char **args;
 
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
 		return (NULL);
 	token->type = TOKEN_COMMAND;
 	token->start = ft_mk_wildcard_command(lexer);
+	args = ft_split(token->start, ' ');
+	token->command = *args;
+	token->args = args + 1;
 	token->size = ft_strlen(token->start);
 	return (token);
 }
