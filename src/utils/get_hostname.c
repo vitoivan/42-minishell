@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_hostname.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/04 12:40:13 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/19 17:26:28 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ static char	*get_buffer_from_pipe(int pipefd[2], char *path, char **args)
 	char	*read_buffer;
 	char	*buffer;
 
+	(void)path;
+	(void)args;
 	read_buffer = ft_calloc(1, HOSTNAME_SIZE);
 	buffer = ft_calloc(1, HOSTNAME_SIZE);
-	free_hostname_data(path, args);
 	read(pipefd[0], read_buffer, HOSTNAME_SIZE);
 	pipe_close_both(pipefd);
 	ft_strlcpy(buffer, read_buffer, ft_strlen(read_buffer));
@@ -65,18 +66,32 @@ char	*get_hostname(char **envp)
 
 	if (pipe(pipefd) == -1)
 		return (NULL);
-	if (get_hostname_path(&path) == False || get_hostname_args(&args) == False)
+	args = NULL;
+	path = NULL;
+	if (get_hostname_path(&path) == False)
+	{
+		if (path)
+			free(path);
 		return (NULL);
+	}
+	if (get_hostname_args(&args) == False)
+	{
+		free_hostname_data(path, args);
+		return (NULL);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
 		dup2(pipefd[1], STDOUT_FILENO);
 		pipe_close_both(pipefd);
 		execve(path, args, envp);
+		free_hostname_data(path, args);
+		exit(0);
 	}
 	else
 	{
 		waitpid(pid, NULL, 0);
+		free_hostname_data(path, args);
 		return (get_buffer_from_pipe(pipefd, path, args));
 	}
 	return (NULL);

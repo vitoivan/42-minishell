@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 19:09:10 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/20 01:15:56 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,32 @@ static t_ast_node	*expression_builder(t_ctx **ctx, t_parser_context *context)
 {
 	t_ast_node	*node;
 	t_ast_node	*right;
-	t_token		*operator;
+	t_token		*op;
 
 	node = mk_node_command(get_previus_token(context));
-	operator = get_current_token(context);
-	if (!operator || operator->type == TOKEN_COMMAND)
+	op = get_current_token(context);
+	if (!op || op->type == TOKEN_COMMAND)
 		return (node);
 	while (1)
 	{
-		operator = get_current_token(context);
-		if (!operator || operator->type == TOKEN_ERROR)
+		op = get_current_token(context);
+		if (!op || op->type == TOKEN_ERROR)
 			break ;
 		advance_to_next_token(ctx, context);
 		right = mk_node_command(get_current_token(context));
-		node = mk_node_binary_expression(operator, node, right);
+		node = mk_node_binary_expression(op, node, right);
 		advance_to_next_token(ctx, context);
 	}
-	if (operator && operator->type == TOKEN_ERROR)
+	if (op && op->type == TOKEN_ERROR)
 	{
-		clean_token_with_error(operator);
+		clean_token_with_error(op);
 		return (NULL);
 	}
 	return (node);
 }
 
-
-
-static t_ast_node	*parser_expression_tree(t_ctx **ctx, t_parser_context *context)
+static t_ast_node	*parser_expression_tree(t_ctx **ctx,
+											t_parser_context *context)
 {
 	advance_to_next_token(ctx, context);
 	if (get_previus_token(context) == NULL)
@@ -87,31 +86,31 @@ static t_ast_node	*parser_expression_tree(t_ctx **ctx, t_parser_context *context
 	return (expression_builder(ctx, context));
 }
 
-
-static t_lkd_lst *parser_expression_linked(t_ctx **ctx, t_parser_context *context)
+static t_lkd_lst	*parser_expression_linked(t_ctx **ctx,
+											t_parser_context *context)
 {
-	t_token *operator;
-	t_lkd_lst *lst_of_tokens;
-
+	t_token		*op;
+	t_lkd_lst	*lst_of_tokens;
 
 	lst_of_tokens = lkd_lst_new_list();
-	while(1) {
-		operator = get_current_token(context);
-		if (!operator || operator->type == TOKEN_ERROR)
+	while (1)
+	{
+		op = get_current_token(context);
+		if (!op || op->type == TOKEN_ERROR)
 		{
-			lkd_lst_add_back(&lst_of_tokens, lkd_lst_new_node(operator));
+			lkd_lst_add_back(&lst_of_tokens, lkd_lst_new_node(op));
 			break ;
 		}
-		lkd_lst_add_back(&lst_of_tokens, lkd_lst_new_node(operator));
+		lkd_lst_add_back(&lst_of_tokens, lkd_lst_new_node(op));
 		advance_to_next_token(ctx, context);
 	}
-	if (lst_of_tokens->size < 1) {
+	if (lst_of_tokens->size < 1)
+	{
 		free(lst_of_tokens);
 		return (NULL);
 	}
 	return (lst_of_tokens);
 }
-
 
 t_ast_node	*ft_parser_tree(t_ctx **ctx, char *source)
 {
@@ -125,27 +124,22 @@ t_ast_node	*ft_parser_tree(t_ctx **ctx, char *source)
 	return (command_tree);
 }
 
-t_lkd_lst *ft_parser_linked(t_ctx **ctx, char *source)
+t_lkd_lst	*ft_parser_linked(t_ctx **ctx, char *source)
 {
 	t_parser_context	context;
-	t_lkd_lst *lst;
+	t_lkd_lst			*lst;
 
 	lexer_init(&context.lexer, source);
 	parser_init(&context.parser);
 	advance_to_next_token(ctx, &context);
-	
 	lst = parser_expression_linked(ctx, &context);
-
-	if (lst)
-		debug_list_of_tokens(lst);
-	lkd_lst_kill_list(&lst, del_token_list);
-	return (NULL);
-
-	//return (parser_expression_linked(ctx, &context));
-
+	// if (lst)
+	// 	debug_list_of_tokens(lst);
+	// lkd_lst_kill_list(&lst, del_token_list);
+	return (lst);
 }
 
-void *ft_parser(t_ctx **ctx, char *source)
+void	*ft_parser(t_ctx **ctx, char *source)
 {
 	if (USE_LIST)
 		return (ft_parser_linked(ctx, source));

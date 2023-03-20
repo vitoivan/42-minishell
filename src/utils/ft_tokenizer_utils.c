@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:51:11 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/18 09:40:52 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 14:12:50 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_token	*ft_mk_generic_token(t_token_type type, char *start, UINT size)
 	token->type = type;
 	token->size = size;
 	token->start = start;
+	token->filein = 0;
+	token->fileout = 1;
 	return (token);
 }
 

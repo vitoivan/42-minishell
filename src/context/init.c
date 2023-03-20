@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/18 15:46:19 by coder            ###   ########.fr       */
+/*   Updated: 2023/03/20 00:22:59 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ t_ctx	*ctx_init(int argc, char **argv, char **envp)
 	ctx->hostname = get_hostname(envp);
 	ctx->argc = argc;
 	ctx->argv = argv;
-	ctx->env = ctx_parse_env(envp);
 	ctx->root_cmd = NULL;
 	ctx->buffer = ft_calloc(PIPE_BUFFER, sizeof(char));
 	ctx->pid = -1;
+	ctx->pids = ft_calloc(250, sizeof(int));
 	return (ctx);
 }
