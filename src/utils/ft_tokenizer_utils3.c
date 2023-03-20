@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 08:19:25 by jv                #+#    #+#             */
-/*   Updated: 2023/03/19 22:39:32 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/20 09:08:00 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,12 @@ void	advance_to_next_token(t_ctx **ctx, t_parser_context *context)
 
 BYTE	ft_lexer_is_readable(t_lexer *lexer)
 {
-	char	*c;
-
-	if (is_at_end(lexer))
-		return (0);
-	c = lexer->current_position;
-	while (ft_isspace(*c))
-		c++;
-	if (ft_isascii(*c))
-		return (1);
-	return (0);
+	if (*lexer->current_position == '\0' || ft_isspace(*lexer->current_position))
+	{
+		while(ft_isspace(*lexer->current_position))
+			lexer->current_position++;
+		if (*lexer->current_position == '\0' || is_operator(lexer, 0))
+			return (0);
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:51:11 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 15:04:37 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/20 09:07:38 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,22 @@ BYTE	is_at_end(t_lexer *lexer)
 
 BYTE	is_operator(t_lexer *lexer, UINT offset)
 {
-	char	c;
+	char	*c;
 
-	c = *(lexer->current_position - offset);
-	if (c == '&' || c == '|' || c == '>' || c == '<' || c == ';')
+	c = (lexer->current_position - offset);
+	if (ft_strncmp(c, "&&", 2) == 0)
+		return (1);
+	if (ft_strncmp(c, "||", 2) == 0)
+		return (1);
+	if (ft_strncmp(c, ">>", 2) == 0)
+		return (1);
+	if (ft_strncmp(c, "<<", 2) == 0)
+		return (1);
+	if (ft_strncmp(c, "|", 1) == 0)
+		return (1);
+	if (ft_strncmp(c, ">", 1) == 0)
+		return (1);
+	if (ft_strncmp(c, "<", 1) == 0)
 		return (1);
 	return (0);
 }
