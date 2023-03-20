@@ -187,7 +187,7 @@ void debug_list_of_tokens(t_lkd_lst *commands)
 			ft_printf("command: %s ", tk->command);
 			ft_printf("args: [");
 			UINT index = 0;
-			if (tk->args[index]) {
+			if (tk->args && tk->args[index]) {
 				for (; tk->args[index + 1]; index++)
 					ft_printf("%s, ", tk->args[index]);
 				ft_printf("%s]", tk->args[index]);

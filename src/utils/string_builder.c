@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:50:01 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/18 20:07:00 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/19 20:18:21 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,11 @@ static int	handle_var(t_ctx **ctx, t_str_builder_internal *sb, const char *s)
 	free(sb->env_name);
 	sb->env_len = ft_strlen(sb->env_value);
 	if (!sb->env_value)
+	{
+		ft_printf("error: %s\n", sb->env_name);
 		if (string_builder_free_everything(NULL, (void *)&sb, "sb_internal"))
 			return (-1);
+	}
 	ft_strlcpy(sb->new_str + sb->j, sb->env_value, sb->env_len + 1);
 	free(sb->env_value);
 	sb->j += sb->env_len;
