@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/20 09:31:35 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/20 21:02:25 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ t_token	*scan_operator(t_ctx **ctx, t_parser_context *context)
 		return (ft_mk_generic_token(TOKEN_ERROR, msg, 0));
 	}
 	if (!get_previus_token(context)
-		|| get_previus_token(context)->type == TOKEN_ERROR)
+		|| get_previus_token(context)->type == TOKEN_ERROR
+		|| get_current_token(context)->type != TOKEN_COMMAND)
 	{
 		msg = ft_strdup("minishell: Error, invalid Syntax");
 		return (ft_mk_generic_token(TOKEN_ERROR, msg, 0));

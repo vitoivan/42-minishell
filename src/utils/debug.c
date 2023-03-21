@@ -165,7 +165,6 @@ void	debug_token(t_token *token)
 		break ;
 	}
 }
-
 void	debug_list_of_tokens(t_lkd_lst *commands)
 {
 	t_lkd_node *node;
@@ -183,14 +182,14 @@ void	debug_list_of_tokens(t_lkd_lst *commands)
 		{
 			t_token *tk = (t_token *)node->content;
 			ft_printf("\tTOKEN_COMMAND -> ");
-			ft_printf("command: %s ", tk->command);
+			ft_printf("command: [%s] ", tk->command);
 			ft_printf("args: [");
 			UINT index = 0;
 			if (tk->args && tk->args[index])
 			{
 				for (; tk->args[index + 1]; index++)
-					ft_printf("%s, ", tk->args[index]);
-				ft_printf("%s]", tk->args[index]);
+					ft_printf("{%s}, ", tk->args[index]);
+				ft_printf("{%s}]", tk->args[index]);
 			}
 			else
 			{
