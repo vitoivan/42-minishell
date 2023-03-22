@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/19 15:07:31 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:42:41 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void			ctx_free(t_ctx **ctx);
 void			ctx_update(t_ctx **ctx);
 void			ctx_populate_buffer(t_ctx **ctx, char *data);
 t_lkd_lst		*ctx_parse_env(char **envp);
-void			env(t_ctx **ctx);
 char			**parse_ldk_lst_to_char_array(t_lkd_lst *list);
 
 # define USER_SIZE 1024

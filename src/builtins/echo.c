@@ -3,47 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/21 22:52:49 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:08:11 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	skip_quotes2(char **line)
+static void	skip_quotes2(char *line, int *i)
 {
 	char	quote;
 
-	quote = **line;
-	(*line)++;
-	while (**line && **line != quote)
-		(*line)++;
-	if (**line)
-		(*line)++;
+	quote = line[*i];
+	(*i)++;
+	while (line[*i] && line[*i] != quote)
+		(*i)++;
+	if (line[*i])
+		(*i)++;
 }
 
 static int	get_args_qty(char *line)
 {
-	int		args_qty;
-	char	*tmp;
+	int	args_qty;
+	int	len;
+	int	i;
 
+	len = ft_strlen(line);
 	args_qty = 0;
-	tmp = line;
-	while (*tmp)
+	i = 0;
+	while (i < len && line[i])
 	{
-		skip_whitespace(&tmp, False);
-		if (*tmp != ' ' && *tmp)
+		while (line[i] == ' ' && line[i])
+			i++;
+		if (line[i] != ' ' && line[i])
 			args_qty++;
-		else if (ft_is_double_quote(*tmp) || ft_is_single_quote(*tmp))
+		else if (ft_is_double_quote(line[i]) || ft_is_single_quote(line[i]))
 		{
-			skip_quotes2(&tmp);
+			skip_quotes2(line, &i);
 			continue ;
 		}
-		tmp++;
+		i++;
 	}
-	if (args_qty == 0 && !*tmp && tmp != line)
+	if (args_qty == 0 && i == len - 1)
 		return (1);
 	return (args_qty);
 }
@@ -73,28 +76,30 @@ static char	*parse_to_string(char **args)
 
 static void	populate_args(char *line, int args_qty, char **args)
 {
-	char	*tmp1;
-	char	*tmp2;
-	int		i;
+	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
-	tmp1 = line + 5;
-	while (*tmp1 && i < args_qty)
+	j = 0;
+	k = 0;
+	j = ft_strlen("echo");
+	while (i < args_qty && line[j])
 	{
-		if (*tmp1 == ' ')
-			skip_whitespace(&tmp1, False);
-		else if (ft_is_double_quote(*tmp1) || ft_is_single_quote(*tmp1))
+		while (line[j] && line[j] == ' ')
+			j++;
+		if (ft_is_double_quote(line[j]) || ft_is_single_quote(line[j]))
 		{
-			tmp2 = tmp1;
-			skip_quotes2(&tmp1);
-			args[i++] = ft_substr(tmp2 + 1, 0, tmp1 - tmp2 - 2);
+			k = j;
+			skip_quotes2(line, &j);
+			args[i++] = ft_substr(line + k, 0, j - k - 2);
 		}
 		else
 		{
-			tmp2 = tmp1;
-			while (*tmp1 && *tmp1 != ' ')
-				tmp1++;
-			args[i++] = ft_substr(tmp2, 0, tmp1 - tmp2);
+			k = j;
+			while (line[j] && line[j] != ' ')
+				j++;
+			args[i++] = ft_substr(line + k, 0, j - k);
 		}
 	}
 }
@@ -106,8 +111,10 @@ void	echo(t_ctx **ctx, char *line, t_token *token)
 	int		args_qty;
 
 	(void)ctx;
-	(void)token;
-	args_qty = get_args_qty(line + 5);
+	if (ft_strlen(line) > 5)
+		args_qty = get_args_qty(line + 5);
+	else
+		args_qty = get_args_qty(line + 4);
 	args = (char **)ft_calloc(args_qty + 1, sizeof(char *));
 	if (args_qty <= 0)
 	{

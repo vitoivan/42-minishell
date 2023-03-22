@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/20 00:55:35 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:41:09 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static int	is_equal(char *s1, char *s2, int len)
 void	builtin_main(t_ctx **ctx, char *line, t_token *token)
 {
 	if (is_equal(line, "pwd", 3))
-		pwd(ctx, line);
+		pwd(ctx, line, token);
 	else if (is_equal(line, "clear", 5))
-		ft_printf("\e[1;1H\e[2J");
+		ft_putstr_fd("\e[1;1H\e[2J", token->fileout);
 	else if (is_equal(line, "cd", 2))
 	{
 		cmd_cd(ctx, line);
@@ -43,7 +43,7 @@ void	builtin_main(t_ctx **ctx, char *line, t_token *token)
 		echo(ctx, line, token);
 	}
 	else if (is_equal(line, "env", 3))
-		env(ctx);
+		env(ctx, token);
 	else if (is_equal(line, "unset", 5))
 		unset(ctx, line);
 }

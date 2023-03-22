@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 17:02:47 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:44:06 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ static void	validate_pwd(t_ctx **ctx, char *line)
 		(*ctx)->status_code = 1;
 }
 
-void	pwd(t_ctx **ctx, char *line)
+void	pwd(t_ctx **ctx, char *line, t_token *token)
 {
 	char	*current_path;
+	char	*fmt;
 
 	validate_pwd(ctx, line);
 	if ((*ctx)->status_code != EXIT_SUCCESS)
@@ -37,6 +38,8 @@ void	pwd(t_ctx **ctx, char *line)
 	}
 	current_path = NULL;
 	current_path = getcwd(current_path, PATH_SIZE);
-	ft_printf("%s\n", current_path);
+	fmt = ft_strjoin(current_path, "\n");
 	free(current_path);
+	ft_putstr_fd(fmt, token->fileout);
+	free(fmt);
 }
