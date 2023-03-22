@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/20 21:02:25 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/21 22:59:01 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_token	*scan_operator(t_ctx **ctx, t_parser_context *context)
 
 	type = ft_get_token_type(&context->lexer);
 	while (!is_at_end(&context->lexer) && is_operator(&context->lexer, 0))
-		context->lexer.current_position++;
+		context->lexer.current_position += is_operator(&context->lexer, 0);
 	if (is_at_end(&context->lexer) && is_operator(&context->lexer, 1))
 	{
 		msg = ft_strdup("minishell: Error, invalid Syntax");
