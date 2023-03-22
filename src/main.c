@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/20 03:50:52 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/21 22:45:54 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,9 +182,11 @@ static void	close_pipes(t_lkd_lst *list)
 
 	i = 0;
 	cur = list->head;
-	while (cur && i < list->size && cur->content)
+	while (cur && i <= list->size && cur->content)
 	{
 		token = (t_token *)cur->content;
+		if (!token)
+			break ;
 		if (token->filein != STDIN_FILENO)
 			close(token->filein);
 		if (token->fileout != STDOUT_FILENO)
@@ -353,24 +355,17 @@ static void	exec_cmds(t_lkd_lst *list)
 	}
 }
 
-static void	waitpids(t_lkd_lst *list)
+static void	waitpids(void)
 {
 	unsigned int	i;
-	t_lkd_node		*cur;
-	t_token			*token;
+	unsigned int	max_pids;
 
+	max_pids = 250;
 	i = 0;
-	cur = list->head;
-	while (cur && i < list->size && cur->content)
+	while (i < max_pids)
 	{
-		token = (t_token *)cur->content;
-		if (token->type == NODE_COMMAND)
-		{
+		if (g_ctx->pids[i] != -1)
 			waitpid(g_ctx->pids[i], &g_ctx->status_code, 0);
-			g_ctx->status_code = WEXITSTATUS(g_ctx->status_code);
-			g_ctx->pids[i] = -1;
-		}
-		cur = cur->next;
 		i++;
 	}
 }
@@ -398,7 +393,7 @@ int	main(int argc, char **argv, char **envp)
 			create_pipes(list);
 			exec_cmds(list);
 			close_pipes(list);
-			waitpids(list);
+			waitpids();
 		}
 		clear();
 	}

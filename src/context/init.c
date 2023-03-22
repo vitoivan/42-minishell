@@ -6,11 +6,28 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/20 00:22:59 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/21 22:43:18 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	*init_pids(void)
+{
+	int	i;
+	int	*pids;
+	int	max_pids;
+
+	max_pids = 250;
+	pids = ft_calloc(max_pids, sizeof(int));
+	i = 0;
+	while (i < max_pids)
+	{
+		pids[i] = -1;
+		i++;
+	}
+	return (pids);
+}
 
 t_ctx	*ctx_init(int argc, char **argv, char **envp)
 {
@@ -26,6 +43,6 @@ t_ctx	*ctx_init(int argc, char **argv, char **envp)
 	ctx->root_cmd = NULL;
 	ctx->buffer = ft_calloc(PIPE_BUFFER, sizeof(char));
 	ctx->pid = -1;
-	ctx->pids = ft_calloc(250, sizeof(int));
+	ctx->pids = init_pids();
 	return (ctx);
 }
