@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/22 00:12:54 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/22 00:35:50 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,15 @@ t_token	*scan_operator(t_ctx **ctx, t_parser_context *context)
 	type = ft_get_token_type(&context->lexer);
 	while (!is_at_end(&context->lexer) && is_operator(&context->lexer, 0))
 		context->lexer.current_position += is_operator(&context->lexer, 0);
-	if (is_at_end(&context->lexer) && is_operator(&context->lexer, 1))
+	if (is_at_end(&context->lexer) && is_operator(&context->lexer, 0))
 	{
 		msg = ft_strdup("minishell: Error, invalid Syntax");
 		return (ft_mk_generic_token(TOKEN_ERROR, msg, 0));
 	}
 	if (!get_previus_token(context)
 		|| get_previus_token(context)->type == TOKEN_ERROR
-		|| get_current_token(context)->type != TOKEN_COMMAND)
+		|| (get_current_token(context)->type != TOKEN_COMMAND
+		&& get_current_token(context)->type != TOKEN_OPERATOR_HERE_DOC_ARGS))
 	{
 		msg = ft_strdup("minishell: Error, invalid Syntax");
 		return (ft_mk_generic_token(TOKEN_ERROR, msg, 0));
@@ -124,7 +125,7 @@ t_token	*scan_here_document(t_lexer *lexer)
 		lexer->current_position++;
 	delimiter = ft_strndup(lexer->start,
 							lexer->current_position - lexer->start);
-	if (*delimiter == '\0' || is_operator(lexer, 1))
+	if (*delimiter == '\0' || is_operator(lexer, 2))
 		return (ft_mk_generic_token(TOKEN_ERROR,
 									ft_strdup("Error: Invalid Syntax"),
 									0));
