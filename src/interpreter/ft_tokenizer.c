@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/21 22:59:01 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/22 00:12:54 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,14 @@ t_token	*scan_command(t_ctx **ctx, t_parser_context *context)
 	t_token	*token;
 
 	double_quote = 0;
-	variable = 0;
 	single_quote = 0;
+	variable = 0;
 	if (is_operator(&context->lexer, 0) || is_at_end(&context->lexer))
 		return (NULL);
 	token = token_scan_command_run(&context->lexer, &variable, &single_quote,
 			&double_quote);
 	if (token)
 		return (token);
-	if (single_quote || double_quote)
-		if ((single_quote && double_quote))
-			return (ft_mk_generic_token(TOKEN_ERROR,
-										ft_strdup("minishell: unquoted string error"),
-										0));
 	return (mk_token(ctx, &context->lexer, variable, TOKEN_COMMAND));
 }
 

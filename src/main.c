@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/21 22:53:42 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/22 00:16:59 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,6 @@ static void	exec_cmds(t_lkd_lst *list)
 {
 	unsigned int	i;
 	t_lkd_node		*cur;
-	t_lkd_node		*next;
 	t_lkd_node		*prev;
 	t_token			*token;
 	char			**args;
@@ -258,8 +257,7 @@ static void	exec_cmds(t_lkd_lst *list)
 			break ;
 		if (i > 0)
 			prev = cur->prev;
-		if (i < list->size - 1)
-			next = cur->next;
+
 		if (prev && need_skip_cmd(cur) == True)
 		{
 			cur = cur->next;
@@ -353,7 +351,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		g_ctx->cmdlist = (t_lkd_lst *)ft_parser(&g_ctx, line);
 		free_if_exists((void **)&line);
-		list = g_ctx->cmdlist;
+		list = NULL;
 		if (list)
 		{
 			create_pipes(list);

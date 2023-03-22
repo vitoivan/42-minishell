@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:44:00 by jv                #+#    #+#             */
-/*   Updated: 2023/03/19 21:20:32 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/22 00:13:19 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ t_token	*token_scan_command_run(t_lexer *lexer,
 								BYTE *var, BYTE *s_quote, BYTE *d_quote)
 {	
 	/* (*d_quote && *s_quote) => caso haja duas aspas definidas continue */
-	while (ft_lexer_is_readable(lexer) || (*d_quote && *s_quote))
+	while (ft_lexer_is_readable(lexer) || *s_quote || *d_quote)
 	{
-		if (ft_is_double_quote(*lexer->current_position))
+		if (ft_is_double_quote(*lexer->current_position) && !(*s_quote))
 			*d_quote = !(*d_quote);
-		if (ft_is_single_quote(*lexer->current_position))
+		if (ft_is_single_quote(*lexer->current_position) && !(*d_quote))
 			*s_quote = !(*s_quote);
 		if (*lexer->current_position == '$'
 			&& (*(lexer->current_position + 1) != '\0')
@@ -50,6 +50,10 @@ t_token	*token_scan_command_run(t_lexer *lexer,
 			return (mk_wildcard_token(lexer));
 		lexer->current_position++;
 	}
+	if ((*d_quote) || (*s_quote))
+		return (ft_mk_generic_token(TOKEN_ERROR,
+					ft_strdup("minishell: unquoted string error"),
+					0));
 	return (NULL);
 }
 
