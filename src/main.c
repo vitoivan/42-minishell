@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/21 22:45:54 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/21 22:53:42 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,41 +225,11 @@ static int	need_skip_cmd(t_lkd_node *node)
 				return (1);
 			if (tmp_token->type == TOKEN_OPERATOR_REDIRECT_INPUT)
 				return (1);
+			if (tmp_token->type == TOKEN_OPERATOR_REDIRECT_APPEND)
+				return (1);
 		}
 	}
 	return (0);
-}
-
-static int	run_builtin_with_fork(t_token *token)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		dup2(token->filein, STDIN_FILENO);
-		dup2(token->fileout, STDOUT_FILENO);
-		close(token->filein);
-		close(token->fileout);
-		if (token->type == NODE_COMMAND)
-			builtin_main(&g_ctx, token->start, token);
-		ctx_free(&g_ctx);
-		exit(0);
-	}
-	else if (pid > 0)
-	{
-		if (token->filein != STDIN_FILENO)
-			close(token->filein);
-		if (token->fileout != STDOUT_FILENO)
-			close(token->fileout);
-	}
-	else
-	{
-		ft_putstr_fd("Error: fork failed\n", STDERR_FILENO);
-		ctx_free(&g_ctx);
-		exit(1);
-	}
-	return (pid);
 }
 
 static void	exec_cmds(t_lkd_lst *list)
@@ -304,11 +274,7 @@ static void	exec_cmds(t_lkd_lst *list)
 			if (is_builtin(trimmed))
 			{
 				free(trimmed);
-				if (next && next->content
-					&& is_redir(((t_token *)next->content)->type))
-					g_ctx->pids[i] = run_builtin_with_fork(token);
-				else
-					builtin_main(&g_ctx, token->start, token);
+				builtin_main(&g_ctx, token->start, token);
 			}
 			else if (cmd_is_valid(token->start))
 			{

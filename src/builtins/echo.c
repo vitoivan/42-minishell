@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/20 00:55:59 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/21 22:52:49 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	echo(t_ctx **ctx, char *line, t_token *token)
 	}
 	populate_args(line, args_qty, args);
 	str = parse_to_string(args);
-	ft_putstr_fd(str, STDOUT_FILENO);
+	ft_putstr_fd(str, token->fileout);
 	clear_splitted(&args);
 	free(str);
 }
