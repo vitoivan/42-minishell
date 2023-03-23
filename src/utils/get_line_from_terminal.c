@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line_from_terminal.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/13 10:07:47 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:40:16 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/22 14:08:11 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/23 00:18:46 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,15 @@ static char	*parse_to_string(char **args)
 		tmp = str;
 		str = ft_strjoin(str, args[i]);
 		free_if_exists((void **)&tmp);
-		tmp = str;
-		str = ft_strjoin(str, " ");
-		free_if_exists((void **)&tmp);
+		if (args[i + 1])
+		{
+			tmp = str;
+			str = ft_strjoin(str, " ");
+			free_if_exists((void **)&tmp);
+		}
 		i++;
 	}
-	tmp = ft_strjoin(str, "\n");
-	free_if_exists((void **)&str);
-	return (tmp);
+	return (str);
 }
 
 static void	populate_args(char *line, int args_qty, char **args)
@@ -83,7 +84,7 @@ static void	populate_args(char *line, int args_qty, char **args)
 	i = 0;
 	j = 0;
 	k = 0;
-	j = ft_strlen("echo");
+	j = 5;
 	while (i < args_qty && line[j])
 	{
 		while (line[j] && line[j] == ' ')
@@ -92,7 +93,7 @@ static void	populate_args(char *line, int args_qty, char **args)
 		{
 			k = j;
 			skip_quotes2(line, &j);
-			args[i++] = ft_substr(line + k, 0, j - k - 2);
+			args[i++] = ft_substr(line + k + 1, 0, j - k - 2);
 		}
 		else
 		{
@@ -108,6 +109,7 @@ void	echo(t_ctx **ctx, char *line, t_token *token)
 {
 	char	**args;
 	char	*str;
+	char	*tmp;
 	int		args_qty;
 
 	(void)ctx;
@@ -122,8 +124,19 @@ void	echo(t_ctx **ctx, char *line, t_token *token)
 		return ;
 	}
 	populate_args(line, args_qty, args);
-	str = parse_to_string(args);
-	ft_putstr_fd(str, token->fileout);
+	if (args_qty >= 1 && ft_strcmp(args[0], "-n") == 0)
+	{
+		str = parse_to_string(args + 1);
+		ft_putstr_fd(str, token->fileout);
+	}
+	else
+	{
+		str = parse_to_string(args);
+		tmp = str;
+		str = ft_strjoin(str, "\n");
+		ft_putstr_fd(str, token->fileout);
+		free(tmp);
+	}
 	clear_splitted(&args);
 	free(str);
 }
