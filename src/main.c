@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/23 00:31:36 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/23 00:43:07 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,13 @@ static void	create_pipes(t_lkd_lst *list)
 					ft_putstr_fd("Error creating pipe\n", STDERR_FILENO);
 					exit(1);
 				}
-				if (prev && need_skip_cmd(prev) == 0)
+				if (prev)
+				{
 					((t_token *)prev->content)->fileout = pipes[i][1];
-				else if (prev && need_skip_cmd(prev) == 1 && i > 2)
-					((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
+					if (((t_token *)prev->content)->type == TOKEN_OPERATOR_REDIRECT_INPUT
+						&& i > 2)
+						((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
+				}
 				if (next)
 					((t_token *)next->content)->filein = pipes[i][0];
 			}
