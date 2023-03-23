@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/23 00:46:30 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/23 00:48:34 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ static void	create_pipes(t_lkd_lst *list)
 				if (prev)
 				{
 					((t_token *)prev->content)->fileout = pipes[i][1];
-					if (((t_token *)prev->prev->content)->type == TOKEN_OPERATOR_REDIRECT_INPUT
-						&& i > 2)
+					if (i > 2
+						&& ((t_token *)prev->prev->content)->type == TOKEN_OPERATOR_REDIRECT_INPUT)
 						((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
 				}
 				if (next)
