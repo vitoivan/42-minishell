@@ -6,13 +6,49 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/22 14:39:04 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/23 00:30:14 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 t_ctx		*g_ctx;
+
+static int	need_skip_cmd(t_lkd_node *node)
+{
+	t_token		*token;
+	t_token		*tmp_token;
+	t_lkd_node	*prev;
+	t_lkd_node	*next;
+
+	prev = NULL;
+	next = NULL;
+	if (!node)
+		return (0);
+	token = (t_token *)node->content;
+	if (!token)
+		return (0);
+	if (node->prev)
+		prev = node->prev;
+	if (node->next)
+		next = node->next;
+	if (prev && prev->content != NULL)
+	{
+		tmp_token = (t_token *)prev->content;
+		if (token->type == TOKEN_COMMAND)
+		{
+			if (!tmp_token)
+				return (0);
+			if (tmp_token->type == TOKEN_OPERATOR_REDIRECT)
+				return (1);
+			if (tmp_token->type == TOKEN_OPERATOR_REDIRECT_INPUT)
+				return (1);
+			if (tmp_token->type == TOKEN_OPERATOR_REDIRECT_APPEND)
+				return (1);
+		}
+	}
+	return (0);
+}
 
 static void	clear(void)
 {
@@ -98,8 +134,10 @@ static void	create_pipes(t_lkd_lst *list)
 					ft_putstr_fd("Error creating pipe\n", STDERR_FILENO);
 					exit(1);
 				}
-				if (prev)
+				if (prev && need_skip_cmd(prev) == 0)
 					((t_token *)prev->content)->fileout = pipes[i][1];
+				else if (prev && need_skip_cmd(prev) == 1)
+					((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
 				if (next)
 					((t_token *)next->content)->filein = pipes[i][0];
 			}
@@ -194,42 +232,6 @@ static void	close_pipes(t_lkd_lst *list)
 		cur = cur->next;
 		i++;
 	}
-}
-
-static int	need_skip_cmd(t_lkd_node *node)
-{
-	t_token		*token;
-	t_token		*tmp_token;
-	t_lkd_node	*prev;
-	t_lkd_node	*next;
-
-	prev = NULL;
-	next = NULL;
-	if (!node)
-		return (0);
-	token = (t_token *)node->content;
-	if (!token)
-		return (0);
-	if (node->prev)
-		prev = node->prev;
-	if (node->next)
-		next = node->next;
-	if (prev && prev->content != NULL)
-	{
-		tmp_token = (t_token *)prev->content;
-		if (token->type == TOKEN_COMMAND)
-		{
-			if (!tmp_token)
-				return (0);
-			if (tmp_token->type == TOKEN_OPERATOR_REDIRECT)
-				return (1);
-			if (tmp_token->type == TOKEN_OPERATOR_REDIRECT_INPUT)
-				return (1);
-			if (tmp_token->type == TOKEN_OPERATOR_REDIRECT_APPEND)
-				return (1);
-		}
-	}
-	return (0);
 }
 
 static void	exec_cmds(t_lkd_lst *list)
