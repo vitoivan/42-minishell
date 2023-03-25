@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/25 10:11:19 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/25 12:15:36 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,27 @@
 static char	*get_line(char *prompt)
 {
 	char	*line;
+	char	*tmp;
 
 	line = readline(prompt);
+	tmp = line;
+	skip_whitespace(&tmp, False);
+	if (!tmp || !*tmp)
+	{
+		free(line);
+		line = NULL;
+	}
 	while (!line)
+	{
 		line = readline(prompt);
+		tmp = line;
+		skip_whitespace(&tmp, False);
+		if (!tmp || !*tmp)
+		{
+			free(line);
+			line = NULL;
+		}
+	}
 	return (line);
 }
 
