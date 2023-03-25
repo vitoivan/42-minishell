@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/25 10:39:16 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/25 12:08:11 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,6 +352,7 @@ static void	exec_cmds(t_lkd_lst *list)
 			{
 				ft_putstr_fd(trimmed, STDERR_FILENO);
 				ft_putstr_fd(":  error: command not found\n", STDERR_FILENO);
+				g_ctx->status_code = 127;
 				free(trimmed);
 			}
 		}
