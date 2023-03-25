@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 08:19:25 by jv                #+#    #+#             */
-/*   Updated: 2023/03/22 00:00:51 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/25 17:48:46 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,17 @@ void	advance_to_next_token(t_ctx **ctx, t_parser_context *context)
 	context->lexer.start = context->lexer.current_position;
 }
 
-BYTE	ft_lexer_is_readable(t_lexer *lexer)
+BYTE	ft_lexer_is_readable(t_lexer *lexer, BYTE *s_quote, BYTE *d_quote)
 {
-	if (*lexer->current_position == '\0' || ft_isspace(*lexer->current_position))
-	{
-		while(ft_isspace(*lexer->current_position))
-			lexer->current_position++;
-		if (*lexer->current_position == '\0' || is_operator(lexer, 0))
-			return (0);
-	}
+	while(ft_isspace(*lexer->current_position))
+		lexer->current_position++;
+	if (ft_is_double_quote(*lexer->current_position) && !(*s_quote))
+		*d_quote = !(*d_quote);
+	if (ft_is_single_quote(*lexer->current_position) && !(*d_quote))
+		*s_quote = !(*s_quote);
+	if (*lexer->current_position == '\0')
+		return (0);
+	if (is_operator(lexer, 0) && !(*d_quote) && !(*s_quote))
+		return (0);
 	return (1);
 }
