@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/22 00:35:50 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/25 16:54:08 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable, t_token_type type)
 		token->args = NULL;
 		token->command = NULL;
 	}
-	token->type = type;
 	return (token);
 }
 
