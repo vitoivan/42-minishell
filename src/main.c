@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/25 10:10:56 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/25 10:39:16 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,25 +139,24 @@ static void	create_pipes(t_lkd_lst *list)
 				}
 				if (prev)
 				{
-					((t_token *)prev->content)->fileout = pipes[i][1];
 					if (i > 2)
 					{
 						tmp_token = (t_token *)prev->prev->content;
 						if (tmp_token->type == TOKEN_OPERATOR_REDIRECT_INPUT)
-							((t_token *)prev->prev->content)->fileout = pipes[i][1];
+							((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
 						else if (tmp_token->type == TOKEN_OPERATOR_HERE_DOC)
 							((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
 					}
+					else if (((t_token *)prev->content)->type == TOKEN_COMMAND)
+						((t_token *)prev->content)->fileout = pipes[i][1];
 				}
-				if (next)
+				if (next && ((t_token *)next->content)->type == TOKEN_COMMAND)
 					((t_token *)next->content)->filein = pipes[i][0];
 			}
 			// caso o node atual seja um redirecionamento,
 			if (token->type == TOKEN_OPERATOR_REDIRECT
 				|| token->type == TOKEN_OPERATOR_REDIRECT_APPEND)
 			{
-				// se o node anterior for um comando,
-				// setar o fileout do node anterior
 				if (next && ((t_token *)next->content)->type != TOKEN_COMMAND)
 				{
 					ft_putstr_fd("Error: no command after redirect\n",
@@ -181,16 +180,17 @@ static void	create_pipes(t_lkd_lst *list)
 					exit(1);
 				}
 				free(trimmed);
-				if (prev && ((t_token *)prev->content)->type == TOKEN_COMMAND)
-					((t_token *)prev->content)->fileout = fileout;
-				if (i > 2)
+				if (i > 2 && prev)
 				{
 					tmp_token = (t_token *)prev->prev->content;
-					if (tmp_token->type == TOKEN_OPERATOR_HERE_DOC)
+					if (tmp_token->type == TOKEN_OPERATOR_REDIRECT_INPUT)
+						((t_token *)prev->prev->prev->content)->fileout = fileout;
+					else if (tmp_token->type == TOKEN_OPERATOR_HERE_DOC)
 						((t_token *)prev->prev->prev->content)->fileout = fileout;
 				}
-				// se o node seguinte for um comando,
-				//	setar o filein do node seguinte
+				else if (prev
+						&& ((t_token *)prev->content)->type == TOKEN_COMMAND)
+					((t_token *)prev->content)->fileout = fileout;
 			}
 			if (token->type == TOKEN_OPERATOR_REDIRECT_INPUT)
 			{
