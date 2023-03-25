@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/25 12:08:11 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/25 15:18:14 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,16 @@ static void	clear(void)
 
 static int	handle_empty_line(char **line)
 {
+	int	i;
+
+	i = 0;
 	if (!line || !*line)
 		return (-1);
-	if ((*line)[0] == '\0' || (*line)[0] == '\n')
+	if (ft_strlen(*line) == 0)
+		return (-1);
+	while ((*line)[i] && ((*line)[i] == ' ' || (*line)[i] == '\n'))
+		i++;
+	if ((*line)[i] == '\0')
 	{
 		free_if_exists((void **)line);
 		return (-1);
