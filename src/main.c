@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/23 00:48:34 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/25 10:10:56 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static int	need_skip_cmd(t_lkd_node *node)
 				return (1);
 		}
 	}
+	if (token->type == TOKEN_OPERATOR_HERE_DOC_ARGS)
+		return (1);
 	return (0);
 }
 
@@ -91,6 +93,7 @@ static void	create_pipes(t_lkd_lst *list)
 	t_lkd_node		*next;
 	t_lkd_node		*prev;
 	t_token			*token;
+	t_token			*tmp_token;
 	unsigned int	i;
 	unsigned int	max_pipes;
 	int				**pipes;
@@ -137,9 +140,14 @@ static void	create_pipes(t_lkd_lst *list)
 				if (prev)
 				{
 					((t_token *)prev->content)->fileout = pipes[i][1];
-					if (i > 2
-						&& ((t_token *)prev->prev->content)->type == TOKEN_OPERATOR_REDIRECT_INPUT)
-						((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
+					if (i > 2)
+					{
+						tmp_token = (t_token *)prev->prev->content;
+						if (tmp_token->type == TOKEN_OPERATOR_REDIRECT_INPUT)
+							((t_token *)prev->prev->content)->fileout = pipes[i][1];
+						else if (tmp_token->type == TOKEN_OPERATOR_HERE_DOC)
+							((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
+					}
 				}
 				if (next)
 					((t_token *)next->content)->filein = pipes[i][0];
@@ -175,6 +183,12 @@ static void	create_pipes(t_lkd_lst *list)
 				free(trimmed);
 				if (prev && ((t_token *)prev->content)->type == TOKEN_COMMAND)
 					((t_token *)prev->content)->fileout = fileout;
+				if (i > 2)
+				{
+					tmp_token = (t_token *)prev->prev->content;
+					if (tmp_token->type == TOKEN_OPERATOR_HERE_DOC)
+						((t_token *)prev->prev->prev->content)->fileout = fileout;
+				}
 				// se o node seguinte for um comando,
 				//	setar o filein do node seguinte
 			}
@@ -200,6 +214,26 @@ static void	create_pipes(t_lkd_lst *list)
 				free(trimmed);
 				if (prev && ((t_token *)prev->content)->type == TOKEN_COMMAND)
 					((t_token *)prev->content)->filein = filein;
+			}
+			if (token->type == TOKEN_OPERATOR_HERE_DOC)
+			{
+				if (prev && ((t_token *)prev->content)->type == TOKEN_COMMAND)
+				{
+					filein = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC,
+							0644);
+					if (filein == -1)
+					{
+						ft_putstr_fd("error while running heredoc\n",
+										STDERR_FILENO);
+						exit(1);
+					}
+					ft_putstr_fd(((t_token *)next->content)->start,
+									filein);
+					ft_putstr_fd("\n", filein);
+					close(filein);
+					filein = open("here_doc", O_RDONLY);
+					((t_token *)prev->content)->filein = filein;
+				}
 			}
 		}
 		cur = cur->next;
@@ -339,6 +373,7 @@ static void	waitpids(void)
 			waitpid(g_ctx->pids[i], &g_ctx->status_code, 0);
 		i++;
 	}
+	unlink("here_doc");
 }
 
 int	main(int argc, char **argv, char **envp)

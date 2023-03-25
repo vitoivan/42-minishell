@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   termcolors.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 00:02:28 by vivan-de          #+#    #+#             */
-/*   Updated: 2022/12/10 00:02:29 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/25 10:06:38 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERMCOLORS_H
 # define TERMCOLORS_H
 
-# define RED "\x1B[31m"
-# define GREEN "\x1B[32m"
-# define YEL "\x1B[33m"
-# define BLU "\x1B[34m"
-# define MAG "\x1B[35m"
-# define CYN "\x1B[36m"
-# define WHT "\x1B[37m"
-# define RESET_COLOR "\x1B[0m"
-# define COLOR_BOLD "\e[1m"
-# define REMOVE_BOLD "\e[m"
+# define RED "\001\x1B[31m\002"
+# define GREEN "\001\x1B[32m\002"
+# define YEL "\001\x1B[33m\002"
+# define BLU "\001\x1B[34m\002"
+# define MAG "\001\x1B[35m\002"
+# define CYN "\001\x1B[36m\002"
+# define WHT "\001\x1B[37m\002"
+# define RESET_COLOR "\001\x1B[0m\002"
+# define COLOR_BOLD "\001\e[1m\002"
+# define REMOVE_BOLD "\001\e[m\002"
 
 #endif
