@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/25 12:04:33 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/25 12:25:35 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,29 @@ static int	builtin_export(t_ctx **ctx, char *name, char *value)
 	return (return_value);
 }
 
+static int	validate_export(char *line)
+{
+	char	*tmp;
+
+	tmp = ft_strchr(line, '=');
+	if (tmp == NULL || tmp == line || ft_strlen(line) < 7)
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(line, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (False);
+	}
+	tmp = line + 7;
+	skip_whitespace(&tmp, False);
+	if (!tmp || !*tmp)
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(line, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (False);
+	}
+	return (True);
+}
 int	cmd_export(t_ctx **ctx, char *line)
 {
 	char	*args;
@@ -96,6 +119,8 @@ int	cmd_export(t_ctx **ctx, char *line)
 	int		status;
 	char	*value;
 
+	if (validate_export(line) == False)
+		return (False);
 	args = line + 7;
 	if (ft_strchr(args, '=') == NULL)
 		return (0);
