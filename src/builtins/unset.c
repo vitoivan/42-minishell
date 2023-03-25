@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 19:58:25 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/25 12:03:56 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,15 @@
 static void	validate_unset(t_ctx **ctx, char *line)
 {
 	char	*name;
+	int		len;
 
+	len = ft_strlen(line);
+	if (len < 6)
+	{
+		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
+		(*ctx)->status_code = 1;
+		return ;
+	}
 	name = line + 6;
 	if (!name)
 	{
@@ -23,7 +31,7 @@ static void	validate_unset(t_ctx **ctx, char *line)
 		(*ctx)->status_code = 1;
 	}
 	skip_whitespace(&name, 0);
-	if (strlen(name) == 0)
+	if (*name == '\0' || !name)
 	{
 		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
 		(*ctx)->status_code = 1;
