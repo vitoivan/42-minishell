@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/18 19:20:18 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/26 18:00:18 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	skip_quotes(char **line)
 {
+	char	quote;
+
+	quote = **line;
 	(*line)++;
-	while (!ft_is_double_quote(**line) && **line != '\0')
+	while (**line != quote && **line != '\0')
 		(*line)++;
-	if (ft_is_double_quote(**line))
+	if (**line == quote)
 		(*line)++;
 }

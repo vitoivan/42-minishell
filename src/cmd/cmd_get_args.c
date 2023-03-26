@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:45:57 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/26 17:56:59 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static int	handle_double_quotes(char **line, t_lkd_lst **lkd_args)
 	skip_quotes(&tmp);
 	if (*tmp == ' ' || *tmp == '\0')
 	{
-		arg = ft_calloc(tmp - *line + 1, sizeof(char));
-		ft_strlcpy(arg, *line, tmp - *line + 1);
+		arg = ft_calloc(tmp - *line - 1, sizeof(char));
+		ft_strlcpy(arg, *line + 1, tmp - *line - 1);
 		lkd_lst_add_back(lkd_args, lkd_lst_new_node((void *)arg));
 		*line = tmp;
 		return (1);
@@ -79,7 +79,7 @@ void	cmd_get_args(char ***args, char *line)
 		skip_whitespace(&line, False);
 		if (*line == '\0')
 			break ;
-		if (ft_is_double_quote(*line))
+		if (ft_is_double_quote(*line) || ft_is_single_quote(*line))
 		{
 			if (handle_double_quotes(&line, &lkd_args) == 1)
 				continue ;
