@@ -6,7 +6,7 @@
 /*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/25 15:18:14 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/25 21:24:20 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ static void	create_pipes(t_lkd_lst *list)
 							((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
 						else if (tmp_token->type == TOKEN_OPERATOR_HERE_DOC)
 							((t_token *)prev->prev->prev->content)->fileout = pipes[i][1];
+						else if (((t_token *)prev->content)->type == TOKEN_COMMAND)
+							((t_token *)prev->content)->fileout = pipes[i][1];
 					}
 					else if (((t_token *)prev->content)->type == TOKEN_COMMAND)
 						((t_token *)prev->content)->fileout = pipes[i][1];
@@ -194,6 +196,8 @@ static void	create_pipes(t_lkd_lst *list)
 						((t_token *)prev->prev->prev->content)->fileout = fileout;
 					else if (tmp_token->type == TOKEN_OPERATOR_HERE_DOC)
 						((t_token *)prev->prev->prev->content)->fileout = fileout;
+					else if (((t_token *)prev->content)->type == TOKEN_COMMAND)
+						((t_token *)prev->content)->fileout = fileout;
 				}
 				else if (prev
 						&& ((t_token *)prev->content)->type == TOKEN_COMMAND)
