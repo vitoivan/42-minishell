@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/27 22:37:48 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 22:42:36 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,6 @@ static int	need_skip_cmd(t_lkd_node *node)
 	if (token->type == TOKEN_OPERATOR_HERE_ARGS)
 		return (1);
 	return (0);
-}
-
-static void	clear(void)
-{
-	ft_putstr_fd(g_ctx->buffer, STDOUT_FILENO);
-	ft_bzero(g_ctx->buffer, PIPE_BUFFER);
-	ast_node_free(g_ctx->root_cmd);
-	lkd_lst_kill_list(&g_ctx->cmdlist, del_token_list);
 }
 
 static int	handle_empty_line(char **line)
@@ -400,7 +392,6 @@ int	main(int argc, char **argv, char **envp)
 			close_pipes(g_ctx->cmdlist);
 			waitpids();
 		}
-		clear();
 	}
 	return (0);
 }

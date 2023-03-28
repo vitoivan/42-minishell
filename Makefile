@@ -26,7 +26,6 @@ TARGETS = 	main.c \
 			utils/ft_parser_utils.c \
 			utils/ft_tokenizer_utils.c \
 			interpreter/ft_tokenizer.c \
-			interpreter/exec_tree.c \
 			interpreter/ft_parser.c \
 			utils/print_lkd_list.c \
 			utils/debug.c \

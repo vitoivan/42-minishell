@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:16:59 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/27 22:04:49 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 22:48:03 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,4 @@ t_ast_node_type	get_node_type(t_token *token)
 	if (token->type == TOKEN_ERROR)
 		return (NODE_INVALID);
 	return (NODE_COMMAND);
-}
-
-void	ast_free_command_node(t_ast_node *node)
-{
-	del_token(node->token);
-	free(node);
-}
-
-void	clean_token_with_error(t_token *token)
-{
-	ft_printf("%s\n", token->start);
-	del_token(token);
 }

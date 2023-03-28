@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/27 22:04:49 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 22:44:30 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,6 @@ typedef struct s_parser_context
 	t_parser					parser;
 }								t_parser_context;
 
-typedef struct s_ast_node
-{
-	t_ast_node_type				type;
-	t_token						*token;
-	BYTE						had_error;
-	union
-	{
-		struct
-		{
-			struct s_ast_node	*left;
-			struct s_ast_node	*right;
-		} s_binary_expression;
-	} u_as;
-}								t_ast_node;
 
 typedef struct s_string_builder
 {

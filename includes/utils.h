@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/27 22:14:19 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 22:47:05 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,10 @@ void			print_lkd_list(t_lkd_lst **list);
 
 /*	parser functions	*/
 void			*ft_parser(t_ctx **ctx, char *source);
-t_ast_node_type	get_node_type(t_token *token);
-void			ast_node_free(t_ast_node *node);
 void			parser_init(t_parser *parser);
 void			clean_token_with_error(t_token *token);
 
 /*  tokenizer functions */
-void			exec_tree(t_ast_node *node, t_ctx **ctx);
 void			del_token(t_token *token);
 void			del_token_list(void *token);
 void			advance_to_next_token(t_ctx **ctx, t_parser_context *context);
@@ -67,7 +64,6 @@ void			lexer_init(t_lexer *lexer, char *source);
 void			skip_white_spaces(t_lexer *lexer);
 void			skip_quotes(char **line);
 void			clear_splitted(char ***splitted);
-void			ast_free_command_node(t_ast_node *node);
 void	token_string_builder(t_token *token,
 							t_ctx **ctx,
 							t_lexer *lexer);
@@ -109,7 +105,6 @@ void			ft_fill_token(t_token *token, t_token_type type);
 void			print_errno(t_ctx **ctx, char *line);
 
 /* debug functions */
-void			debug_command_tree(t_ast_node *root);
 void			debug_token(t_token *token);
 void			debug_list_of_tokens(t_lkd_lst *commands);
 
