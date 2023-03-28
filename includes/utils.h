@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/25 17:18:16 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 21:23:13 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ t_token			*scan_command(t_ctx **ctx, t_parser_context *context);
 t_token			*mk_wildcard_token(t_lexer *lexer);
 t_token			*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable,
 					t_token_type type);
+char			*ft_remove_slash(char *str);
 
 /* Error handle utils */
 void			print_errno(t_ctx **ctx, char *line);

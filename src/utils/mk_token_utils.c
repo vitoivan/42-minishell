@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 22:44:00 by jv                #+#    #+#             */
-/*   Updated: 2023/03/25 17:43:13 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 21:29:50 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_token	*token_scan_command_run(t_lexer *lexer,
 			&& (*(lexer->current_position + 1) != '\0')
 			&& !ft_isspace(*(lexer->current_position + 1)))
 			*var = 1;
-		if (*lexer->current_position == '*')
+		if (*lexer->current_position == '*' && (!(*d_quote || *s_quote)))
 			return (mk_wildcard_token(lexer));
 		lexer->current_position++;
 	}

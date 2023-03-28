@@ -48,6 +48,7 @@ TARGETS = 	main.c \
 			utils/ctx_get_env.c \
 			utils/ft_wildcard_utils.c \
 			utils/mk_token_utils.c \
+			utils/ft_remove_slash.c \
 			cmd/cmd_is_valid.c \
 			cmd/cmd_try_run.c \
 			cmd/path.c \

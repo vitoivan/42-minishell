@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 08:19:25 by jv                #+#    #+#             */
-/*   Updated: 2023/03/25 17:48:46 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 21:04:33 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,18 @@ void	advance_to_next_token(t_ctx **ctx, t_parser_context *context)
 
 BYTE	ft_lexer_is_readable(t_lexer *lexer, BYTE *s_quote, BYTE *d_quote)
 {
-	while(ft_isspace(*lexer->current_position))
-		lexer->current_position++;
-	if (ft_is_double_quote(*lexer->current_position) && !(*s_quote))
+	char curr;
+	char prev;
+
+	curr = *lexer->current_position;
+	prev = *(lexer->current_position - 1);
+	while(ft_isspace(curr))
+		curr = *(++lexer->current_position);
+	if (ft_is_double_quote(curr) && !(*s_quote) && prev != '\\')
 		*d_quote = !(*d_quote);
-	if (ft_is_single_quote(*lexer->current_position) && !(*d_quote))
+	if (ft_is_single_quote(curr) && !(*d_quote) && prev != '\\')
 		*s_quote = !(*s_quote);
-	if (*lexer->current_position == '\0')
+	if (curr == '\0')
 		return (0);
 	if (is_operator(lexer, 0) && !(*d_quote) && !(*s_quote))
 		return (0);

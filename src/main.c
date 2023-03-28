@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/25 21:24:20 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/26 18:09:37 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ static int	need_skip_cmd(t_lkd_node *node)
 	t_token		*token;
 	t_token		*tmp_token;
 	t_lkd_node	*prev;
-	t_lkd_node	*next;
 
 	prev = NULL;
-	next = NULL;
 	if (!node)
 		return (0);
 	token = (t_token *)node->content;
@@ -30,8 +28,6 @@ static int	need_skip_cmd(t_lkd_node *node)
 		return (0);
 	if (node->prev)
 		prev = node->prev;
-	if (node->next)
-		next = node->next;
 	if (prev && prev->content != NULL)
 	{
 		tmp_token = (t_token *)prev->content;
@@ -287,19 +283,15 @@ static void	exec_cmds(t_lkd_lst *list)
 	unsigned int	i;
 	t_lkd_node		*cur;
 	t_lkd_node		*prev;
-	t_lkd_node		*next;
 	t_token			*token;
 	char			**args;
 	char			*trimmed;
 	char			*binary_path;
 	char			*cmd;
-	int				max_pids;
 	char			**env;
 
 	i = 0;
 	cur = list->head;
-	max_pids = list->size;
-	next = NULL;
 	prev = NULL;
 	while (cur && i < list->size && cur->content)
 	{
@@ -308,8 +300,6 @@ static void	exec_cmds(t_lkd_lst *list)
 			break ;
 		if (i > 0)
 			prev = cur->prev;
-		if (i < list->size - 1)
-			next = cur->next;
 		if (prev && need_skip_cmd(cur) == True)
 		{
 			cur = cur->next;
