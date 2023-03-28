@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/27 22:04:49 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 22:37:48 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,9 +381,7 @@ static void	waitpids(void)
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	t_lkd_lst	*list;
 
-	line = NULL;
 	g_ctx = ctx_init(argc, argv, envp);
 	g_ctx->hostname = get_hostname(envp);
 	handle_signals();
@@ -395,12 +393,11 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		g_ctx->cmdlist = (t_lkd_lst *)ft_parser(&g_ctx, line);
 		free_if_exists((void **)&line);
-		list = NULL;
-		if (list)
+		if (g_ctx->cmdlist)
 		{
-			create_pipes(list);
-			exec_cmds(list);
-			close_pipes(list);
+			create_pipes(g_ctx->cmdlist);
+			exec_cmds(g_ctx->cmdlist);
+			close_pipes(g_ctx->cmdlist);
 			waitpids();
 		}
 		clear();
