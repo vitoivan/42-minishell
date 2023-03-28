@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/20 01:03:41 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/27 22:04:49 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef enum e_token_type
 	TOKEN_COMMAND,
 	TOKEN_OPERATOR,
 	TOKEN_OPERATOR_HERE_DOC,
-	TOKEN_OPERATOR_HERE_DOC_ARGS,
+	TOKEN_OPERATOR_HERE_ARGS,
 	TOKEN_OPERATOR_REDIRECT_INPUT,
 	TOKEN_OPERATOR_AND,
 	TOKEN_OPERATOR_OR,

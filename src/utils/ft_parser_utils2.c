@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 22:16:59 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/18 10:16:23 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 22:04:49 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ast_node_type	get_node_type(t_token *token)
 		return (NODE_REDIRECT_INPUT);
 	if (token->type == TOKEN_OPERATOR_HERE_DOC)
 		return (NODE_HERE_DOCUMENT);
-	if (token->type == TOKEN_OPERATOR_HERE_DOC_ARGS)
+	if (token->type == TOKEN_OPERATOR_HERE_ARGS)
 		return (NODE_HERE_ARGS);
 	if (token->type == TOKEN_OPERATOR_REDIRECT)
 		return (NODE_REDIRECT);

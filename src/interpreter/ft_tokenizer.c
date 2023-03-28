@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/27 21:13:34 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 22:14:38 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable, t_token_type type)
 {
 	t_token	*token;
-	char	**args;
 
 	token = ft_calloc(1, sizeof(t_token));
 	token->filein = 0;
@@ -29,26 +28,7 @@ t_token	*mk_token(t_ctx **ctx, t_lexer *lexer, BYTE variable, t_token_type type)
 		token->size = (UINT)(lexer->current_position - lexer->start);
 		token->start = ft_remove_slash(ft_strndup(lexer->start, token->size));
 	}
-	if (token->type != TOKEN_ERROR)
-	{
-		if (type == TOKEN_COMMAND)
-		{
-			args = ft_split(token->start, ' ');
-			token->command = *args;
-			token->args = args + 1;
-		}
-		else
-		{
-			token->args = NULL;
-			token->command = NULL;
-		}
-		token->type = type;
-	}
-	else
-	{
-		token->args = NULL;
-		token->command = NULL;
-	}
+	ft_fill_token(token, type);
 	return (token);
 }
 
@@ -104,7 +84,7 @@ t_token	*scan_operator(t_ctx **ctx, t_parser_context *context)
 	if (!get_previus_token(context)
 		|| get_previus_token(context)->type == TOKEN_ERROR
 		|| (get_current_token(context)->type != TOKEN_COMMAND
-		&& get_current_token(context)->type != TOKEN_OPERATOR_HERE_DOC_ARGS))
+			&& get_current_token(context)->type != TOKEN_OPERATOR_HERE_ARGS))
 	{
 		msg = ft_strdup("minishell: Error, invalid Syntax");
 		return (ft_mk_generic_token(TOKEN_ERROR, msg, 0));
@@ -123,13 +103,13 @@ t_token	*scan_here_document(t_lexer *lexer)
 	while (!ft_isspace(*lexer->current_position) && !is_at_end(lexer))
 		lexer->current_position++;
 	delimiter = ft_strndup(lexer->start,
-							lexer->current_position - lexer->start);
+			lexer->current_position - lexer->start);
 	if (*delimiter == '\0' || is_operator(lexer, 2))
 		return (ft_mk_generic_token(TOKEN_ERROR,
-									ft_strdup("Error: Invalid Syntax"),
-									0));
+				ft_strdup("Error: Invalid Syntax"),
+				0));
 	final_line = token_here_doc_args(delimiter);
 	free(delimiter);
-	return (ft_mk_generic_token(TOKEN_OPERATOR_HERE_DOC_ARGS, final_line,
+	return (ft_mk_generic_token(TOKEN_OPERATOR_HERE_ARGS, final_line,
 			ft_strlen(final_line)));
 }

@@ -200,10 +200,10 @@ void	debug_list_of_tokens(t_lkd_lst *commands)
             ft_printf("\tTOKEN_OPERATOR");
         if (((t_token *) node->content)->type == TOKEN_OPERATOR_HERE_DOC)
             ft_printf("\tTOKEN_OPERATOR_HERE_DOC");
-        if (((t_token *) node->content)->type == TOKEN_OPERATOR_HERE_DOC_ARGS)
+        if (((t_token *) node->content)->type == TOKEN_OPERATOR_HERE_ARGS)
 		{
 			t_token *tk = (t_token *) node->content;
-			ft_printf("\tTOKEN_OPERATOR_HERE_DOC_ARGS -> %s", tk->start);
+			ft_printf("\tTOKEN_OPERATOR_HERE_ARGS -> %s", tk->start);
 		}
         if (((t_token *) node->content)->type == TOKEN_OPERATOR_REDIRECT_INPUT)
             ft_printf("\tTOKEN_OPERATOR_REDIRECT_INPUT");

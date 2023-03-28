@@ -6,7 +6,7 @@
 /*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/26 18:09:37 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/27 22:04:49 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	need_skip_cmd(t_lkd_node *node)
 				return (1);
 		}
 	}
-	if (token->type == TOKEN_OPERATOR_HERE_DOC_ARGS)
+	if (token->type == TOKEN_OPERATOR_HERE_ARGS)
 		return (1);
 	return (0);
 }
@@ -395,7 +395,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		g_ctx->cmdlist = (t_lkd_lst *)ft_parser(&g_ctx, line);
 		free_if_exists((void **)&line);
-		list = g_ctx->cmdlist;
+		list = NULL;
 		if (list)
 		{
 			create_pipes(list);

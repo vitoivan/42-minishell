@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:51:11 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 14:12:50 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/27 22:14:11 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,30 @@ char	*ft_strndup(const char *str, UINT n)
 	new = ft_calloc(sizeof(char), n + 1);
 	ft_strlcpy(new, str, n + 1);
 	return (new);
+}
+
+void	ft_fill_token(t_token *token, t_token_type type)
+{
+	char	**args;
+
+	if (token->type != TOKEN_ERROR)
+	{
+		if (type == TOKEN_COMMAND)
+		{
+			args = ft_split(token->start, ' ');
+			token->command = *args;
+			token->args = args + 1;
+		}
+		else
+		{
+			token->args = NULL;
+			token->command = NULL;
+		}
+		token->type = type;
+	}
+	else
+	{
+		token->args = NULL;
+		token->command = NULL;
+	}
 }
