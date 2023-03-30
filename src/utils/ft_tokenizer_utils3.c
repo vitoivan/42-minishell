@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer_utils3.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 08:19:25 by jv                #+#    #+#             */
-/*   Updated: 2023/03/30 08:16:07 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:28:42 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ BYTE	ft_lexer_is_readable(t_lexer *lexer, BYTE *s_quote, BYTE *d_quote)
 	char	prev;
 
 	curr = *lexer->current_position;
-	prev = *(lexer->current_position - 1);
+	if (lexer->current_position > lexer->start)
+		prev = *(lexer->current_position - 1);
+	else
+		prev = *lexer->current_position;
 	while (ft_isspace(curr))
 		curr = *(++lexer->current_position);
 	if (ft_is_double_quote(curr) && !(*s_quote) && prev != '\\')
