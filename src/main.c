@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/30 08:18:11 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 19:54:26 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	main(int argc, char **argv, char **envp)
 			close_pipes(g_ctx->cmdlist);
 			waitpids();
 		}
+		lkd_lst_kill_list(&g_ctx->cmdlist, del_token_list);
 	}
 	return (0);
 }
