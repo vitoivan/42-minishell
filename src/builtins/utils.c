@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/20 14:17:06 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/28 09:57:17 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,21 @@ BOOL	is_builtin(char *cmd)
 	if (compare_equality(cmd, "clear", 5))
 		return (True);
 	return (False);
+}
+
+char	*echo_parse_args_to_str(char **args, int args_qty)
+{
+	char	*str;
+	char	*tmp;
+
+	if (args_qty >= 1 && ft_strcmp(args[0], "-n") == 0)
+		str = echo_parse_args(args + 1);
+	else
+	{
+		str = echo_parse_args(args);
+		tmp = str;
+		str = ft_strjoin(str, "\n");
+		free(tmp);
+	}
+	return (str);
 }

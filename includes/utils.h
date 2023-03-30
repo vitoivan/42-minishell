@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/27 22:47:05 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/30 08:11:00 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char			*ft_strndup(const char *str, UINT n);
 char			*token_here_doc_args(char *delimiter);
 t_precedence	get_precedence(t_token *token);
 int				ft_isspace(int c);
-BYTE			ft_lexer_is_readable(t_lexer *lexer, BYTE *s_quote, BYTE *d_quote);
+BYTE			ft_lexer_is_readable(t_lexer *lexer, BYTE *s_quote,
+					BYTE *d_quote);
 int				real_string_size(t_ctx **ctx, char *s, int size);
 BOOL			ft_is_double_quote(char c);
 BOOL			ft_is_single_quote(char c);
@@ -118,4 +119,7 @@ char			*ctx_get_env(t_ctx **ctx, char *env_name);
 void			handle_signals(void);
 int				string_builder_free_everything(void *rs, void *sb,
 					const char *want_free);
+
+void			free_hostname_data(char *path, char **args);
+char			*get_hostname_run_cmd(char *path, char **args, char **envp);
 #endif

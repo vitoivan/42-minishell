@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/22 13:41:09 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/28 09:47:39 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ void	builtin_main(t_ctx **ctx, char *line, t_token *token)
 		exit(0);
 	}
 	else if (is_equal(line, "echo", 4))
-	{
-		if (!token)
-			return ;
 		echo(ctx, line, token);
-	}
 	else if (is_equal(line, "env", 3))
 		env(ctx, token);
 	else if (is_equal(line, "unset", 5))

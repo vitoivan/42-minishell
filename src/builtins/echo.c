@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/23 00:18:46 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/28 09:56:27 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	get_args_qty(char *line)
 	return (args_qty);
 }
 
-static char	*parse_to_string(char **args)
+char	*echo_parse_args(char **args)
 {
 	char	*str;
 	char	*tmp;
@@ -82,7 +82,6 @@ static void	populate_args(char *line, int args_qty, char **args)
 	int	k;
 
 	i = 0;
-	j = 0;
 	k = 0;
 	j = 5;
 	while (i < args_qty && line[j])
@@ -109,10 +108,11 @@ void	echo(t_ctx **ctx, char *line, t_token *token)
 {
 	char	**args;
 	char	*str;
-	char	*tmp;
 	int		args_qty;
 
 	(void)ctx;
+	if (!token)
+		return ;
 	if (ft_strlen(line) > 5)
 		args_qty = get_args_qty(line + 5);
 	else
@@ -124,19 +124,8 @@ void	echo(t_ctx **ctx, char *line, t_token *token)
 		return ;
 	}
 	populate_args(line, args_qty, args);
-	if (args_qty >= 1 && ft_strcmp(args[0], "-n") == 0)
-	{
-		str = parse_to_string(args + 1);
-		ft_putstr_fd(str, token->fileout);
-	}
-	else
-	{
-		str = parse_to_string(args);
-		tmp = str;
-		str = ft_strjoin(str, "\n");
-		ft_putstr_fd(str, token->fileout);
-		free(tmp);
-	}
+	str = echo_parse_args_to_str(args, args_qty);
+	ft_putstr_fd(str, token->fileout);
 	clear_splitted(&args);
 	free(str);
 }

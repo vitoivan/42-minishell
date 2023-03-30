@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 10:19:03 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 17:27:19 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/28 09:46:29 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,30 @@ char	**get_path(void)
 	return (splitted);
 }
 
+static char	*get_binary(char *cmd, char *cursor)
+{
+	char	*binary;
+	char	*tmp;
+
+	tmp = ft_strjoin(cursor, "/");
+	binary = ft_strjoin(tmp, cmd);
+	free(tmp);
+	if (access(binary, F_OK) == 0)
+		return (binary);
+	if (access(cmd, F_OK) == 0)
+	{
+		free(binary);
+		binary = ft_strdup(cmd);
+		return (binary);
+	}
+	free(binary);
+	return (NULL);
+}
+
 char	*get_cmd_binary_path(char *cmd)
 {
 	char	**path;
 	char	*binary;
-	char	*tmp;
 	char	**cursor;
 
 	path = get_path();
@@ -55,21 +74,12 @@ char	*get_cmd_binary_path(char *cmd)
 	cursor = path;
 	while (*cursor)
 	{
-		tmp = ft_strjoin(*cursor, "/");
-		binary = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(binary, F_OK) == 0)
+		binary = get_binary(cmd, *cursor);
+		if (binary)
 		{
 			free_path(path);
 			return (binary);
 		}
-		if (access(cmd, F_OK) == 0)
-		{
-			free_path(path);
-			free(binary);
-			return (ft_strdup(cmd));
-		}
-		free(binary);
 		cursor++;
 	}
 	free_path(path);

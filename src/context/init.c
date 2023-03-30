@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/27 22:48:28 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/30 08:11:16 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	*init_pids(void)
 	int	*pids;
 	int	max_pids;
 
-	max_pids = 250;
+	max_pids = MAX_PIDS;
 	pids = ft_calloc(max_pids, sizeof(int));
 	i = 0;
 	while (i < max_pids)

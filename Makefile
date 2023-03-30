@@ -11,6 +11,8 @@ OBJ_DIR = dist
 OBJ_DIRS = $(OBJ_DIR) \
 			$(OBJ_DIR)/utils \
 			$(OBJ_DIR)/interpreter \
+			$(OBJ_DIR)/interpreter/exec_list/create_pipes \
+			$(OBJ_DIR)/interpreter/exec_list/exec_cmd \
 			$(OBJ_DIR)/cmd \
 			$(OBJ_DIR)/builtins \
 			$(OBJ_DIR)/pipes \
@@ -27,8 +29,16 @@ TARGETS = 	main.c \
 			utils/ft_tokenizer_utils.c \
 			interpreter/ft_tokenizer.c \
 			interpreter/ft_parser.c \
+			interpreter/exec_list/create_pipes/create_pipes.c \
+			interpreter/exec_list/create_pipes/handle_op_heredoc.c \
+			interpreter/exec_list/create_pipes/handle_op_pipe.c \
+			interpreter/exec_list/create_pipes/handle_op_redirect_in.c \
+			interpreter/exec_list/create_pipes/handle_op_redirect_out.c \
+			interpreter/exec_list/exec_cmd/exec_cmd.c \
+			interpreter/exec_list/exec_cmd/need_skip_cmd.c \
 			utils/print_lkd_list.c \
 			utils/debug.c \
+			utils/get_hostname_utils.c \
 			utils/skip_whitespace.c \
 			utils/print_terminal.c \
 			utils/errors.c \

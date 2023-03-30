@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/27 22:44:30 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/30 08:10:56 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,19 @@
 # define BUFFER_SIZE 4096
 # define DEBUG 0
 # define USE_LIST 1
+# define MAX_PIDS 250
 # define UINT unsigned int
 # define BYTE unsigned char
 # define HERE_DOC "EOF"
 # define HERE_DOC_2 "_"
 
-enum							e_bool
+enum				e_bool
 {
 	False = 0,
 	True = 1
 };
 
-enum							e_erros
+enum				e_erros
 {
 	UNQUOTED_STRING_ERROR,
 	MEMORY_ALLOC_ERROR,
@@ -52,13 +53,13 @@ typedef enum e_ast_node_type
 	NODE_REDIRECT,
 	NODE_REDIRECT_APPEND,
 	NODE_SEMICOLON
-}								t_ast_node_type;
+}					t_ast_node_type;
 
 typedef enum e_precedence
 {
 	PREC_NONE,
 	PREC_HIGH
-}								t_precedence;
+}					t_precedence;
 
 typedef enum e_token_type
 {
@@ -76,44 +77,43 @@ typedef enum e_token_type
 	TOKEN_OPERATOR_REDIRECT_APPEND,
 	TOKEN_OPERATOR_SEMICOLON,
 	TOKEN_HIGH_OPERATOR
-}								t_token_type;
+}					t_token_type;
 
 typedef struct s_lexer
 {
-	char						*start;
-	char						*current_position;
-}								t_lexer;
+	char			*start;
+	char			*current_position;
+}					t_lexer;
 
 typedef struct s_token
 {
-	char						*start;
-	char						*error_msg;
-	char						*command;
-	char						**args;
-	t_token_type				type;
-	int							filein;
-	int							fileout;
-	UINT						size;
-}								t_token;
+	char			*start;
+	char			*error_msg;
+	char			*command;
+	char			**args;
+	t_token_type	type;
+	int				filein;
+	int				fileout;
+	UINT			size;
+}					t_token;
 
 typedef struct s_parser
 {
-	t_token						*previus_token;
-	t_token						*current_token;
-	BYTE						had_error;
-}								t_parser;
+	t_token			*previus_token;
+	t_token			*current_token;
+	BYTE			had_error;
+}					t_parser;
 
 typedef struct s_parser_context
 {
-	t_lexer						lexer;
-	t_parser					parser;
-}								t_parser_context;
-
+	t_lexer			lexer;
+	t_parser		parser;
+}					t_parser_context;
 
 typedef struct s_string_builder
 {
-	UINT						size;
-	char						*start;
-}								t_str_builder;
+	UINT			size;
+	char			*start;
+}					t_str_builder;
 
 #endif

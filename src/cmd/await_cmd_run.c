@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 09:58:10 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:26:54 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 03:47:03 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static BOOL	run_child(t_ctx **ctx, t_await_cmd_run_props *data,
 	return (True);
 }
 
-static void	create_pipes(t_await_cmd_run_props *data)
+static void	create_pipes2(t_await_cmd_run_props *data)
 {
 	if (!pipe_create(data->child_write_pipe)
 		|| !pipe_create(data->parent_write_pipe))
@@ -55,7 +55,7 @@ BOOL	await_cmd_run(t_ctx **ctx, char *binary_path, char **args)
 {
 	t_await_cmd_run_props	data;
 
-	create_pipes(&data);
+	create_pipes2(&data);
 	(*ctx)->pid = fork();
 	if ((*ctx)->pid == 0 && run_child(ctx, &data, binary_path, args) == False)
 		return (False);

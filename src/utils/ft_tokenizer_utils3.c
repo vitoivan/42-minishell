@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer_utils3.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 08:19:25 by jv                #+#    #+#             */
-/*   Updated: 2023/03/27 21:04:33 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/30 08:16:07 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*lexer_next_token(t_ctx **ctx, t_parser_context *context, BYTE is_here_doc)
+t_token	*lexer_next_token(t_ctx **ctx, t_parser_context *context,
+							BYTE is_here_doc)
 {
 	t_token	*new_current_token;
 
@@ -33,7 +34,7 @@ t_token	*lexer_next_token(t_ctx **ctx, t_parser_context *context, BYTE is_here_d
 void	del_token(t_token *token)
 {
 	char	**args;
-	BYTE 	i;
+	BYTE	i;
 
 	i = 0;
 	if (token != NULL)
@@ -53,7 +54,7 @@ void	del_token(t_token *token)
 	}
 }
 
-void del_token_list(void *token) 
+void	del_token_list(void *token)
 {
 	del_token((t_token *)token);
 }
@@ -68,18 +69,17 @@ void	advance_to_next_token(t_ctx **ctx, t_parser_context *context)
 	else
 		context->parser.current_token = lexer_next_token(ctx, context,
 				0);
-
 	context->lexer.start = context->lexer.current_position;
 }
 
 BYTE	ft_lexer_is_readable(t_lexer *lexer, BYTE *s_quote, BYTE *d_quote)
 {
-	char curr;
-	char prev;
+	char	curr;
+	char	prev;
 
 	curr = *lexer->current_position;
 	prev = *(lexer->current_position - 1);
-	while(ft_isspace(curr))
+	while (ft_isspace(curr))
 		curr = *(++lexer->current_position);
 	if (ft_is_double_quote(curr) && !(*s_quote) && prev != '\\')
 		*d_quote = !(*d_quote);

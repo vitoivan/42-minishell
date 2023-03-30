@@ -6,58 +6,62 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:44:41 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 16:19:08 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/28 10:04:10 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	handle_sigint(int sig)
+static int	send_sig_to_processes(int sig)
 {
-	unsigned int	i;
-	t_lkd_lst		*list;
-	t_lkd_node		*node;
-	t_token			*token;
+	int	i;
+	int	done;
 
-	(void)sig;
-	ft_putstr_fd("\n", STDERR_FILENO);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	done = 0;
 	i = 0;
-	list = g_ctx->cmdlist;
-	if (!list || !list->head)
-		return ;
-	node = list->head;
-	while (i < list->size)
+	while (i < MAX_PIDS)
 	{
-		token = (t_token *)node->content;
-		if (!token)
-			break ;
-		if (token->type == TOKEN_COMMAND)
+		if (g_ctx->pids[i] != -1)
 		{
-			if (g_ctx->pids[i] != -1)
-				kill(g_ctx->pids[i], SIGINT);
+			done = 1;
+			kill(g_ctx->pids[i], sig);
 			g_ctx->pids[i] = -1;
 		}
 		i++;
+	}
+	return (done);
+}
+
+static void	handle_sigint(int sig)
+{
+	int	done;
+
+	(void)sig;
+	done = send_sig_to_processes(SIGINT);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	if (!done)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 	g_ctx->status_code = 130;
 }
 
 static void	handle_sigquit(int sig)
 {
+	int	done;
+
 	(void)sig;
+	done = send_sig_to_processes(SIGQUIT);
 	ft_putstr_fd("\n", STDERR_FILENO);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	if (g_ctx->pid != -1)
+	if (!done)
 	{
-		kill(g_ctx->pid, SIGQUIT);
-		g_ctx->pid = -1;
-		g_ctx->status_code = 131;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
+	g_ctx->status_code = 131;
 }
 
 void	handle_signals(void)

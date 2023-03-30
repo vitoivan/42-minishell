@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_remove_slash.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 21:14:22 by jv                #+#    #+#             */
-/*   Updated: 2023/03/27 21:22:53 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/30 08:17:31 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*ft_remove_slash(char *str)
 			slashes++;
 		i++;
 	}
-	unslashed_str = (char *) ft_calloc(ft_strlen(str) - slashes + 1, sizeof(char));
+	unslashed_str = (char *) ft_calloc(ft_strlen(str) - slashes + 1,
+			sizeof(char));
 	i = 0;
 	while (str[i])
 	{
@@ -36,8 +37,6 @@ char	*ft_remove_slash(char *str)
 			unslashed_str[j++] = str[i];
 		i++;
 	}
-	/* limpando aqui pra nao ter que criar uma var tmp lá */
-	/* inclusive fazer isso no ft_strjoin é uma boa */
-	free(str); 
+	free(str);
 	return (unslashed_str);
 }

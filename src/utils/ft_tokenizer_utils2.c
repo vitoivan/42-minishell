@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tokenizer_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:51:11 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/21 22:54:38 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/30 08:15:06 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ BYTE	is_operator(t_lexer *lexer, UINT offset)
 
 t_token_type	ft_get_token_type(t_lexer *lexer)
 {
-	char	*curr; 
-	
+	char	*curr;
+
 	curr = lexer->current_position;
 	if (ft_strncmp(curr, "&&", 2) == 0)
 		return (TOKEN_OPERATOR_AND);
