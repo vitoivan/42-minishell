@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_op_redirect_out.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/30 03:46:23 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 09:07:28 by jv               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ static void	attach_fd_to_cmd(t_handle_exec_list *s)
 
 static void	get_fileout(t_handle_exec_list *s, char *filename)
 {
-	int	fileout;
-
-	fileout = -1;
 	if (s->token->type == TOKEN_OPERATOR_REDIRECT)
 		s->fileout = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (s->token->type == TOKEN_OPERATOR_REDIRECT_APPEND)
