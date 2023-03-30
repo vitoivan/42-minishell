@@ -6,21 +6,23 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/30 08:25:02 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:18:07 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../includes/minishell.h"
 
-static t_handle_exec_list	*init_struct(t_lkd_lst *list)
+static void	init_struct(t_lkd_lst *list, t_handle_exec_list *s)
 {
-	t_handle_exec_list	*s;
-
-	s = (t_handle_exec_list *)ft_calloc(1, sizeof(t_handle_exec_list));
 	s->i = 0;
 	s->cur = list->head;
 	s->list = list;
-	return (s);
+	s->prev = NULL;
+	s->next = NULL;
+	s->token = NULL;
+	s->tmp_token = NULL;
+	s->filein = STDIN_FILENO;
+	s->fileout = STDOUT_FILENO;
 }
 
 static void	run_child_process(char *cmd, char *binary_path, char **args,
@@ -96,28 +98,27 @@ static void	handle_token_cmd(t_handle_exec_list *s)
 
 void	exec_cmds(t_lkd_lst *list)
 {
-	t_handle_exec_list	*s;
+	t_handle_exec_list	s;
 
-	s = init_struct(list);
-	while (s->cur && (unsigned int)s->i < list->size && s->cur->content)
+	init_struct(list, &s);
+	while (s.cur && (unsigned int)s.i < list->size && s.cur->content)
 	{
-		s->token = (t_token *)s->cur->content;
-		if (!s->token)
+		s.token = (t_token *)s.cur->content;
+		if (!s.token)
 			break ;
-		if (s->i > 0)
-			s->prev = s->cur->prev;
-		if ((unsigned int)s->i < list->size - 1)
-			s->next = s->cur->next;
-		if (s->prev && need_skip_cmd(s->cur) == True)
+		if (s.i > 0)
+			s.prev = s.cur->prev;
+		if ((unsigned int)s.i < list->size - 1)
+			s.next = s.cur->next;
+		if (s.prev && need_skip_cmd(s.cur) == True)
 		{
-			s->cur = s->cur->next;
-			s->i++;
+			s.cur = s.cur->next;
+			s.i++;
 			continue ;
 		}
 		else
-			handle_token_cmd(s);
-		s->cur = s->cur->next;
-		s->i++;
+			handle_token_cmd(&s);
+		s.cur = s.cur->next;
+		s.i++;
 	}
-	free(s);
 }
