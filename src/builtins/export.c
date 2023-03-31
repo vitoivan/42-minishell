@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/28 09:50:56 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:51:38 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	builtin_export(t_ctx **ctx, char *name, char *value)
 	return_value = True;
 	if (ft_is_double_quote(value[0]))
 	{
-		str_len = ft_strlen(value) - 2;
+		str_len = ft_strlen(value) - 1;
 		value_to_be_setted = ft_calloc(str_len + 1, sizeof(char));
 		if (value_to_be_setted == NULL)
 			return (False);

@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 10:19:03 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/28 09:46:29 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:56:30 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ char	*get_cmd_binary_path(char *cmd)
 	char	**cursor;
 
 	path = get_path();
-	if (!path)
-		return (NULL);
 	cursor = path;
-	while (*cursor)
+	while (path && *cursor)
 	{
 		binary = get_binary(cmd, *cursor);
 		if (binary)
@@ -83,5 +81,8 @@ char	*get_cmd_binary_path(char *cmd)
 		cursor++;
 	}
 	free_path(path);
+	binary = get_binary(cmd, "");
+	if (binary)
+		return (binary);
 	return (NULL);
 }
