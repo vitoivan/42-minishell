@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/30 08:09:46 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:13:45 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static void	create_pipe(t_lkd_node *cur, int **pipes, unsigned int i)
 	if (token->type == TOKEN_ERROR)
 	{
 		ft_putstr_fd("LexerError: Token with error\n", STDERR_FILENO);
-		exit(1);
+		free(s);
+		return ;
 	}
 	if (cur->prev && i > 0)
 		s->prev = s->cur->prev;
