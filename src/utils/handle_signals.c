@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:44:41 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/28 10:04:10 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:31:00 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,14 @@ static void	handle_sigint(int sig)
 	g_ctx->status_code = 130;
 }
 
-static void	handle_sigquit(int sig)
-{
-	int	done;
-
-	(void)sig;
-	done = send_sig_to_processes(SIGQUIT);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	if (!done)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	g_ctx->status_code = 131;
-}
-
 void	handle_signals(void)
 {
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	handle_signals_child_process(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }

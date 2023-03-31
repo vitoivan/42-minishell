@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/30 19:54:26 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/30 21:39:47 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,24 @@ void	close_pipes(t_lkd_lst *list)
 	}
 }
 
+static void	handle_status_code(void)
+{
+	if (WIFEXITED(g_ctx->status_code))
+		g_ctx->status_code = WEXITSTATUS(g_ctx->status_code);
+	else if (WIFSIGNALED(g_ctx->status_code))
+	{
+		if (WTERMSIG(g_ctx->status_code) == SIGINT)
+			g_ctx->status_code = 130;
+		else if (WTERMSIG(g_ctx->status_code) == SIGQUIT)
+		{
+			ft_putstr_fd("Quit: (core dumped)\n", STDERR_FILENO);
+			g_ctx->status_code = 131;
+		}
+		else
+			g_ctx->status_code = WTERMSIG(g_ctx->status_code);
+	}
+}
+
 static void	waitpids(void)
 {
 	unsigned int	i;
@@ -65,6 +83,7 @@ static void	waitpids(void)
 		if (g_ctx->pids[i] != -1)
 		{
 			waitpid(g_ctx->pids[i], &g_ctx->status_code, 0);
+			handle_status_code();
 			g_ctx->pids[i] = -1;
 		}
 		i++;

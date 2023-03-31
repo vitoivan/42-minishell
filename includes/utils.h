@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/30 08:11:00 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:43:16 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void			lexer_init(t_lexer *lexer, char *source);
 void			skip_white_spaces(t_lexer *lexer);
 void			skip_quotes(char **line);
 void			clear_splitted(char ***splitted);
-void	token_string_builder(t_token *token,
-							t_ctx **ctx,
-							t_lexer *lexer);
+void			token_string_builder(t_token *token,
+					t_ctx **ctx,
+					t_lexer *lexer);
 BYTE			is_at_end(t_lexer *lexer);
 BYTE			is_operator(t_lexer *lexer, UINT offset);
 BYTE			ft_strmatch(char *entry, char *pattern);
@@ -81,18 +81,17 @@ BOOL			ft_is_double_quote(char c);
 BOOL			ft_is_single_quote(char c);
 BOOL			ft_isquote(char c);
 t_token_type	ft_get_token_type(t_lexer *lexer);
-t_token	*token_scan_command_run(t_lexer *lexer,
-								BYTE *var,
-								BYTE *s_quote,
-								BYTE *d_quote);
+t_token			*token_scan_command_run(t_lexer *lexer,
+					BYTE *var,
+					BYTE *s_quote,
+					BYTE *d_quote);
 t_token			*get_current_token(t_parser_context *context);
 t_token			*get_previus_token(t_parser_context *context);
-t_token	*ft_mk_generic_token(t_token_type type,
-								char *start,
-								UINT size);
-t_token	*lexer_next_token(t_ctx **ctx,
-							t_parser_context *context,
-							BYTE is_here_doc);
+t_token			*ft_mk_generic_token(t_token_type type,
+					char *start,
+					UINT size);
+t_token			*lexer_next_token(t_ctx **ctx, t_parser_context *context,
+					BYTE is_here_doc);
 t_token			*scan_here_document(t_lexer *lexer);
 t_token			*scan_operator(t_ctx **ctx, t_parser_context *context);
 t_token			*scan_command(t_ctx **ctx, t_parser_context *context);
@@ -122,4 +121,5 @@ int				string_builder_free_everything(void *rs, void *sb,
 
 void			free_hostname_data(char *path, char **args);
 char			*get_hostname_run_cmd(char *path, char **args, char **envp);
+void			handle_signals_child_process(void);
 #endif

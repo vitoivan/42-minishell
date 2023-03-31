@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/30 20:18:07 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:18:41 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	run_child_process(char *cmd, char *binary_path, char **args,
 
 	dup2(s->token->filein, STDIN_FILENO);
 	dup2(s->token->fileout, STDOUT_FILENO);
+	handle_signals_child_process();
 	close_pipes(s->list);
 	env = parse_ldk_lst_to_char_array(g_ctx->env);
 	execve(binary_path, args, env);
