@@ -6,17 +6,17 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/30 22:25:27 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 23:00:37 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int get_status_from_line(char *line)
+static int	get_status_from_line(char *line)
 {
-	int status;
-	int len;
-	char *t;
+	int		status;
+	int		len;
+	char	*t;
 
 	status = 0;
 	len = ft_strlen(line);
@@ -33,7 +33,6 @@ static int get_status_from_line(char *line)
 		skip_whitespace(&t, False);
 		status = ft_atoi(t);
 	}
-
 	return (status);
 }
 

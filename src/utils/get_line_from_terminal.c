@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 10:54:35 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/30 22:59:40 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 23:00:32 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ BOOL	get_line_from_terminal(char **line, t_ctx *ctx)
 
 	prompt = get_prompt(ctx);
 	*line = get_line(prompt);
-	if(!*line)
+	if (!*line)
 		custom_exit("exit", 0);
 	add_history(*line);
 	free(prompt);

@@ -37,7 +37,6 @@ TARGETS = 	main.c \
 			interpreter/exec_list/exec_cmd/exec_cmd.c \
 			interpreter/exec_list/exec_cmd/need_skip_cmd.c \
 			utils/print_lkd_list.c \
-			utils/debug.c \
 			utils/get_hostname_utils.c \
 			utils/skip_whitespace.c \
 			utils/print_terminal.c \

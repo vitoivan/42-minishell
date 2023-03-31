@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:40:24 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/27 22:16:42 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/30 23:01:02 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ t_lkd_lst	*ft_parser_linked(t_ctx **ctx, char *source)
 	parser_init(&context.parser);
 	advance_to_next_token(ctx, &context);
 	lst = parser_expression_linked(ctx, &context);
-	if (lst)
-		debug_list_of_tokens(lst);
 	return (lst);
 }
 
