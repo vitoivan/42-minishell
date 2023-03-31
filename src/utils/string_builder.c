@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:50:01 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/19 20:18:21 by jv               ###   ########.fr       */
+/*   Updated: 2023/03/31 00:15:30 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static int	handle_var(t_ctx **ctx, t_str_builder_internal *sb, const char *s)
 	sb->env_name = ft_strndup(s + sb->ini_pos, sb->i - sb->ini_pos);
 	sb->env_value = ctx_get_env(ctx, sb->env_name);
 	free(sb->env_name);
+	if (!sb->env_value)
+		return (1);
 	sb->env_len = ft_strlen(sb->env_value);
 	if (!sb->env_value)
 	{

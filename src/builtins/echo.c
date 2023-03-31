@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/28 09:56:27 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/31 00:19:56 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	echo(t_ctx **ctx, char *line, t_token *token)
 	if (args_qty <= 0)
 	{
 		clear_splitted(&args);
+		ft_putstr_fd("\n", token->fileout);
 		return ;
 	}
 	populate_args(line, args_qty, args);

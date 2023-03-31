@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:50:01 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/16 15:07:53 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/31 00:16:58 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ static int	handle_env_value(t_ctx **ctx, t_str_builder_real_size_internal *rs)
 	else
 		rs->env_value = ctx_get_env(ctx, rs->env_name);
 	if (rs->env_value == NULL)
-		return (string_builder_free_everything((void *)rs, NULL, "real_str")
-			- 2);
+		rs->env_value = ft_strdup("");
 	return (1);
 }
 
