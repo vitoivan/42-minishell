@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/28 09:47:39 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 22:22:58 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ void	builtin_main(t_ctx **ctx, char *line, t_token *token)
 	else if (is_equal(line, "export", 6))
 		cmd_export(ctx, line);
 	else if (is_equal(line, "exit", 4))
-	{
-		ft_printf("exit\n");
-		ctx_free(&g_ctx);
-		exit(0);
-	}
+		custom_exit(line, -1);
 	else if (is_equal(line, "echo", 4))
 		echo(ctx, line, token);
 	else if (is_equal(line, "env", 3))

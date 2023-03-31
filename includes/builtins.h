@@ -6,7 +6,7 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 15:35:14 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/28 09:56:12 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/30 22:22:52 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ void	echo(t_ctx **ctx, char *line, t_token *token);
 void	env(t_ctx **ctx, t_token *token);
 char	*echo_parse_args_to_str(char **args, int args_qty);
 char	*echo_parse_args(char **args);
+void	custom_exit(char *line, int status);
 
 #endif
