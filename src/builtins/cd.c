@@ -6,27 +6,41 @@
 /*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/12 19:58:07 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/31 00:34:22 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	cd(char *path)
+static char	*get_cd_path(char *line)
 {
-	if (chdir(path) == -1)
-		return (False);
-	return (True);
+	char	*path;
+
+	path = line + 2;
+	while (*path == ' ')
+		path++;
+	if (*path == '\0')
+		path = ctx_get_env(&g_ctx, "HOME");
+	return (path);
 }
 
 int	cmd_cd(t_ctx **ctx, char *line)
 {
-	char	*path;
-	int		return_value;
+	char *path;
 
-	path = line + 3;
-	return_value = cd(path);
-	if (return_value == -1)
+	path = get_cd_path(line);
+	if (path == NULL)
+	{
+		ft_putendl_fd("cd: HOME not set", 2);
 		(*ctx)->status_code = 1;
-	return (return_value);
+		return (1);
+	}
+	if (chdir(path) == -1)
+	{
+		ft_putstr_fd("cd: no such file or directory: ", 2);
+		ft_putendl_fd(path, 2);
+		(*ctx)->status_code = 1;
+		return (1);
+	}
+	return (0);
 }
