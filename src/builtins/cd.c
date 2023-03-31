@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/31 00:34:22 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:09:34 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*get_cd_path(char *line)
 
 int	cmd_cd(t_ctx **ctx, char *line)
 {
-	char *path;
+	char	*path;
 
 	path = get_cd_path(line);
 	if (path == NULL)
