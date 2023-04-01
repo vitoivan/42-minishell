@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lkd_lst_pop_at.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 20:44:37 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/02/28 07:27:34 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/04/01 10:40:34 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	pop_thought_tail(t_lkd_lst **list, t_uint i,
 	t_lkd_node	*next;
 
 	current_lkd_node = (*list)->tail;
-	while (i-- > 0)
+	while (i++ < (*list)->size - 1)
 	{
 		if (current_lkd_node)
 			current_lkd_node = current_lkd_node->prev;
