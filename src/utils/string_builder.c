@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 07:50:01 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/31 00:15:30 by vivan-de         ###   ########.fr       */
+/*   Updated: 2023/04/01 12:17:14 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_str_builder	*string_builder(t_ctx **ctx, const char *s, int size)
 		else if (s[sb.i] == '$' && !sb.single_quote)
 		{
 			sb.ini_pos = ++sb.i;
-			while (s[sb.i] && ft_isalpha(s[sb.i]))
+			while (s[sb.i] && (ft_isalnum(s[sb.i]) || s[sb.i] == '_'))
 				sb.i++;
 			if (handle_var(ctx, &sb, s) == -1)
 				return (NULL);
