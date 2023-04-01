@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/03/27 22:46:50 by jv               ###   ########.fr       */
+/*   Updated: 2023/04/01 11:29:03 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_ctx
 	int			status_code;
 	int			argc;
 	t_lkd_lst	*env;
+	char		**env_vector;
 	char		**argv;
 	char		*buffer;
 	t_lkd_lst	*cmdlist;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jv <jv@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 13:53:32 by vivan-de          #+#    #+#             */
-/*   Updated: 2023/03/27 22:43:53 by jv               ###   ########.fr       */
+/*   Updated: 2023/04/01 11:34:35 by victor.simo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ctx_free(t_ctx **ctx)
 		free((*ctx)->pids);
 	free_if_exists((void **)&(*ctx)->hostname);
 	free_if_exists((void **)&(*ctx)->path);
-	free_if_exists((void **)&(*ctx)->buffer);
+	free((*ctx)->env_vector);
 	lkd_lst_kill_list(&(*ctx)->env, free);
 	lkd_lst_kill_list(&(*ctx)->cmdlist, del_token_list);
 	clear_history();
