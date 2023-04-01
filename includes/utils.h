@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor.simoes <victor.simoes@student.42    +#+  +:+       +#+        */
+/*   By: vivan-de <vivan-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 15:21:11 by victor            #+#    #+#             */
-/*   Updated: 2023/04/01 11:19:46 by victor.simo      ###   ########.fr       */
+/*   Updated: 2023/03/30 21:43:16 by vivan-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,4 @@ int				string_builder_free_everything(void *rs, void *sb,
 void			free_hostname_data(char *path, char **args);
 char			*get_hostname_run_cmd(char *path, char **args, char **envp);
 void			handle_signals_child_process(void);
-int				is_valid_identifier(char c);
-int				validate_identifiers(t_str_builder_internal *sb, char *s);
-
 #endif
